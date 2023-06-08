@@ -31,16 +31,20 @@ func BenchmarkHashing(b *testing.B) {
 	}
 
 	for _, size := range benchmarks {
-		benchmarkHasher(size, "lukechampine_blake3_256", lukechampineBlake3Hasher{}, b)
-		benchmarkHasher(size, "zeebo_blake3_256", zeeboBlake3Hasher{}, b)
-		benchmarkHasher(size, "blake2b_256", blake2bHasher{}, b)
+		benchmarkHasher(size, "sha1", sha1Hasher{}, b)
 		benchmarkHasher(size, "sha256", sha256Hasher{}, b)
 		benchmarkHasher(size, "sha256_simd", sha256SimdHasher{}, b)
-		benchmarkHasher(size, "sha2_512", sha512Hasher{}, b)
+		benchmarkHasher(size, "blake2b_256", blake2bHasher{}, b)
 		// benchmarkHasher("sha512/256", sha512_256Hasher{}, b)
-		benchmarkHasher(size, "sha1", sha1Hasher{}, b)
 		benchmarkHasher(size, "sha3", sha3Hasher{}, b)
+		benchmarkHasher(size, "lukechampine_blake3_256", lukechampineBlake3Hasher{}, b)
+		benchmarkHasher(size, "zeebo_blake3_256", zeeboBlake3Hasher{}, b)
+
+		benchmarkHasher(size, "sha2_512", sha512Hasher{}, b)
+		benchmarkHasher(size, "blake2b_512", blake2b512Hasher{}, b)
 		benchmarkHasher(size, "sha3_512", sha3_512Hasher{}, b)
+		benchmarkHasher(size, "lukechampine_blake3_512", lukechampineBlake3_512Hasher{}, b)
+		benchmarkHasher(size, "zeebo_blake3_512", zeeboBlake3_512Hasher{}, b)
 	}
 }
 
@@ -62,16 +66,34 @@ func (lukechampineBlake3Hasher) Hash(input []byte) {
 	lukechampineblake3.Sum256(input)
 }
 
+type lukechampineBlake3_512Hasher struct{}
+
+func (lukechampineBlake3_512Hasher) Hash(input []byte) {
+	lukechampineblake3.Sum512(input)
+}
+
 type zeeboBlake3Hasher struct{}
 
 func (zeeboBlake3Hasher) Hash(input []byte) {
 	zeeboblake3.Sum256(input)
 }
 
+type zeeboBlake3_512Hasher struct{}
+
+func (zeeboBlake3_512Hasher) Hash(input []byte) {
+	zeeboblake3.Sum512(input)
+}
+
 type blake2bHasher struct{}
 
 func (blake2bHasher) Hash(input []byte) {
 	blake2b.Sum256(input)
+}
+
+type blake2b512Hasher struct{}
+
+func (blake2b512Hasher) Hash(input []byte) {
+	blake2b.Sum512(input)
 }
 
 type sha256Hasher struct{}
