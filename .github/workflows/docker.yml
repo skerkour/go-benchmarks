@@ -1,0 +1,53 @@
+name: Docker
+
+# This workflow build and publish the docker image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      # - name: Build and tag Docker image
+      #   run: make docker_build
+
+      # - name: Docker image info
+      #   run: docker images
+
+      - name: Login to container registries
+        run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u skerkour --password-stdin
+
+      # - name: Push Docker images
+      #   # see here for the details of the release phase https://devcenter.heroku.com/articles/container-registry-and-runtime#release-phase
+      #   run: make docker_push
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: 'arm64'
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ghcr.io/skerkour/go-benchmarks:latest
+
+
+  # benchmarks:
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - uses: actions/checkout@v3
+
+  #     - name: Run Benchmarks
+  #       run: make run
