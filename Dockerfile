@@ -1,4 +1,4 @@
-FROM golang:latest
+FROM golang:1.21
 
 RUN apt update && apt upgrade -y
 RUN apt install make curl wget

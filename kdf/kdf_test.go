@@ -16,8 +16,8 @@ import (
 	lukechampineblake3 "lukechampine.com/blake3"
 )
 
-type Hasher interface {
-	Hash(input []byte)
+type KDF interface {
+	DeriveKey(secret, info []byte)
 }
 
 func BenchmarkHashing(b *testing.B) {

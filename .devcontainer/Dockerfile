@@ -1,4 +1,4 @@
-FROM golang:latest AS go
+FROM golang:1.21 AS go
 
 FROM ubuntu:latest
 
