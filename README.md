@@ -33,7 +33,7 @@ $ docker run --pull=always -ti --rm ghcr.io/skerkour/go-benchmarks:latest
 **Last update**: 2023-05-06
 
 amd64:
-* [AMD EPYC 7543 (Scaleway ENT1-S)](results/scaleway_ent1_s.txt)
+* [AMD EPYC 7543 (Scaleway POP2-8C-32G)](results/scaleway_POP2-8C-32G.txt)
 * [AMD EPYC 7R13 (AWS EC2 c6a.4xlarge)](results/aws_c6a_4xlarge.txt)
 * [Intel Xeon Platinum 8375C @ 2.90GHz (AWS EC2 c6i.4xlarge)](results/aws_c6i_4xlarge.txt)
 
