@@ -6,7 +6,8 @@ run:
 	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/hashing
 	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/checksum
 	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/chunking
-	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/encryption
+	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/encryption_aead
+	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/encryption_unauthenticated
 	go test -timeout 1h -benchmem -bench=. github.com/skerkour/go-benchmarks/compression
 	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/signatures
 # disable inlining
