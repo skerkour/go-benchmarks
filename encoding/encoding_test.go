@@ -8,9 +8,9 @@ import (
 	"testing"
 
 	akamenskybase58 "github.com/akamensky/base58"
+	stdxbase32 "github.com/bloom42/stdx/base32"
 	mrtronbase58 "github.com/mr-tron/base58"
 	"github.com/skerkour/go-benchmarks/utils"
-	golibsbase32 "github.com/skerkour/golibs/base32"
 )
 
 type Encoder interface {
@@ -30,7 +30,7 @@ func BenchmarkEncode(b *testing.B) {
 		benchmarkEncode(size, "std_hex", stdHex{}, b)
 		benchmarkEncode(size, "std_base64", stdBase64{}, b)
 		benchmarkEncode(size, "std_base32", stdBase32{}, b)
-		benchmarkEncode(size, "golibs_base32", golibsBase32{}, b)
+		benchmarkEncode(size, "stdx_base32", stdxBase32{}, b)
 		benchmarkEncode(size, "akamensky_base58", akamenskyBase58{}, b)
 		benchmarkEncode(size, "mr-tron_base58", mrTronBase58{}, b)
 	}
@@ -78,8 +78,8 @@ func (stdBase32) Encode(data []byte) {
 	base32.StdEncoding.EncodeToString(data)
 }
 
-type golibsBase32 struct{}
+type stdxBase32 struct{}
 
-func (golibsBase32) Encode(data []byte) {
-	golibsbase32.EncodeToString(data)
+func (stdxBase32) Encode(data []byte) {
+	stdxbase32.EncodeToString(data)
 }

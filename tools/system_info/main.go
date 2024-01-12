@@ -5,7 +5,7 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/skerkour/golibs/cpuinfo"
+	"github.com/bloom42/stdx/cpuinfo"
 	"golang.org/x/sys/cpu"
 )
 
