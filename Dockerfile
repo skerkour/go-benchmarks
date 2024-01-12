@@ -20,9 +20,3 @@ RUN make download_and_verify_deps
 
 ENTRYPOINT ["/bin/bash", "-c"]
 CMD ["make", "run"]
-
-LABEL maintainer="Sylvain Kerkour <https://kerkour.com>"
-LABEL homepage=https://github.com/skerkour/go-benchmarks
-LABEL org.opencontainers.image.name=go-benchmarks
-LABEL repository=https://github.com/skerkour/go-benchmarks
-LABEL org.opencontainers.image.source=https://github.com/skerkour/go-benchmarks
