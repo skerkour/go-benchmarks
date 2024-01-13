@@ -38,5 +38,5 @@ amd64:
 * [Intel Xeon Platinum 8375C @ 2.90GHz (AWS EC2 c6i.4xlarge)](results/aws_c6i_4xlarge.txt)
 
 arm64:
-* [Ampere Altra Max Neoverse-N1 (Scaleway AMP2-C8)](results/scaleway_amp2_c8.txt)
+* [Ampere Altra Max Neoverse-N1 (Scaleway COPARM1-8C-32G)](results/scaleway_COPARM1-8C-32G.txt)
 * [Graviton 3 (AWS EC2 c7g.4xlarge)](results/aws_c7g_4xlarge.txt)
