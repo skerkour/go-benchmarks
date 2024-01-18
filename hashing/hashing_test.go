@@ -31,20 +31,20 @@ func BenchmarkHashing(b *testing.B) {
 	}
 
 	for _, size := range benchmarks {
-		benchmarkHasher(size, "sha1", sha1Hasher{}, b)
 		benchmarkHasher(size, "sha256", sha256Hasher{}, b)
+		benchmarkHasher(size, "zeebo_blake3_256", zeeboBlake3Hasher{}, b)
+		benchmarkHasher(size, "lukechampine_blake3_256", lukechampineBlake3Hasher{}, b)
 		benchmarkHasher(size, "blake2b_256", blake2bHasher{}, b)
 		benchmarkHasher(size, "blake2s_256", blake2sHasher{}, b)
 		// benchmarkHasher("sha512/256", sha512_256Hasher{}, b)
 		benchmarkHasher(size, "sha3", sha3Hasher{}, b)
-		benchmarkHasher(size, "lukechampine_blake3_256", lukechampineBlake3Hasher{}, b)
-		benchmarkHasher(size, "zeebo_blake3_256", zeeboBlake3Hasher{}, b)
+		benchmarkHasher(size, "sha1", sha1Hasher{}, b)
 
 		benchmarkHasher(size, "sha2_512", sha512Hasher{}, b)
+		benchmarkHasher(size, "zeebo_blake3_512", zeeboBlake3_512Hasher{}, b)
+		benchmarkHasher(size, "lukechampine_blake3_512", lukechampineBlake3_512Hasher{}, b)
 		benchmarkHasher(size, "blake2b_512", blake2b512Hasher{}, b)
 		benchmarkHasher(size, "sha3_512", sha3_512Hasher{}, b)
-		benchmarkHasher(size, "lukechampine_blake3_512", lukechampineBlake3_512Hasher{}, b)
-		benchmarkHasher(size, "zeebo_blake3_512", zeeboBlake3_512Hasher{}, b)
 	}
 }
 

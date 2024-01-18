@@ -9,6 +9,9 @@ import (
 
 	"github.com/skerkour/go-benchmarks/utils"
 	zeeboblake3 "github.com/zeebo/blake3"
+	"golang.org/x/crypto/blake2b"
+	"golang.org/x/crypto/blake2s"
+	"golang.org/x/crypto/sha3"
 	lukechampineblake3 "lukechampine.com/blake3"
 )
 
@@ -32,18 +35,18 @@ func BenchmarkMac(b *testing.B) {
 
 	for _, size := range benchmarks {
 		benchmarkMac(size, "sha256", sha256Mac{}, output256, b)
-		// benchmarkMac(size, "blake2b_256", blake2bHasher{}, b)
-		// benchmarkMac(size, "blake2s_256", blake2sHasher{}, b)
-		// benchmarkMac("sha512/256", sha512_256Hasher{}, b)
-		// benchmarkMac(size, "sha3", sha3Hasher{}, b)
-		benchmarkMac(size, "lukechampine_blake3_256", lukechampineBlake3Mac{}, output256, b)
 		benchmarkMac(size, "zeebo_blake3_256", zeeboBlake3Mac{}, output256, b)
+		benchmarkMac(size, "lukechampine_blake3_256", lukechampineBlake3Mac{}, output256, b)
+		benchmarkMac(size, "blake2b_256", blake2bMac{}, output256, b)
+		benchmarkMac(size, "blake2s_256", blake2sMac{}, output256, b)
+		// benchmarkMac("sha512/256", sha512_256Hasher{}, b)
+		benchmarkMac(size, "sha3", sha3Mac{}, output256, b)
 
 		benchmarkMac(size, "sha2_512", sha512Hasher{}, output512, b)
-		// benchmarkMac(size, "blake2b_512", blake2b512Hasher{}, b)
-		// benchmarkMac(size, "sha3_512", sha3_512Hasher{}, b)
-		benchmarkMac(size, "lukechampine_blake3_512", lukechampineBlake3_512Mac{}, output512, b)
 		benchmarkMac(size, "zeebo_blake3_512", zeeboBlake3_512Mac{}, output512, b)
+		benchmarkMac(size, "lukechampine_blake3_512", lukechampineBlake3_512Mac{}, output512, b)
+		// benchmarkMac(size, "blake2b_512", blake2b512Hasher{}, b)
+		benchmarkMac(size, "sha3_512", sha3_512Mac{}, output512, b)
 	}
 }
 
@@ -93,17 +96,21 @@ func (zeeboBlake3_512Mac) Mac(key, input, output []byte) {
 	digest.Read(output)
 }
 
-// type blake2sHasher struct{}
+type blake2sMac struct{}
 
-// func (blake2sHasher) Hash(input []byte) {
-// 	blake2s.Sum256(input)
-// }
+func (blake2sMac) Mac(key, input, output []byte) {
+	hasher, _ := blake2s.New256(key)
+	hasher.Write(input)
+	hasher.Sum(output)
+}
 
-// type blake2bHasher struct{}
+type blake2bMac struct{}
 
-// func (blake2bHasher) Hash(input []byte) {
-// 	blake2b.Sum256(input)
-// }
+func (blake2bMac) Mac(key, input, output []byte) {
+	hasher, _ := blake2b.New(32, key)
+	hasher.Write(input)
+	hasher.Sum(output)
+}
 
 // type blake2b512Hasher struct{}
 
@@ -132,14 +139,18 @@ func (sha512Hasher) Mac(key, input, output []byte) {
 // 	sha512.Sum512_256(input)
 // }
 
-// type sha3Hasher struct{}
+type sha3Mac struct{}
 
-// func (sha3Hasher) Hash(input []byte) {
-// 	sha3.Sum256(input)
-// }
+func (sha3Mac) Mac(key, input, output []byte) {
+	hmac := hmac.New(sha3.New256, key)
+	hmac.Write(input)
+	hmac.Sum(output)
+}
 
-// type sha3_512Hasher struct{}
+type sha3_512Mac struct{}
 
-// func (sha3_512Hasher) Hash(input []byte) {
-// 	sha3.Sum512(input)
-// }
+func (sha3_512Mac) Mac(key, input, output []byte) {
+	hmac := hmac.New(sha3.New512, key)
+	hmac.Write(input)
+	hmac.Sum(output)
+}
