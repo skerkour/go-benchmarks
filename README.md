@@ -27,6 +27,13 @@ or with `docker` (amd64, arm64):
 $ make docker_build # optional
 $ docker run --pull=always -ti --rm ghcr.io/skerkour/go-benchmarks:latest
 ```
+<!--
+apt update && apt upgrade -y && apt dist-upgrade -y
+curl -fsSL https://get.docker.com -o /tmp/get-docker.sh && sh /tmp/get-docker.sh
+reboot
+docker run --pull=always -d ghcr.io/skerkour/go-benchmarks:latest
+ssh xx@xx -i .ssh/xx 'docker logs xx'
+-->
 
 ## Results
 
