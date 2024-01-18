@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"testing"
 
-	sha256simd "github.com/minio/sha256-simd"
 	"github.com/skerkour/go-benchmarks/utils"
 	zeeboblake3 "github.com/zeebo/blake3"
 	"golang.org/x/crypto/blake2b"
@@ -34,7 +33,6 @@ func BenchmarkHashing(b *testing.B) {
 	for _, size := range benchmarks {
 		benchmarkHasher(size, "sha1", sha1Hasher{}, b)
 		benchmarkHasher(size, "sha256", sha256Hasher{}, b)
-		benchmarkHasher(size, "sha256_simd", sha256SimdHasher{}, b)
 		benchmarkHasher(size, "blake2b_256", blake2bHasher{}, b)
 		benchmarkHasher(size, "blake2s_256", blake2sHasher{}, b)
 		// benchmarkHasher("sha512/256", sha512_256Hasher{}, b)
@@ -108,12 +106,6 @@ type sha256Hasher struct{}
 
 func (sha256Hasher) Hash(input []byte) {
 	sha256.Sum256(input)
-}
-
-type sha256SimdHasher struct{}
-
-func (sha256SimdHasher) Hash(input []byte) {
-	sha256simd.Sum256(input)
 }
 
 type sha512Hasher struct{}

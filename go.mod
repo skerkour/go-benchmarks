@@ -10,7 +10,6 @@ require (
 	github.com/golang/snappy v0.0.4
 	github.com/jotfs/fastcdc-go v0.2.0
 	github.com/klauspost/compress v1.17.4
-	github.com/minio/sha256-simd v1.0.1
 	github.com/mr-tron/base58 v1.2.0
 	github.com/pierrec/lz4/v4 v4.1.17
 	github.com/restic/chunker v0.4.0

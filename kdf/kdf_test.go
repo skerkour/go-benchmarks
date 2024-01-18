@@ -1,90 +1,88 @@
-package hashing
+package kdf
 
-// import (
-// 	"crypto/sha1"
-// 	"crypto/sha256"
-// 	"crypto/sha512"
-// 	"fmt"
-// 	"testing"
+import (
+	"crypto/sha256"
+	"crypto/sha512"
+	"fmt"
+	"io"
+	"testing"
 
-// 	sha256simd "github.com/minio/sha256-simd"
-// 	"github.com/skerkour/go-benchmarks/utils"
-// 	zeeboblake3 "github.com/zeebo/blake3"
-// 	"golang.org/x/crypto/blake2b"
-// 	"golang.org/x/crypto/blake2s"
-// 	"golang.org/x/crypto/sha3"
-// 	lukechampineblake3 "lukechampine.com/blake3"
-// )
+	"github.com/skerkour/go-benchmarks/utils"
+	zeeboblake3 "github.com/zeebo/blake3"
+	"golang.org/x/crypto/hkdf"
+	lukechampineblake3 "lukechampine.com/blake3"
+)
 
-// type KDF interface {
-// 	DeriveKey(secret, info []byte)
-// }
+type KDF interface {
+	DeriveKey(secret, info []byte)
+}
 
-// func BenchmarkHashing(b *testing.B) {
-// 	benchmarks := []int64{
-// 		64,
-// 		1024,
-// 		16 * 1024,
-// 		64 * 1024,
-// 		1024 * 1024,
-// 		10 * 1024 * 1024,
-// 		1024 * 1024 * 1024,
-// 	}
+func BenchmarkKDF(b *testing.B) {
+	benchmarks := []int64{
+		32,
+		64,
+		128,
+		256,
+	}
 
-// 	for _, size := range benchmarks {
-// 		benchmarkHasher(size, "sha1", sha1Hasher{}, b)
-// 		benchmarkHasher(size, "sha256", sha256Hasher{}, b)
-// 		benchmarkHasher(size, "sha256_simd", sha256SimdHasher{}, b)
-// 		benchmarkHasher(size, "blake2b_256", blake2bHasher{}, b)
-// 		benchmarkHasher(size, "blake2s_256", blake2sHasher{}, b)
-// 		// benchmarkHasher("sha512/256", sha512_256Hasher{}, b)
-// 		benchmarkHasher(size, "sha3", sha3Hasher{}, b)
-// 		benchmarkHasher(size, "lukechampine_blake3_256", lukechampineBlake3Hasher{}, b)
-// 		benchmarkHasher(size, "zeebo_blake3_256", zeeboBlake3Hasher{}, b)
+	info := []byte("info-kdf-benchmark")
+	key := utils.RandBytes(b, 32)
 
-// 		benchmarkHasher(size, "sha2_512", sha512Hasher{}, b)
-// 		benchmarkHasher(size, "blake2b_512", blake2b512Hasher{}, b)
-// 		benchmarkHasher(size, "sha3_512", sha3_512Hasher{}, b)
-// 		benchmarkHasher(size, "lukechampine_blake3_512", lukechampineBlake3_512Hasher{}, b)
-// 		benchmarkHasher(size, "zeebo_blake3_512", zeeboBlake3_512Hasher{}, b)
-// 	}
-// }
+	for _, size := range benchmarks {
+		benchmarkKDF(size, "sha256", sha256KDF{}, key, info, b)
+		// benchmarkHasher(size, "blake2b_256", blake2bHasher{}, b)
+		// benchmarkHasher(size, "blake2s_256", blake2sHasher{}, b)
+		// benchmarkHasher("sha512/256", sha512_256Hasher{}, b)
+		// benchmarkHasher(size, "sha3", sha3Hasher{}, b)
+		benchmarkKDF(size, "lukechampine_blake3_256", lukechampineBlake3KDF{}, key, info, b)
+		benchmarkKDF(size, "zeebo_blake3_256", zeeboBlake3KDF{}, key, info, b)
 
-// func benchmarkHasher[H Hasher](size int64, algorithm string, hasher H, b *testing.B) {
-// 	b.Run(fmt.Sprintf("%s-%s", utils.BytesCount(size), algorithm), func(b *testing.B) {
-// 		b.ReportAllocs()
-// 		b.SetBytes(size)
-// 		buf := utils.RandBytes(b, size)
-// 		b.ResetTimer()
-// 		for i := 0; i < b.N; i++ {
-// 			hasher.Hash(buf)
-// 		}
-// 	})
-// }
+		benchmarkKDF(size, "sha2_512", sha512KDF{}, key, info, b)
+		// benchmarkHasher(size, "blake2b_512", blake2b512Hasher{}, b)
+		// benchmarkHasher(size, "sha3_512", sha3_512Hasher{}, b)
+		benchmarkKDF(size, "lukechampine_blake3_512", lukechampineBlake3_512KDF{}, key, info, b)
+		benchmarkKDF(size, "zeebo_blake3_512", zeeboBlake3_512KDF{}, key, info, b)
+	}
+}
 
-// type lukechampineBlake3Hasher struct{}
+func benchmarkKDF[H KDF](size int64, algorithm string, kdf H, key, info []byte, b *testing.B) {
+	b.Run(fmt.Sprintf("%s-%s", utils.BytesCount(size), algorithm), func(b *testing.B) {
+		b.ReportAllocs()
+		b.SetBytes(size)
+		b.ResetTimer()
+		for i := 0; i < b.N; i++ {
+			kdf.DeriveKey(key, info)
+		}
+	})
+}
 
-// func (lukechampineBlake3Hasher) Hash(input []byte) {
-// 	lukechampineblake3.Sum256(input)
-// }
+type lukechampineBlake3KDF struct{}
 
-// type lukechampineBlake3_512Hasher struct{}
+func (lukechampineBlake3KDF) DeriveKey(secret, info []byte) {
+	out := make([]byte, 32)
+	lukechampineblake3.DeriveKey(out, string(info), secret)
+}
 
-// func (lukechampineBlake3_512Hasher) Hash(input []byte) {
-// 	lukechampineblake3.Sum512(input)
-// }
+type lukechampineBlake3_512KDF struct{}
 
-// type zeeboBlake3Hasher struct{}
+func (lukechampineBlake3_512KDF) DeriveKey(secret, info []byte) {
+	out := make([]byte, 64)
+	lukechampineblake3.DeriveKey(out, string(info), secret)
+}
 
-// func (zeeboBlake3Hasher) Hash(input []byte) {
-// 	zeeboblake3.Sum256(input)
-// }
+type zeeboBlake3KDF struct{}
 
-// type zeeboBlake3_512Hasher struct{}
+func (zeeboBlake3KDF) DeriveKey(secret, info []byte) {
+	out := make([]byte, 32)
+	zeeboblake3.DeriveKey(string(info), secret, out)
+}
 
-// func (zeeboBlake3_512Hasher) Hash(input []byte) {
-// 	zeeboblake3.Sum512(input)
-// }
+type zeeboBlake3_512KDF struct{}
+
+func (zeeboBlake3_512KDF) DeriveKey(secret, info []byte) {
+	out := make([]byte, 64)
+	zeeboblake3.DeriveKey(string(info), secret, out)
+}
 
 // type blake2sHasher struct{}
 
@@ -104,33 +102,25 @@ package hashing
 // 	blake2b.Sum512(input)
 // }
 
-// type sha256Hasher struct{}
+type sha256KDF struct{}
 
-// func (sha256Hasher) Hash(input []byte) {
-// 	sha256.Sum256(input)
-// }
+func (sha256KDF) DeriveKey(secret, info []byte) {
+	out := make([]byte, 32)
+	hkdf := hkdf.New(sha256.New, secret, nil, info)
+	_, _ = io.ReadFull(hkdf, out)
+}
 
-// type sha256SimdHasher struct{}
+type sha512KDF struct{}
 
-// func (sha256SimdHasher) Hash(input []byte) {
-// 	sha256simd.Sum256(input)
-// }
+func (sha512KDF) DeriveKey(secret, info []byte) {
+	out := make([]byte, 64)
+	hkdf := hkdf.New(sha512.New, secret, nil, info)
+	_, _ = io.ReadFull(hkdf, out)
+}
 
-// type sha512Hasher struct{}
-
-// func (sha512Hasher) Hash(input []byte) {
-// 	sha512.Sum512(input)
-// }
-
-// // type sha512_256Hasher struct{}
-// // func (sha512_256Hasher) Hash(input []byte) {
-// // 	sha512.Sum512_256(input)
-// // }
-
-// type sha1Hasher struct{}
-
-// func (sha1Hasher) Hash(input []byte) {
-// 	sha1.Sum(input)
+// type sha512_256Hasher struct{}
+// func (sha512_256Hasher) Hash(input []byte) {
+// 	sha512.Sum512_256(input)
 // }
 
 // type sha3Hasher struct{}

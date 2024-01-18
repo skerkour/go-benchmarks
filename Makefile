@@ -5,6 +5,7 @@ run:
 	go run tools/system_info/main.go
 	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/hashing
 	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/mac
+	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/kdf
 	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/checksum
 	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/chunking
 	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/encryption_aead

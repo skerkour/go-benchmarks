@@ -28,9 +28,7 @@ func BenchmarkMac(b *testing.B) {
 	}
 
 	for _, size := range benchmarks {
-		// benchmarkMac(size, "sha1", sha1Hasher{}, b)
 		benchmarkMac(size, "sha256", sha256Mac{}, b)
-		// benchmarkMac(size, "sha256_simd", sha256SimdHasher{}, b)
 		// benchmarkMac(size, "blake2b_256", blake2bHasher{}, b)
 		// benchmarkMac(size, "blake2s_256", blake2sHasher{}, b)
 		// benchmarkMac("sha512/256", sha512_256Hasher{}, b)
@@ -123,12 +121,6 @@ func (sha256Mac) Mac(key, input []byte) {
 	hmac.Sum(out)
 }
 
-// type sha256SimdHasher struct{}
-
-// func (sha256SimdHasher) Hash(input []byte) {
-// 	sha256simd.Sum256(input)
-// }
-
 type sha512Hasher struct{}
 
 func (sha512Hasher) Mac(key, input []byte) {
@@ -141,12 +133,6 @@ func (sha512Hasher) Mac(key, input []byte) {
 // type sha512_256Hasher struct{}
 // func (sha512_256Hasher) Hash(input []byte) {
 // 	sha512.Sum512_256(input)
-// }
-
-// type sha1Hasher struct{}
-
-// func (sha1Hasher) Hash(input []byte) {
-// 	sha1.Sum(input)
 // }
 
 // type sha3Hasher struct{}
