@@ -14,7 +14,7 @@ import (
 )
 
 type KDF interface {
-	DeriveKey(secret, info []byte)
+	DeriveKey(secret, info, out []byte)
 }
 
 func BenchmarkKDF(b *testing.B) {
@@ -27,60 +27,59 @@ func BenchmarkKDF(b *testing.B) {
 
 	info := []byte("info-kdf-benchmark")
 	key := utils.RandBytes(b, 32)
+	output256 := make([]byte, 32, 256)
+	output512 := make([]byte, 64, 256)
 
 	for _, size := range benchmarks {
-		benchmarkKDF(size, "sha256", sha256KDF{}, key, info, b)
+		benchmarkKDF(size, "sha256", sha256KDF{}, key, info, output256, b)
 		// benchmarkHasher(size, "blake2b_256", blake2bHasher{}, b)
 		// benchmarkHasher(size, "blake2s_256", blake2sHasher{}, b)
 		// benchmarkHasher("sha512/256", sha512_256Hasher{}, b)
 		// benchmarkHasher(size, "sha3", sha3Hasher{}, b)
-		benchmarkKDF(size, "lukechampine_blake3_256", lukechampineBlake3KDF{}, key, info, b)
-		benchmarkKDF(size, "zeebo_blake3_256", zeeboBlake3KDF{}, key, info, b)
+		benchmarkKDF(size, "lukechampine_blake3_256", lukechampineBlake3KDF{}, key, info, output256, b)
+		benchmarkKDF(size, "zeebo_blake3_256", zeeboBlake3KDF{}, key, info, output256, b)
 
-		benchmarkKDF(size, "sha2_512", sha512KDF{}, key, info, b)
+		benchmarkKDF(size, "sha2_512", sha512KDF{}, key, info, output512, b)
 		// benchmarkHasher(size, "blake2b_512", blake2b512Hasher{}, b)
 		// benchmarkHasher(size, "sha3_512", sha3_512Hasher{}, b)
-		benchmarkKDF(size, "lukechampine_blake3_512", lukechampineBlake3_512KDF{}, key, info, b)
-		benchmarkKDF(size, "zeebo_blake3_512", zeeboBlake3_512KDF{}, key, info, b)
+		benchmarkKDF(size, "lukechampine_blake3_512", lukechampineBlake3_512KDF{}, key, info, output512, b)
+		benchmarkKDF(size, "zeebo_blake3_512", zeeboBlake3_512KDF{}, key, info, output512, b)
 	}
 }
 
-func benchmarkKDF[H KDF](size int64, algorithm string, kdf H, key, info []byte, b *testing.B) {
+func benchmarkKDF[H KDF](size int64, algorithm string, kdf H, key, info, output []byte, b *testing.B) {
+
 	b.Run(fmt.Sprintf("%s-%s", utils.BytesCount(size), algorithm), func(b *testing.B) {
 		b.ReportAllocs()
 		b.SetBytes(size)
 		b.ResetTimer()
 		for i := 0; i < b.N; i++ {
-			kdf.DeriveKey(key, info)
+			kdf.DeriveKey(key, info, output)
 		}
 	})
 }
 
 type lukechampineBlake3KDF struct{}
 
-func (lukechampineBlake3KDF) DeriveKey(secret, info []byte) {
-	out := make([]byte, 32)
+func (lukechampineBlake3KDF) DeriveKey(secret, info, out []byte) {
 	lukechampineblake3.DeriveKey(out, string(info), secret)
 }
 
 type lukechampineBlake3_512KDF struct{}
 
-func (lukechampineBlake3_512KDF) DeriveKey(secret, info []byte) {
-	out := make([]byte, 64)
+func (lukechampineBlake3_512KDF) DeriveKey(secret, info, out []byte) {
 	lukechampineblake3.DeriveKey(out, string(info), secret)
 }
 
 type zeeboBlake3KDF struct{}
 
-func (zeeboBlake3KDF) DeriveKey(secret, info []byte) {
-	out := make([]byte, 32)
+func (zeeboBlake3KDF) DeriveKey(secret, info, out []byte) {
 	zeeboblake3.DeriveKey(string(info), secret, out)
 }
 
 type zeeboBlake3_512KDF struct{}
 
-func (zeeboBlake3_512KDF) DeriveKey(secret, info []byte) {
-	out := make([]byte, 64)
+func (zeeboBlake3_512KDF) DeriveKey(secret, info, out []byte) {
 	zeeboblake3.DeriveKey(string(info), secret, out)
 }
 
@@ -104,16 +103,14 @@ func (zeeboBlake3_512KDF) DeriveKey(secret, info []byte) {
 
 type sha256KDF struct{}
 
-func (sha256KDF) DeriveKey(secret, info []byte) {
-	out := make([]byte, 32)
+func (sha256KDF) DeriveKey(secret, info, out []byte) {
 	hkdf := hkdf.New(sha256.New, secret, nil, info)
 	_, _ = io.ReadFull(hkdf, out)
 }
 
 type sha512KDF struct{}
 
-func (sha512KDF) DeriveKey(secret, info []byte) {
-	out := make([]byte, 64)
+func (sha512KDF) DeriveKey(secret, info, out []byte) {
 	hkdf := hkdf.New(sha512.New, secret, nil, info)
 	_, _ = io.ReadFull(hkdf, out)
 }

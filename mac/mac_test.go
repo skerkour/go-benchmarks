@@ -13,7 +13,7 @@ import (
 )
 
 type Mac interface {
-	Mac(key, input []byte)
+	Mac(key, input, output []byte)
 }
 
 func BenchmarkMac(b *testing.B) {
@@ -27,24 +27,27 @@ func BenchmarkMac(b *testing.B) {
 		1024 * 1024 * 1024,
 	}
 
+	output256 := make([]byte, 32, 256)
+	output512 := make([]byte, 64, 256)
+
 	for _, size := range benchmarks {
-		benchmarkMac(size, "sha256", sha256Mac{}, b)
+		benchmarkMac(size, "sha256", sha256Mac{}, output256, b)
 		// benchmarkMac(size, "blake2b_256", blake2bHasher{}, b)
 		// benchmarkMac(size, "blake2s_256", blake2sHasher{}, b)
 		// benchmarkMac("sha512/256", sha512_256Hasher{}, b)
 		// benchmarkMac(size, "sha3", sha3Hasher{}, b)
-		benchmarkMac(size, "lukechampine_blake3_256", lukechampineBlake3Mac{}, b)
-		benchmarkMac(size, "zeebo_blake3_256", zeeboBlake3Mac{}, b)
+		benchmarkMac(size, "lukechampine_blake3_256", lukechampineBlake3Mac{}, output256, b)
+		benchmarkMac(size, "zeebo_blake3_256", zeeboBlake3Mac{}, output256, b)
 
-		benchmarkMac(size, "sha2_512", sha512Hasher{}, b)
+		benchmarkMac(size, "sha2_512", sha512Hasher{}, output512, b)
 		// benchmarkMac(size, "blake2b_512", blake2b512Hasher{}, b)
 		// benchmarkMac(size, "sha3_512", sha3_512Hasher{}, b)
-		benchmarkMac(size, "lukechampine_blake3_512", lukechampineBlake3_512Mac{}, b)
-		benchmarkMac(size, "zeebo_blake3_512", zeeboBlake3_512Mac{}, b)
+		benchmarkMac(size, "lukechampine_blake3_512", lukechampineBlake3_512Mac{}, output512, b)
+		benchmarkMac(size, "zeebo_blake3_512", zeeboBlake3_512Mac{}, output512, b)
 	}
 }
 
-func benchmarkMac[H Mac](size int64, algorithm string, hasher H, b *testing.B) {
+func benchmarkMac[H Mac](size int64, algorithm string, hasher H, output []byte, b *testing.B) {
 	b.Run(fmt.Sprintf("%s-%s", utils.BytesCount(size), algorithm), func(b *testing.B) {
 		b.ReportAllocs()
 		b.SetBytes(size)
@@ -52,46 +55,42 @@ func benchmarkMac[H Mac](size int64, algorithm string, hasher H, b *testing.B) {
 		buf := utils.RandBytes(b, size)
 		b.ResetTimer()
 		for i := 0; i < b.N; i++ {
-			hasher.Mac(key, buf)
+			hasher.Mac(key, buf, output)
 		}
 	})
 }
 
 type lukechampineBlake3Mac struct{}
 
-func (lukechampineBlake3Mac) Mac(key, input []byte) {
-	out := make([]byte, 64)
+func (lukechampineBlake3Mac) Mac(key, input, output []byte) {
 	hasher := lukechampineblake3.New(32, key)
 	hasher.Write(input)
-	hasher.Sum(out)
+	hasher.Sum(output)
 }
 
 type lukechampineBlake3_512Mac struct{}
 
-func (lukechampineBlake3_512Mac) Mac(key, input []byte) {
-	out := make([]byte, 64)
+func (lukechampineBlake3_512Mac) Mac(key, input, output []byte) {
 	hasher := lukechampineblake3.New(64, key)
 	hasher.Write(input)
-	hasher.Sum(out)
+	hasher.Sum(output)
 }
 
 type zeeboBlake3Mac struct{}
 
-func (zeeboBlake3Mac) Mac(key, input []byte) {
-	out := make([]byte, 64)
+func (zeeboBlake3Mac) Mac(key, input, output []byte) {
 	hasher, _ := zeeboblake3.NewKeyed(key)
 	hasher.Write(input)
-	hasher.Sum(out)
+	hasher.Sum(output)
 }
 
 type zeeboBlake3_512Mac struct{}
 
-func (zeeboBlake3_512Mac) Mac(key, input []byte) {
-	out := make([]byte, 64)
+func (zeeboBlake3_512Mac) Mac(key, input, output []byte) {
 	hasher, _ := zeeboblake3.NewKeyed(key)
 	hasher.Write(input)
 	digest := hasher.Digest()
-	digest.Read(out)
+	digest.Read(output)
 }
 
 // type blake2sHasher struct{}
@@ -114,20 +113,18 @@ func (zeeboBlake3_512Mac) Mac(key, input []byte) {
 
 type sha256Mac struct{}
 
-func (sha256Mac) Mac(key, input []byte) {
-	out := make([]byte, 64)
+func (sha256Mac) Mac(key, input, output []byte) {
 	hmac := hmac.New(sha256.New, key)
 	hmac.Write(input)
-	hmac.Sum(out)
+	hmac.Sum(output)
 }
 
 type sha512Hasher struct{}
 
-func (sha512Hasher) Mac(key, input []byte) {
-	out := make([]byte, 64)
+func (sha512Hasher) Mac(key, input, output []byte) {
 	hmac := hmac.New(sha512.New, key)
 	hmac.Write(input)
-	hmac.Sum(out)
+	hmac.Sum(output)
 }
 
 // type sha512_256Hasher struct{}
