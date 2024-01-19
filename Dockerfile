@@ -1,31 +1,17 @@
-FROM golang:alpine
+FROM golang:latest
 
-RUN apk update && \
-    apk upgrade --no-cache && \
-    apk add --no-cache ca-certificates make curl wget git
+RUN apt update && apt upgrade -y && apt install -y make curl wget git
 
 ARG USERNAME=benchmarks
 ARG USER_UID=10001
 ARG USER_GID=$USER_UID
 
-ENV TZ="Europe/London"
-ENV LC_ALL="en_US.UTF-8"
-ENV LANG="en_US.UTF-8"
-ENV LANGUAGE="en_US:en"
-
-RUN echo "${TZ}" > /etc/timezone
-RUN update-ca-certificates
-
-RUN adduser \
-    --disabled-password \
-    --gecos "" \
-    --shell "/bin/sh" \
-    --uid "${USER_UID}" \
-    "${USERNAME}"
+RUN addgroup --gid $USER_GID $USERNAME \
+    && adduser --uid $USER_UID --ingroup $USERNAME --disabled-password --shell /bin/bash --gecos "" $USERNAME
 
 USER $USERNAME
 
-WORKDIR /home/${USERNAME}/benchmarks
+WORKDIR /home/${USERNAME}
 
 COPY . ./
 COPY ./.git /home/${USERNAME}/benchmarks/.git
