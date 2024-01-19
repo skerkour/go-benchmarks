@@ -9,6 +9,9 @@ import (
 	"golang.org/x/sys/cpu"
 )
 
+// GitCommit is set at build time
+var GitCommit string
+
 func main() {
 	fmt.Println("--------------------------------------------------------------------------------")
 	fmt.Println("-- SYSTEM INFO")
@@ -16,6 +19,7 @@ func main() {
 	fmt.Print("\n")
 
 	fmt.Println("Date:", time.Now().UTC().Format("2006-01-02"))
+	fmt.Println("Commit:", GitCommit)
 	fmt.Print("\n")
 
 	fmt.Println("Go version:", runtime.Version())

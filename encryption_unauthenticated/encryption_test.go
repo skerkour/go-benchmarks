@@ -8,8 +8,10 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/bloom42/stdx/crypto/chacha20"
+	chacha12 "github.com/bloom42/stdx/crypto/xchacha12"
+	"github.com/bloom42/stdx/crypto/xchacha20"
 	"github.com/skerkour/go-benchmarks/utils"
-	"golang.org/x/crypto/chacha20"
 	"golang.org/x/crypto/chacha20poly1305"
 )
 
@@ -31,8 +33,8 @@ type Cipher interface {
 }
 
 func BenchmarkEncryptUnauthenticated(b *testing.B) {
-	xChaCha20Key := utils.RandBytes(b, chacha20.KeySize)
-	xChaCha20Nonce := utils.RandBytes(b, chacha20.NonceSizeX)
+	xChaCha20Key := utils.RandBytes(b, xchacha20.KeySize)
+	xChaCha20Nonce := utils.RandBytes(b, xchacha20.NonceSize)
 
 	chaCha20Key := utils.RandBytes(b, chacha20.KeySize)
 	chaCha20Nonce := utils.RandBytes(b, chacha20.NonceSize)
@@ -43,7 +45,8 @@ func BenchmarkEncryptUnauthenticated(b *testing.B) {
 	aes256CfbIv := utils.RandBytes(b, 16)
 
 	for _, size := range BENCHMARKS {
-		benchmarkEncrypt(b, size, "XChaCha20", newxChaCha20Cipher(b, xChaCha20Key, xChaCha20Nonce), xChaCha20Nonce)
+		benchmarkEncrypt(b, size, "XChaCha20", newXChaCha20Cipher(b, xChaCha20Key, xChaCha20Nonce), xChaCha20Nonce)
+		benchmarkEncrypt(b, size, "XChaCha12", newXChaCha12Cipher(b, xChaCha20Key, xChaCha20Nonce), xChaCha20Nonce)
 		benchmarkEncrypt(b, size, "ChaCha20", newChaCha20Cipher(b, chaCha20Key, chaCha20Nonce), chaCha20Nonce)
 		benchmarkEncrypt(b, size, "AES_256_CBC", newAesCbcCipher(b, aes256CbcKey), aes256CbcIv)
 		benchmarkEncrypt(b, size, "AES_256_CFB", newAesCfbCipher(b, aes256CfbKey), aes256CfbIv)
@@ -51,8 +54,8 @@ func BenchmarkEncryptUnauthenticated(b *testing.B) {
 }
 
 func BenchmarkDecryptUnauthenticated(b *testing.B) {
-	xChaCha20Key := utils.RandBytes(b, chacha20.KeySize)
-	xChaCha20Nonce := utils.RandBytes(b, chacha20.NonceSizeX)
+	xChaCha20Key := utils.RandBytes(b, xchacha20.KeySize)
+	xChaCha20Nonce := utils.RandBytes(b, xchacha20.NonceSize)
 
 	chaCha20Key := utils.RandBytes(b, chacha20poly1305.KeySize)
 	chaCha20Nonce := utils.RandBytes(b, chacha20poly1305.NonceSize)
@@ -64,7 +67,8 @@ func BenchmarkDecryptUnauthenticated(b *testing.B) {
 	aes256CfbIv := utils.RandBytes(b, 16)
 
 	for _, size := range BENCHMARKS {
-		benchmarkDecrypt(b, size, "XChaCha20", newxChaCha20Cipher(b, xChaCha20Key, xChaCha20Nonce), xChaCha20Nonce)
+		benchmarkEncrypt(b, size, "XChaCha20", newXChaCha20Cipher(b, xChaCha20Key, xChaCha20Nonce), xChaCha20Nonce)
+		benchmarkEncrypt(b, size, "XChaCha12", newXChaCha12Cipher(b, xChaCha20Key, xChaCha20Nonce), xChaCha20Nonce)
 		benchmarkDecrypt(b, size, "ChaCha20", newChaCha20Cipher(b, chaCha20Key, chaCha20Nonce), chaCha20Nonce)
 		benchmarkDecrypt(b, size, "AES_256_CBC", newAesCbcCipher(b, aes256CbcKey), aes256CbcIv)
 		benchmarkDecrypt(b, size, "AES_256_CFB", newAesCfbCipher(b, aes256CfbKey), aes256CfbIv)
@@ -100,11 +104,11 @@ func benchmarkDecrypt[C Cipher](b *testing.B, size int64, algorithm string, ciph
 }
 
 type xChaCha20Cipher struct {
-	cipher *chacha20.Cipher
+	cipher cipher.Stream
 }
 
-func newxChaCha20Cipher(b *testing.B, key, nonce []byte) xChaCha20Cipher {
-	cipher, err := chacha20.NewUnauthenticatedCipher(key, nonce)
+func newXChaCha20Cipher(b *testing.B, key, nonce []byte) xChaCha20Cipher {
+	cipher, err := xchacha20.New(key, nonce)
 	if err != nil {
 		b.Error(err)
 	}
@@ -123,12 +127,36 @@ func (cipher xChaCha20Cipher) Decrypt(dst, _nonce, ciphertext []byte) {
 	cipher.cipher.XORKeyStream(dst, ciphertext)
 }
 
+type xChaCha12Cipher struct {
+	cipher cipher.Stream
+}
+
+func newXChaCha12Cipher(b *testing.B, key, nonce []byte) xChaCha12Cipher {
+	cipher, err := chacha12.NewCipher(key, nonce)
+	if err != nil {
+		b.Error(err)
+	}
+
+	return xChaCha12Cipher{
+		cipher: cipher,
+	}
+}
+
+func (cipher xChaCha12Cipher) Encrypt(dst, _nonce, plaintext []byte) []byte {
+	cipher.cipher.XORKeyStream(dst, plaintext)
+	return dst
+}
+
+func (cipher xChaCha12Cipher) Decrypt(dst, _nonce, ciphertext []byte) {
+	cipher.cipher.XORKeyStream(dst, ciphertext)
+}
+
 type chaCha20Cipher struct {
-	cipher *chacha20.Cipher
+	cipher cipher.Stream
 }
 
 func newChaCha20Cipher(b *testing.B, key, nonce []byte) chaCha20Cipher {
-	cipher, err := chacha20.NewUnauthenticatedCipher(key, nonce)
+	cipher, err := chacha20.NewCipher(key, nonce)
 	if err != nil {
 		b.Error(err)
 	}

@@ -32,7 +32,7 @@ apt update && apt upgrade -y && apt dist-upgrade -y
 curl -fsSL https://get.docker.com -o /tmp/get-docker.sh && sh /tmp/get-docker.sh
 reboot
 docker run --pull=always -d ghcr.io/skerkour/go-benchmarks:latest
-ssh xx@xx -i .ssh/xx 'docker logs xx'
+ssh xx@xx -i xx 'docker logs xx'
 -->
 
 ## Results

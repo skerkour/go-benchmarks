@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/bloom42/stdx/xchacha20blake3"
-	"github.com/bloom42/stdx/xchacha20sha256"
+	"github.com/bloom42/stdx/crypto/experimental_do_not_use/xchacha20sha256"
+	"github.com/bloom42/stdx/crypto/xchacha20blake3"
 	"github.com/skerkour/go-benchmarks/utils"
 	"golang.org/x/crypto/chacha20"
 	"golang.org/x/crypto/chacha20poly1305"

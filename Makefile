@@ -1,8 +1,10 @@
 DOCKER_IMAGE = ghcr.io/skerkour/go-benchmarks:latest
+GO_MODULE = github.com/skerkour/go-benchmarks
+COMMIT := $(shell git rev-parse HEAD)
 
 .PHONY: run
 run:
-	go run tools/system_info/main.go
+	go run -ldflags "-X main.GitCommit=$(COMMIT)" tools/system_info/main.go
 	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/hashing
 	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/mac
 	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/kdf
