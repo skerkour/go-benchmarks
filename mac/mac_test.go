@@ -11,6 +11,7 @@ import (
 	zeeboblake3 "github.com/zeebo/blake3"
 	"golang.org/x/crypto/blake2b"
 	"golang.org/x/crypto/blake2s"
+	"golang.org/x/crypto/poly1305"
 	"golang.org/x/crypto/sha3"
 	lukechampineblake3 "lukechampine.com/blake3"
 )
@@ -31,6 +32,7 @@ func BenchmarkMac(b *testing.B) {
 		1024 * 1024 * 1024,
 	}
 
+	output128 := make([]byte, 16, 256)
 	output256 := make([]byte, 32, 256)
 	output512 := make([]byte, 64, 256)
 
@@ -42,6 +44,7 @@ func BenchmarkMac(b *testing.B) {
 		benchmarkMac(size, "blake2s_256", blake2sMac{}, output256, b)
 		// benchmarkMac("sha512/256", sha512_256Hasher{}, b)
 		benchmarkMac(size, "sha3", sha3Mac{}, output256, b)
+		benchmarkMac(size, "poly1305", poly1305Mac{}, output128, b)
 
 		benchmarkMac(size, "sha2_512", sha512Hasher{}, output512, b)
 		benchmarkMac(size, "zeebo_blake3_512", zeeboBlake3_512Mac{}, output512, b)
@@ -109,6 +112,15 @@ type blake2bMac struct{}
 
 func (blake2bMac) Mac(key, input, output []byte) {
 	hasher, _ := blake2b.New(32, key)
+	hasher.Write(input)
+	hasher.Sum(output)
+}
+
+type poly1305Mac struct{}
+
+func (poly1305Mac) Mac(key, input, output []byte) {
+	polyKey := [32]byte(key[0:32])
+	hasher := poly1305.New(&polyKey)
 	hasher.Write(input)
 	hasher.Sum(output)
 }
