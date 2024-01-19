@@ -4,7 +4,7 @@ COMMIT := $(shell git rev-parse HEAD)
 
 .PHONY: run
 run:
-	go run -ldflags "-X main.GitCommit=$(COMMIT)" tools/system_info/main.go
+	go run -ldflags "-X main.GitCommit=$(GIT_COMMIT)" tools/system_info/main.go
 	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/hashing
 	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/mac
 	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/kdf
@@ -26,7 +26,7 @@ run_docker:
 # Docker
 .PHONY: docker_build
 docker_build:
-	docker build -t $(DOCKER_IMAGE) . -f Dockerfile
+	docker build -t $(DOCKER_IMAGE) . -f Dockerfile --build-arg GIT_COMMIT=$(COMMIT)
 
 .PHONY: docker_push
 docker_push:
