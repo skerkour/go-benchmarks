@@ -49,12 +49,12 @@ func BenchmarkEncryptAEAD(b *testing.B) {
 
 	for _, size := range BENCHMARKS {
 		benchmarkEncrypt(b, size, "XChaCha20_BLAKE3", newXChaCha20Blake3Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
-		benchmarkEncrypt(b, size, "XChaCha20_Poly1305", newXChaCha20Poly1305Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
 		benchmarkEncrypt(b, size, "XChaCha12_BLAKE3", newXChaCha12Blake3Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
-		benchmarkEncrypt(b, size, "XChaCha20_SHA256", newXChaCha20Sha256Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
+		benchmarkEncrypt(b, size, "XChaCha20_Poly1305", newXChaCha20Poly1305Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
 		benchmarkEncrypt(b, size, "ChaCha20_Poly1305", newChaCha20Poly1305Cipher(b, chaCha20Key), chaCha20Nonce, additionalData)
-		benchmarkEncrypt(b, size, "AES_128_GCM", newAesGcmCipher(b, aes128GcmKey), aes128GcmNonce, additionalData)
 		benchmarkEncrypt(b, size, "AES_256_GCM", newAesGcmCipher(b, aes256GcmKey), aes256GcmNonce, additionalData)
+		benchmarkEncrypt(b, size, "AES_128_GCM", newAesGcmCipher(b, aes128GcmKey), aes128GcmNonce, additionalData)
+		benchmarkEncrypt(b, size, "XChaCha20_SHA256", newXChaCha20Sha256Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
 	}
 }
 
@@ -75,12 +75,12 @@ func BenchmarkDecryptAEAD(b *testing.B) {
 
 	for _, size := range BENCHMARKS {
 		benchmarkDecrypt(b, size, "XChaCha20_BLAKE3", newXChaCha20Blake3Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
-		benchmarkDecrypt(b, size, "XChaCha20_Poly1305", newXChaCha20Poly1305Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
 		benchmarkDecrypt(b, size, "XChaCha12_BLAKE3", newXChaCha12Blake3Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
-		benchmarkDecrypt(b, size, "XChaCha20_SHA256", newXChaCha20Sha256Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
+		benchmarkDecrypt(b, size, "XChaCha20_Poly1305", newXChaCha20Poly1305Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
 		benchmarkDecrypt(b, size, "ChaCha20_Poly1305", newChaCha20Poly1305Cipher(b, chaCha20Key), chaCha20Nonce, additionalData)
-		benchmarkDecrypt(b, size, "AES_128_GCM", newAesGcmCipher(b, aes128GcmKey), aes128GcmNonce, additionalData)
 		benchmarkDecrypt(b, size, "AES_256_GCM", newAesGcmCipher(b, aes256GcmKey), aes256GcmNonce, additionalData)
+		benchmarkDecrypt(b, size, "AES_128_GCM", newAesGcmCipher(b, aes128GcmKey), aes128GcmNonce, additionalData)
+		benchmarkDecrypt(b, size, "XChaCha20_SHA256", newXChaCha20Sha256Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
 	}
 }
 
