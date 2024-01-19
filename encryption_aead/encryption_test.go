@@ -8,9 +8,9 @@ import (
 
 	"github.com/bloom42/stdx/crypto/experimental_do_not_use/xchacha20sha256"
 	"github.com/bloom42/stdx/crypto/xchacha12blake3"
+	"github.com/bloom42/stdx/crypto/xchacha20"
 	"github.com/bloom42/stdx/crypto/xchacha20blake3"
 	"github.com/skerkour/go-benchmarks/utils"
-	"golang.org/x/crypto/chacha20"
 	"golang.org/x/crypto/chacha20poly1305"
 )
 
@@ -35,11 +35,11 @@ type AEADCipher interface {
 func BenchmarkEncryptAEAD(b *testing.B) {
 	additionalData := utils.RandBytes(b, 100)
 
-	xChaCha20Key := utils.RandBytes(b, chacha20.KeySize)
-	xChaCha20Nonce := utils.RandBytes(b, chacha20.NonceSizeX)
+	xChaCha20Key := utils.RandBytes(b, xchacha20.KeySize)
+	xChaCha20Nonce := utils.RandBytes(b, xchacha20.NonceSize)
 
-	chaCha20Key := utils.RandBytes(b, chacha20.KeySize)
-	chaCha20Nonce := utils.RandBytes(b, chacha20.NonceSize)
+	chaCha20Key := utils.RandBytes(b, chacha20poly1305.KeySize)
+	chaCha20Nonce := utils.RandBytes(b, chacha20poly1305.NonceSize)
 
 	aes256GcmKey := utils.RandBytes(b, 32)
 	aes256GcmNonce := utils.RandBytes(b, 12)
@@ -61,8 +61,8 @@ func BenchmarkEncryptAEAD(b *testing.B) {
 func BenchmarkDecryptAEAD(b *testing.B) {
 	additionalData := utils.RandBytes(b, 100)
 
-	xChaCha20Key := utils.RandBytes(b, chacha20.KeySize)
-	xChaCha20Nonce := utils.RandBytes(b, chacha20.NonceSizeX)
+	xChaCha20Key := utils.RandBytes(b, xchacha20.KeySize)
+	xChaCha20Nonce := utils.RandBytes(b, xchacha20.NonceSize)
 
 	chaCha20Key := utils.RandBytes(b, chacha20poly1305.KeySize)
 	chaCha20Nonce := utils.RandBytes(b, chacha20poly1305.NonceSize)

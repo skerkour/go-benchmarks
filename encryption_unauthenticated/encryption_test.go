@@ -9,7 +9,7 @@ import (
 	"testing"
 
 	"github.com/bloom42/stdx/crypto/chacha20"
-	chacha12 "github.com/bloom42/stdx/crypto/xchacha12"
+	"github.com/bloom42/stdx/crypto/xchacha12"
 	"github.com/bloom42/stdx/crypto/xchacha20"
 	"github.com/skerkour/go-benchmarks/utils"
 	"golang.org/x/crypto/chacha20poly1305"
@@ -133,7 +133,7 @@ type xChaCha12Cipher struct {
 }
 
 func newXChaCha12Cipher(b *testing.B, key, nonce []byte) xChaCha12Cipher {
-	cipher, err := chacha12.NewCipher(key, nonce)
+	cipher, err := xchacha12.NewCipher(key, nonce)
 	if err != nil {
 		b.Error(err)
 	}
