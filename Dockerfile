@@ -27,9 +27,9 @@ USER $USERNAME
 
 WORKDIR /home/${USERNAME}/benchmarks
 
-COPY /home/runner/work/go-benchmarks/go-benchmarks/.git ./.git
 COPY . ./
-RUN git config --global --add safe.directory /home/benchmarks/benchmarks
+COPY ./.git /home/${USERNAME}/benchmarks/.git
+RUN git config --global --add safe.directory /home/${USERNAME}/benchmarks
 
 RUN make download_and_verify_deps
 
