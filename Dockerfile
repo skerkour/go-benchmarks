@@ -11,11 +11,11 @@ RUN addgroup --gid $USER_GID $USERNAME \
 
 USER $USERNAME
 
-WORKDIR /home/${USERNAME}
+WORKDIR /home/${USERNAME}/go-benchmarks
 
 COPY . ./
-COPY ./.git /home/${USERNAME}/benchmarks/.git
-RUN git config --global --add safe.directory /home/${USERNAME}/benchmarks
+COPY ./.git /home/${USERNAME}/go-benchmarks/.git
+RUN git config --global --add safe.directory /home/${USERNAME}/go-benchmarks
 
 RUN make download_and_verify_deps
 
