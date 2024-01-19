@@ -1,6 +1,6 @@
 DOCKER_IMAGE = ghcr.io/skerkour/go-benchmarks:latest
 GO_MODULE = github.com/skerkour/go-benchmarks
-COMMIT := $(shell git rev-parse HEAD)
+GIT_COMMIT := $(shell git rev-parse HEAD)
 
 .PHONY: run
 run:
@@ -26,7 +26,7 @@ run_docker:
 # Docker
 .PHONY: docker_build
 docker_build:
-	docker build -t $(DOCKER_IMAGE) . -f Dockerfile --build-arg GIT_COMMIT=$(COMMIT)
+	docker build -t $(DOCKER_IMAGE) . -f Dockerfile
 
 .PHONY: docker_push
 docker_push:

@@ -28,10 +28,8 @@ USER $USERNAME
 WORKDIR /home/${USERNAME}/benchmarks
 
 COPY . ./
+COPY ./.git /home/${USERNAME}/benchmarks/.git
 RUN git config --global --add safe.directory /home/${USERNAME}/benchmarks
-
-ARG GIT_COMMIT=0
-ENV GIT_COMMIT=$GIT_COMMIT
 
 RUN make download_and_verify_deps
 
