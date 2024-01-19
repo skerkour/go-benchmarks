@@ -27,7 +27,7 @@ USER $USERNAME
 
 WORKDIR /home/${USERNAME}/benchmarks
 
-COPY ./.git ./.git
+COPY /home/runner/work/go-benchmarks/go-benchmarks/.git ./.git
 COPY . ./
 RUN git config --global --add safe.directory /home/benchmarks/benchmarks
 
