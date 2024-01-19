@@ -27,8 +27,8 @@ USER $USERNAME
 
 WORKDIR /home/${USERNAME}/benchmarks
 
-COPY . ./
 COPY ./.git ./.git
+COPY . ./
 RUN git config --global --add safe.directory /home/benchmarks/benchmarks
 
 RUN make download_and_verify_deps
