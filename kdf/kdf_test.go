@@ -7,6 +7,7 @@ import (
 	"io"
 	"testing"
 
+	"github.com/bloom42/stdx/crypto/chacha20"
 	"github.com/skerkour/go-benchmarks/utils"
 	zeeboblake3 "github.com/zeebo/blake3"
 	"golang.org/x/crypto/hkdf"
@@ -25,7 +26,7 @@ func BenchmarkKDF(b *testing.B) {
 		256,
 	}
 
-	info := []byte("info-kdf-benchmark")
+	info := utils.RandBytes(b, 24)
 	key := utils.RandBytes(b, 32)
 	output256 := make([]byte, 32, 256)
 	output512 := make([]byte, 64, 256)
@@ -34,6 +35,7 @@ func BenchmarkKDF(b *testing.B) {
 		benchmarkKDF(size, "sha256", sha256KDF{}, key, info, output256, b)
 		benchmarkKDF(size, "zeebo_blake3_256", zeeboBlake3KDF{}, key, info, output256, b)
 		benchmarkKDF(size, "lukechampine_blake3_256", lukechampineBlake3KDF{}, key, info, output256, b)
+		benchmarkKDF(size, "chacha20", chacha20KDF{}, key, info, output256, b)
 		// benchmarkHasher(size, "blake2b_256", blake2bHasher{}, b)
 		// benchmarkHasher(size, "blake2s_256", blake2sHasher{}, b)
 		// benchmarkHasher("sha512/256", sha512_256Hasher{}, b)
@@ -80,6 +82,13 @@ type zeeboBlake3_512KDF struct{}
 
 func (zeeboBlake3_512KDF) DeriveKey(secret, info, out []byte) {
 	zeeboblake3.DeriveKey(string(info), secret, out)
+}
+
+type chacha20KDF struct{}
+
+func (chacha20KDF) DeriveKey(secret, info, out []byte) {
+	cipher, _ := chacha20.New(secret, info)
+	cipher.XORKeyStream(out[:], out[:])
 }
 
 // type blake2sHasher struct{}

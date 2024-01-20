@@ -157,7 +157,7 @@ type chaCha20Cipher struct {
 }
 
 func newChaCha20Cipher(b *testing.B, key, nonce []byte) chaCha20Cipher {
-	cipher, err := chacha20.NewCipher(key, nonce)
+	cipher, err := chacha20.New(key, nonce)
 	if err != nil {
 		b.Error(err)
 	}
