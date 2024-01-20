@@ -32,7 +32,7 @@ func BenchmarkKDF(b *testing.B) {
 	output512 := make([]byte, 64, 256)
 
 	for _, size := range benchmarks {
-		benchmarkKDF(size, "sha256", sha256KDF{}, key, info, output256, b)
+		benchmarkKDF(size, "hkdf_sha256", sha256KDF{}, key, info, output256, b)
 		benchmarkKDF(size, "zeebo_blake3_256", zeeboBlake3KDF{}, key, info, output256, b)
 		benchmarkKDF(size, "lukechampine_blake3_256", lukechampineBlake3KDF{}, key, info, output256, b)
 		benchmarkKDF(size, "chacha20", chacha20KDF{}, key, info, output256, b)
@@ -41,7 +41,7 @@ func BenchmarkKDF(b *testing.B) {
 		// benchmarkHasher("sha512/256", sha512_256Hasher{}, b)
 		// benchmarkHasher(size, "sha3", sha3Hasher{}, b)
 
-		benchmarkKDF(size, "sha2_512", sha512KDF{}, key, info, output512, b)
+		benchmarkKDF(size, "hkdf_sha2_512", sha512KDF{}, key, info, output512, b)
 		benchmarkKDF(size, "zeebo_blake3_512", zeeboBlake3_512KDF{}, key, info, output512, b)
 		benchmarkKDF(size, "lukechampine_blake3_512", lukechampineBlake3_512KDF{}, key, info, output512, b)
 		// benchmarkHasher(size, "blake2b_512", blake2b512Hasher{}, b)
