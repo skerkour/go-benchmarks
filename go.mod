@@ -5,7 +5,7 @@ go 1.21
 require (
 	github.com/DataDog/zstd v1.5.5
 	github.com/akamensky/base58 v0.0.0-20210829145138-ce8bf8802e8f
-	github.com/bloom42/stdx v0.0.0-20240121092629-09ed451d9a75
+	github.com/bloom42/stdx v0.0.0-20240124120249-bb22673ca845
 	github.com/cespare/xxhash/v2 v2.2.0
 	github.com/golang/snappy v0.0.4
 	github.com/jotfs/fastcdc-go v0.2.0
