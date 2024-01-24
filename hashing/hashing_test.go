@@ -33,8 +33,8 @@ func BenchmarkHashing(b *testing.B) {
 
 	for _, size := range benchmarks {
 		benchmarkHasher(size, "sha256", sha256Hasher{}, b)
-		benchmarkHasher(size, "zeebo_blake3_256", zeeboBlake3Hasher{}, b)
-		benchmarkHasher(size, "lukechampine_blake3_256", lukechampineBlake3Hasher{}, b)
+		benchmarkHasher(size, "zeebo_blake3", zeeboBlake3Hasher{}, b)
+		benchmarkHasher(size, "lukechampine_blake3", lukechampineBlake3Hasher{}, b)
 		benchmarkHasher(size, "blake2b_256", blake2bHasher{}, b)
 		benchmarkHasher(size, "blake2s_256", blake2sHasher{}, b)
 		// benchmarkHasher("sha512/256", sha512_256Hasher{}, b)
@@ -42,8 +42,8 @@ func BenchmarkHashing(b *testing.B) {
 		benchmarkHasher(size, "sha1", sha1Hasher{}, b)
 
 		benchmarkHasher(size, "sha2_512", sha512Hasher{}, b)
-		benchmarkHasher(size, "zeebo_blake3_512", zeeboBlake3_512Hasher{}, b)
-		benchmarkHasher(size, "lukechampine_blake3_512", lukechampineBlake3_512Hasher{}, b)
+		// benchmarkHasher(size, "zeebo_blake3_512", zeeboBlake3_512Hasher{}, b)
+		// benchmarkHasher(size, "lukechampine_blake3_512", lukechampineBlake3_512Hasher{}, b)
 		benchmarkHasher(size, "blake2b_512", blake2b512Hasher{}, b)
 		benchmarkHasher(size, "sha3_512", sha3_512Hasher{}, b)
 	}
@@ -67,11 +67,11 @@ func (lukechampineBlake3Hasher) Hash(input []byte) {
 	lukechampineblake3.Sum256(input)
 }
 
-type lukechampineBlake3_512Hasher struct{}
+// type lukechampineBlake3_512Hasher struct{}
 
-func (lukechampineBlake3_512Hasher) Hash(input []byte) {
-	lukechampineblake3.Sum512(input)
-}
+// func (lukechampineBlake3_512Hasher) Hash(input []byte) {
+// 	lukechampineblake3.Sum512(input)
+// }
 
 type zeeboBlake3Hasher struct{}
 
@@ -79,11 +79,11 @@ func (zeeboBlake3Hasher) Hash(input []byte) {
 	zeeboblake3.Sum256(input)
 }
 
-type zeeboBlake3_512Hasher struct{}
+// type zeeboBlake3_512Hasher struct{}
 
-func (zeeboBlake3_512Hasher) Hash(input []byte) {
-	zeeboblake3.Sum512(input)
-}
+// func (zeeboBlake3_512Hasher) Hash(input []byte) {
+// 	zeeboblake3.Sum512(input)
+// }
 
 type blake2sHasher struct{}
 

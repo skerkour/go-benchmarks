@@ -133,7 +133,7 @@ type xChaCha12Cipher struct {
 }
 
 func newXChaCha12Cipher(b *testing.B, key, nonce []byte) xChaCha12Cipher {
-	cipher, err := xchacha12.NewCipher(key, nonce)
+	cipher, err := xchacha12.New(key, nonce)
 	if err != nil {
 		b.Error(err)
 	}

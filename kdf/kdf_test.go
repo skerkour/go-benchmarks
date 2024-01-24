@@ -75,7 +75,7 @@ func (lukechampineBlake3_512KDF) DeriveKey(secret, info, out []byte) {
 type zeeboBlake3KDF struct{}
 
 func (zeeboBlake3KDF) DeriveKey(secret, info, out []byte) {
-	zeeboblake3.DeriveKey(string(info), secret, out)
+	zeeboblake3.DeriveKey(string(info), secret, out[:0])
 }
 
 type zeeboBlake3_512KDF struct{}
