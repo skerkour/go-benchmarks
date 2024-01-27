@@ -45,9 +45,9 @@ func BenchmarkEncryptUnauthenticated(b *testing.B) {
 	aes256CfbIv := utils.RandBytes(b, 16)
 
 	for _, size := range BENCHMARKS {
+		benchmarkEncrypt(b, size, "ChaCha20", newChaCha20Cipher(b, chaCha20Key, chaCha20Nonce), chaCha20Nonce)
 		benchmarkEncrypt(b, size, "XChaCha20", newXChaCha20Cipher(b, xChaCha20Key, xChaCha20Nonce), xChaCha20Nonce)
 		benchmarkEncrypt(b, size, "ChaCha12", newChaCha12Cipher(b, xChaCha20Key, chaCha20Nonce), chaCha20Nonce)
-		benchmarkEncrypt(b, size, "ChaCha20", newChaCha20Cipher(b, chaCha20Key, chaCha20Nonce), chaCha20Nonce)
 		benchmarkEncrypt(b, size, "AES_256_CBC", newAesCbcCipher(b, aes256CbcKey), aes256CbcIv)
 		benchmarkEncrypt(b, size, "AES_256_CFB", newAesCfbCipher(b, aes256CfbKey), aes256CfbIv)
 	}
@@ -67,9 +67,9 @@ func BenchmarkDecryptUnauthenticated(b *testing.B) {
 	aes256CfbIv := utils.RandBytes(b, 16)
 
 	for _, size := range BENCHMARKS {
-		benchmarkEncrypt(b, size, "XChaCha20", newXChaCha20Cipher(b, xChaCha20Key, xChaCha20Nonce), xChaCha20Nonce)
-		benchmarkEncrypt(b, size, "ChaCha12", newChaCha12Cipher(b, xChaCha20Key, chaCha20Nonce), chaCha20Nonce)
 		benchmarkDecrypt(b, size, "ChaCha20", newChaCha20Cipher(b, chaCha20Key, chaCha20Nonce), chaCha20Nonce)
+		benchmarkDecrypt(b, size, "XChaCha20", newXChaCha20Cipher(b, xChaCha20Key, xChaCha20Nonce), xChaCha20Nonce)
+		benchmarkDecrypt(b, size, "ChaCha12", newChaCha12Cipher(b, xChaCha20Key, chaCha20Nonce), chaCha20Nonce)
 		benchmarkDecrypt(b, size, "AES_256_CBC", newAesCbcCipher(b, aes256CbcKey), aes256CbcIv)
 		benchmarkDecrypt(b, size, "AES_256_CFB", newAesCfbCipher(b, aes256CfbKey), aes256CfbIv)
 	}
@@ -244,28 +244,28 @@ func pkcs7Pad(b []byte, blocksize int) ([]byte, error) {
 // pkcs7Unpad validates and unpads data from the given bytes slice.
 // The returned value will be 1 to n bytes smaller depending on the
 // amount of padding, where n is the block size.
-func pkcs7Unpad(b []byte, blocksize int) ([]byte, error) {
-	if blocksize <= 0 {
-		return nil, ErrInvalidBlockSize
-	}
-	if len(b) == 0 {
-		return nil, ErrInvalidPKCS7Data
-	}
-	if len(b)%blocksize != 0 {
-		return nil, ErrInvalidPKCS7Padding
-	}
-	c := b[len(b)-1]
-	n := int(c)
-	if n == 0 || n > len(b) {
-		return nil, ErrInvalidPKCS7Padding
-	}
-	for i := 0; i < n; i++ {
-		if b[len(b)-n+i] != c {
-			return nil, ErrInvalidPKCS7Padding
-		}
-	}
-	return b[:len(b)-n], nil
-}
+// func pkcs7Unpad(b []byte, blocksize int) ([]byte, error) {
+// 	if blocksize <= 0 {
+// 		return nil, ErrInvalidBlockSize
+// 	}
+// 	if len(b) == 0 {
+// 		return nil, ErrInvalidPKCS7Data
+// 	}
+// 	if len(b)%blocksize != 0 {
+// 		return nil, ErrInvalidPKCS7Padding
+// 	}
+// 	c := b[len(b)-1]
+// 	n := int(c)
+// 	if n == 0 || n > len(b) {
+// 		return nil, ErrInvalidPKCS7Padding
+// 	}
+// 	for i := 0; i < n; i++ {
+// 		if b[len(b)-n+i] != c {
+// 			return nil, ErrInvalidPKCS7Padding
+// 		}
+// 	}
+// 	return b[:len(b)-n], nil
+// }
 
 type aesCfbCipher struct {
 	aesCipher cipher.Block
