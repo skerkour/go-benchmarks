@@ -32,7 +32,7 @@ go test -benchmem -bench=. github.com/skerkour/go-benchmarks/hashing
 goos: linux
 goarch: amd64
 pkg: github.com/skerkour/go-benchmarks/hashing
-cpu: AMD EPYC 7543 32-Core Processor                
+cpu: AMD EPYC 7543 32-Core Processor
 BenchmarkHashing/64B-sha256-8         	11022166	       107.4 ns/op	 595.91 MB/s	       0 B/op	       0 allocs/op
 BenchmarkHashing/64B-zeebo_blake3-8   	15726772	        76.84 ns/op	 832.88 MB/s	       0 B/op	       0 allocs/op
 BenchmarkHashing/64B-lukechampine_blake3-8         	 9871864	       117.7 ns/op	 543.92 MB/s	       0 B/op	       0 allocs/op
@@ -119,7 +119,7 @@ go test -benchmem -bench=. github.com/skerkour/go-benchmarks/mac
 goos: linux
 goarch: amd64
 pkg: github.com/skerkour/go-benchmarks/mac
-cpu: AMD EPYC 7543 32-Core Processor                
+cpu: AMD EPYC 7543 32-Core Processor
 BenchmarkMac/64B-sha256-8         	  893640	      1156 ns/op	  55.37 MB/s	     480 B/op	       5 allocs/op
 BenchmarkMac/64B-zeebo_blake3_256-8         	  984795	      1099 ns/op	  58.26 MB/s	   10880 B/op	       1 allocs/op
 BenchmarkMac/64B-lukechampine_blake3_256-8  	 3414648	       353.0 ns/op	 181.33 MB/s	       0 B/op	       0 allocs/op
@@ -214,7 +214,7 @@ go test -benchmem -bench=. github.com/skerkour/go-benchmarks/kdf
 goos: linux
 goarch: amd64
 pkg: github.com/skerkour/go-benchmarks/kdf
-cpu: AMD EPYC 7543 32-Core Processor                
+cpu: AMD EPYC 7543 32-Core Processor
 BenchmarkKDF/32B-hkdf_sha256-8         	  501736	      2514 ns/op	  12.73 MB/s	    1297 B/op	      16 allocs/op
 BenchmarkKDF/32B-zeebo_blake3_256-8    	  971852	      1100 ns/op	  29.08 MB/s	   10880 B/op	       1 allocs/op
 BenchmarkKDF/32B-lukechampine_blake3_256-8         	 1000000	      1127 ns/op	  28.38 MB/s	       0 B/op	       0 allocs/op
@@ -249,7 +249,7 @@ go test -benchmem -bench=. github.com/skerkour/go-benchmarks/checksum
 goos: linux
 goarch: amd64
 pkg: github.com/skerkour/go-benchmarks/checksum
-cpu: AMD EPYC 7543 32-Core Processor                
+cpu: AMD EPYC 7543 32-Core Processor
 BenchmarkChecksum/64B-crc32-8         	78780296	        12.85 ns/op	4979.77 MB/s	       0 B/op	       0 allocs/op
 BenchmarkChecksum/64B-crc64-8         	26677107	        39.67 ns/op	1613.11 MB/s	       0 B/op	       0 allocs/op
 BenchmarkChecksum/64B-xxh3-8          	156743540	         7.669 ns/op	8345.27 MB/s	       0 B/op	       0 allocs/op
@@ -296,7 +296,7 @@ go test -benchmem -bench=. github.com/skerkour/go-benchmarks/chunking
 goos: linux
 goarch: amd64
 pkg: github.com/skerkour/go-benchmarks/chunking
-cpu: AMD EPYC 7543 32-Core Processor                
+cpu: AMD EPYC 7543 32-Core Processor
 BenchmarkChunking/64B-jotfs_fastcdc-8         	   16242	     69829 ns/op	   0.92 MB/s	  524451 B/op	       3 allocs/op
 BenchmarkChunking/64B-tigerwill90_fastcdc-8   	   17253	     68501 ns/op	   0.93 MB/s	  459028 B/op	       6 allocs/op
 BenchmarkChunking/64B-restic_chunker-8        	    2290	    475097 ns/op	   0.13 MB/s	 8917818 B/op	       4 allocs/op
@@ -327,14 +327,14 @@ go test -benchmem -bench=. github.com/skerkour/go-benchmarks/encryption_aead
 goos: linux
 goarch: amd64
 pkg: github.com/skerkour/go-benchmarks/encryption_aead
-cpu: AMD EPYC 7543 32-Core Processor                
+cpu: AMD EPYC 7543 32-Core Processor
 BenchmarkEncryptAEAD/64B-XChaCha20_BLAKE3-8         	  620478	      2107 ns/op	  30.37 MB/s	   11776 B/op	       4 allocs/op
 BenchmarkEncryptAEAD/64B-XChaCha20_Poly1305-8       	 1978862	       592.4 ns/op	 108.03 MB/s	     704 B/op	       1 allocs/op
 BenchmarkEncryptAEAD/64B-ChaCha20_Poly1305-8        	 2952094	       381.6 ns/op	 167.73 MB/s	     704 B/op	       1 allocs/op
 BenchmarkEncryptAEAD/64B-AES_256_GCM-8              	 3906673	       310.6 ns/op	 206.05 MB/s	     704 B/op	       1 allocs/op
 BenchmarkEncryptAEAD/64B-AES_128_GCM-8              	 4153292	       294.2 ns/op	 217.54 MB/s	     704 B/op	       1 allocs/op
 BenchmarkEncryptAEAD/64B-BChaCha20_BLAKE3-8         	  355329	      3827 ns/op	  16.73 MB/s	   11872 B/op	       5 allocs/op
-BenchmarkEncryptAEAD/64B-ZChaCha20_BLAKE3-8         	  547896	      2355 ns/op	  27.18 MB/s	   11968 B/op	       6 allocs/op
+BenchmarkEncryptAEAD/64B-SChaCha20_BLAKE3-8         	  547896	      2355 ns/op	  27.18 MB/s	   11968 B/op	       6 allocs/op
 BenchmarkEncryptAEAD/64B-XChaCha20_SHA256-8         	  597211	      2060 ns/op	  31.07 MB/s	    1392 B/op	      10 allocs/op
 BenchmarkEncryptAEAD/1KiB-XChaCha20_BLAKE3-8        	  277286	      4302 ns/op	 238.04 MB/s	   13760 B/op	       4 allocs/op
 BenchmarkEncryptAEAD/1KiB-XChaCha20_Poly1305-8      	  978321	      1289 ns/op	 794.20 MB/s	    2688 B/op	       1 allocs/op
@@ -342,7 +342,7 @@ BenchmarkEncryptAEAD/1KiB-ChaCha20_Poly1305-8       	 1000000	      1092 ns/op	 
 BenchmarkEncryptAEAD/1KiB-AES_256_GCM-8             	 1562368	       792.2 ns/op	1292.56 MB/s	    2688 B/op	       1 allocs/op
 BenchmarkEncryptAEAD/1KiB-AES_128_GCM-8             	 1623068	       731.5 ns/op	1399.79 MB/s	    2688 B/op	       1 allocs/op
 BenchmarkEncryptAEAD/1KiB-BChaCha20_BLAKE3-8        	  200749	      6246 ns/op	 163.93 MB/s	   13856 B/op	       5 allocs/op
-BenchmarkEncryptAEAD/1KiB-ZChaCha20_BLAKE3-8        	  268888	      4366 ns/op	 234.55 MB/s	   13952 B/op	       6 allocs/op
+BenchmarkEncryptAEAD/1KiB-SChaCha20_BLAKE3-8        	  268888	      4366 ns/op	 234.55 MB/s	   13952 B/op	       6 allocs/op
 BenchmarkEncryptAEAD/1KiB-XChaCha20_SHA256-8        	  322003	      3288 ns/op	 311.45 MB/s	    3376 B/op	      10 allocs/op
 BenchmarkEncryptAEAD/16KiB-XChaCha20_BLAKE3-8       	   65518	     18423 ns/op	 889.31 MB/s	   52032 B/op	       4 allocs/op
 BenchmarkEncryptAEAD/16KiB-XChaCha20_Poly1305-8     	  121927	     10837 ns/op	1511.86 MB/s	   40960 B/op	       1 allocs/op
@@ -350,7 +350,7 @@ BenchmarkEncryptAEAD/16KiB-ChaCha20_Poly1305-8      	  120018	     10886 ns/op	1
 BenchmarkEncryptAEAD/16KiB-AES_256_GCM-8            	  137304	      8583 ns/op	1908.86 MB/s	   40960 B/op	       1 allocs/op
 BenchmarkEncryptAEAD/16KiB-AES_128_GCM-8            	  150676	      8072 ns/op	2029.82 MB/s	   40960 B/op	       1 allocs/op
 BenchmarkEncryptAEAD/16KiB-BChaCha20_BLAKE3-8       	   55622	     21213 ns/op	 772.35 MB/s	   52128 B/op	       5 allocs/op
-BenchmarkEncryptAEAD/16KiB-ZChaCha20_BLAKE3-8       	   65028	     18081 ns/op	 906.15 MB/s	   52224 B/op	       6 allocs/op
+BenchmarkEncryptAEAD/16KiB-SChaCha20_BLAKE3-8       	   65028	     18081 ns/op	 906.15 MB/s	   52224 B/op	       6 allocs/op
 BenchmarkEncryptAEAD/16KiB-XChaCha20_SHA256-8       	   49868	     26434 ns/op	 619.81 MB/s	   41648 B/op	      10 allocs/op
 BenchmarkEncryptAEAD/64KiB-XChaCha20_BLAKE3-8       	   18754	     63227 ns/op	1036.52 MB/s	  150337 B/op	       4 allocs/op
 BenchmarkEncryptAEAD/64KiB-XChaCha20_Poly1305-8     	   30750	     37898 ns/op	1729.29 MB/s	  139264 B/op	       1 allocs/op
@@ -358,7 +358,7 @@ BenchmarkEncryptAEAD/64KiB-ChaCha20_Poly1305-8      	   31584	     38650 ns/op	1
 BenchmarkEncryptAEAD/64KiB-AES_256_GCM-8            	   39470	     30317 ns/op	2161.66 MB/s	  139264 B/op	       1 allocs/op
 BenchmarkEncryptAEAD/64KiB-AES_128_GCM-8            	   44060	     28492 ns/op	2300.13 MB/s	  139264 B/op	       1 allocs/op
 BenchmarkEncryptAEAD/64KiB-BChaCha20_BLAKE3-8       	   17906	     67987 ns/op	 963.95 MB/s	  150433 B/op	       5 allocs/op
-BenchmarkEncryptAEAD/64KiB-ZChaCha20_BLAKE3-8       	   18014	     64752 ns/op	1012.11 MB/s	  150529 B/op	       6 allocs/op
+BenchmarkEncryptAEAD/64KiB-SChaCha20_BLAKE3-8       	   18014	     64752 ns/op	1012.11 MB/s	  150529 B/op	       6 allocs/op
 BenchmarkEncryptAEAD/64KiB-XChaCha20_SHA256-8       	   12498	     97452 ns/op	 672.50 MB/s	  139953 B/op	      10 allocs/op
 BenchmarkEncryptAEAD/1MiB-XChaCha20_BLAKE3-8        	    1281	    850929 ns/op	1232.27 MB/s	 2116422 B/op	       4 allocs/op
 BenchmarkEncryptAEAD/1MiB-XChaCha20_Poly1305-8      	    1518	    759845 ns/op	1379.99 MB/s	 2105354 B/op	       1 allocs/op
@@ -366,7 +366,7 @@ BenchmarkEncryptAEAD/1MiB-ChaCha20_Poly1305-8       	    1794	    749338 ns/op	1
 BenchmarkEncryptAEAD/1MiB-AES_256_GCM-8             	    2270	    591955 ns/op	1771.38 MB/s	 2105359 B/op	       1 allocs/op
 BenchmarkEncryptAEAD/1MiB-AES_128_GCM-8             	    2016	    597203 ns/op	1755.81 MB/s	 2105358 B/op	       1 allocs/op
 BenchmarkEncryptAEAD/1MiB-BChaCha20_BLAKE3-8        	    1305	    842819 ns/op	1244.13 MB/s	 2116514 B/op	       5 allocs/op
-BenchmarkEncryptAEAD/1MiB-ZChaCha20_BLAKE3-8        	    1304	    850629 ns/op	1232.71 MB/s	 2116611 B/op	       6 allocs/op
+BenchmarkEncryptAEAD/1MiB-SChaCha20_BLAKE3-8        	    1304	    850629 ns/op	1232.71 MB/s	 2116611 B/op	       6 allocs/op
 BenchmarkEncryptAEAD/1MiB-XChaCha20_SHA256-8        	     850	   1286114 ns/op	 815.31 MB/s	 2106035 B/op	      10 allocs/op
 BenchmarkEncryptAEAD/10MiB-XChaCha20_BLAKE3-8       	     153	   8114207 ns/op	1292.27 MB/s	20990784 B/op	       4 allocs/op
 BenchmarkEncryptAEAD/10MiB-XChaCha20_Poly1305-8     	     237	   4988875 ns/op	2101.83 MB/s	20979718 B/op	       1 allocs/op
@@ -374,7 +374,7 @@ BenchmarkEncryptAEAD/10MiB-ChaCha20_Poly1305-8      	     228	   4959923 ns/op	2
 BenchmarkEncryptAEAD/10MiB-AES_256_GCM-8            	     274	   4140845 ns/op	2532.28 MB/s	20979721 B/op	       1 allocs/op
 BenchmarkEncryptAEAD/10MiB-AES_128_GCM-8            	     313	   3744039 ns/op	2800.65 MB/s	20979726 B/op	       1 allocs/op
 BenchmarkEncryptAEAD/10MiB-BChaCha20_BLAKE3-8       	     146	   7934708 ns/op	1321.51 MB/s	20990880 B/op	       5 allocs/op
-BenchmarkEncryptAEAD/10MiB-ZChaCha20_BLAKE3-8       	     148	   8065913 ns/op	1300.01 MB/s	20990976 B/op	       6 allocs/op
+BenchmarkEncryptAEAD/10MiB-SChaCha20_BLAKE3-8       	     148	   8065913 ns/op	1300.01 MB/s	20990976 B/op	       6 allocs/op
 BenchmarkEncryptAEAD/10MiB-XChaCha20_SHA256-8       	     100	  11026082 ns/op	 951.00 MB/s	20980400 B/op	      10 allocs/op
 BenchmarkEncryptAEAD/100MiB-XChaCha20_BLAKE3-8      	      16	  84167712 ns/op	1245.82 MB/s	209734464 B/op	       4 allocs/op
 BenchmarkEncryptAEAD/100MiB-XChaCha20_Poly1305-8    	      27	  54374447 ns/op	1928.44 MB/s	209723392 B/op	       1 allocs/op
@@ -382,7 +382,7 @@ BenchmarkEncryptAEAD/100MiB-ChaCha20_Poly1305-8     	      20	  55989332 ns/op	1
 BenchmarkEncryptAEAD/100MiB-AES_256_GCM-8           	      36	  42911956 ns/op	2443.55 MB/s	209723394 B/op	       1 allocs/op
 BenchmarkEncryptAEAD/100MiB-AES_128_GCM-8           	      37	  43585334 ns/op	2405.80 MB/s	209723397 B/op	       1 allocs/op
 BenchmarkEncryptAEAD/100MiB-BChaCha20_BLAKE3-8      	      15	  78794308 ns/op	1330.78 MB/s	209734560 B/op	       5 allocs/op
-BenchmarkEncryptAEAD/100MiB-ZChaCha20_BLAKE3-8      	      12	  89841178 ns/op	1167.14 MB/s	209734656 B/op	       6 allocs/op
+BenchmarkEncryptAEAD/100MiB-SChaCha20_BLAKE3-8      	      12	  89841178 ns/op	1167.14 MB/s	209734656 B/op	       6 allocs/op
 BenchmarkEncryptAEAD/100MiB-XChaCha20_SHA256-8      	      12	 116366576 ns/op	 901.10 MB/s	209724080 B/op	      10 allocs/op
 BenchmarkEncryptAEAD/1GiB-XChaCha20_BLAKE3-8        	       1	1402169202 ns/op	 765.77 MB/s	2147502912 B/op	       4 allocs/op
 BenchmarkEncryptAEAD/1GiB-XChaCha20_Poly1305-8      	       2	1023634639 ns/op	1048.95 MB/s	2147491840 B/op	       1 allocs/op
@@ -390,7 +390,7 @@ BenchmarkEncryptAEAD/1GiB-ChaCha20_Poly1305-8       	       2	 988629119 ns/op	1
 BenchmarkEncryptAEAD/1GiB-AES_256_GCM-8             	       2	 879961658 ns/op	1220.21 MB/s	2147491840 B/op	       1 allocs/op
 BenchmarkEncryptAEAD/1GiB-AES_128_GCM-8             	       2	 850260458 ns/op	1262.84 MB/s	2147491840 B/op	       1 allocs/op
 BenchmarkEncryptAEAD/1GiB-BChaCha20_BLAKE3-8        	       1	1262378146 ns/op	 850.57 MB/s	2147503008 B/op	       5 allocs/op
-BenchmarkEncryptAEAD/1GiB-ZChaCha20_BLAKE3-8        	       1	1246670726 ns/op	 861.29 MB/s	2147503104 B/op	       6 allocs/op
+BenchmarkEncryptAEAD/1GiB-SChaCha20_BLAKE3-8        	       1	1246670726 ns/op	 861.29 MB/s	2147503104 B/op	       6 allocs/op
 BenchmarkEncryptAEAD/1GiB-XChaCha20_SHA256-8        	       1	1525475438 ns/op	 703.87 MB/s	2147492528 B/op	      10 allocs/op
 BenchmarkDecryptAEAD/64B-XChaCha20_BLAKE3-8         	  342225	      3168 ns/op	  20.20 MB/s	   12480 B/op	       4 allocs/op
 BenchmarkDecryptAEAD/64B-XChaCha20_Poly1305-8       	 1121415	      1104 ns/op	  57.98 MB/s	    1408 B/op	       1 allocs/op
@@ -398,7 +398,7 @@ BenchmarkDecryptAEAD/64B-ChaCha20_Poly1305-8        	 1360722	       887.1 ns/op
 BenchmarkDecryptAEAD/64B-AES_256_GCM-8              	 2238543	       533.3 ns/op	 120.01 MB/s	    1408 B/op	       1 allocs/op
 BenchmarkDecryptAEAD/64B-AES_128_GCM-8              	 2538620	       510.8 ns/op	 125.30 MB/s	    1408 B/op	       1 allocs/op
 BenchmarkDecryptAEAD/64B-BChaCha20_BLAKE3-8         	  238832	      4907 ns/op	  13.04 MB/s	   12576 B/op	       5 allocs/op
-BenchmarkDecryptAEAD/64B-ZChaCha20_BLAKE3-8         	  319646	      3447 ns/op	  18.57 MB/s	   12672 B/op	       6 allocs/op
+BenchmarkDecryptAEAD/64B-SChaCha20_BLAKE3-8         	  319646	      3447 ns/op	  18.57 MB/s	   12672 B/op	       6 allocs/op
 BenchmarkDecryptAEAD/64B-XChaCha20_SHA256-8         	  468416	      2659 ns/op	  24.07 MB/s	    2128 B/op	      11 allocs/op
 BenchmarkDecryptAEAD/1KiB-XChaCha20_BLAKE3-8        	  206493	      5257 ns/op	 194.81 MB/s	   16448 B/op	       4 allocs/op
 BenchmarkDecryptAEAD/1KiB-XChaCha20_Poly1305-8      	  544092	      2424 ns/op	 422.48 MB/s	    5376 B/op	       1 allocs/op
@@ -406,7 +406,7 @@ BenchmarkDecryptAEAD/1KiB-ChaCha20_Poly1305-8       	  532725	      2213 ns/op	 
 BenchmarkDecryptAEAD/1KiB-AES_256_GCM-8             	  643128	      1572 ns/op	 651.50 MB/s	    5376 B/op	       1 allocs/op
 BenchmarkDecryptAEAD/1KiB-AES_128_GCM-8             	  777375	      1482 ns/op	 690.85 MB/s	    5376 B/op	       1 allocs/op
 BenchmarkDecryptAEAD/1KiB-BChaCha20_BLAKE3-8        	  166113	      7324 ns/op	 139.81 MB/s	   16544 B/op	       5 allocs/op
-BenchmarkDecryptAEAD/1KiB-ZChaCha20_BLAKE3-8        	  194006	      5372 ns/op	 190.63 MB/s	   16640 B/op	       6 allocs/op
+BenchmarkDecryptAEAD/1KiB-SChaCha20_BLAKE3-8        	  194006	      5372 ns/op	 190.63 MB/s	   16640 B/op	       6 allocs/op
 BenchmarkDecryptAEAD/1KiB-XChaCha20_SHA256-8        	  263281	      4864 ns/op	 210.51 MB/s	    6096 B/op	      11 allocs/op
 BenchmarkDecryptAEAD/16KiB-XChaCha20_BLAKE3-8       	   52998	     22579 ns/op	 725.64 MB/s	   84800 B/op	       4 allocs/op
 BenchmarkDecryptAEAD/16KiB-XChaCha20_Poly1305-8     	   51811	     23151 ns/op	 707.70 MB/s	   73728 B/op	       1 allocs/op
@@ -414,7 +414,7 @@ BenchmarkDecryptAEAD/16KiB-ChaCha20_Poly1305-8      	   51813	     23161 ns/op	 
 BenchmarkDecryptAEAD/16KiB-AES_256_GCM-8            	   63226	     19136 ns/op	 856.20 MB/s	   73728 B/op	       1 allocs/op
 BenchmarkDecryptAEAD/16KiB-AES_128_GCM-8            	   64768	     17796 ns/op	 920.67 MB/s	   73728 B/op	       1 allocs/op
 BenchmarkDecryptAEAD/16KiB-BChaCha20_BLAKE3-8       	   49351	     24677 ns/op	 663.93 MB/s	   84896 B/op	       5 allocs/op
-BenchmarkDecryptAEAD/16KiB-ZChaCha20_BLAKE3-8       	   51655	     23266 ns/op	 704.22 MB/s	   84992 B/op	       6 allocs/op
+BenchmarkDecryptAEAD/16KiB-SChaCha20_BLAKE3-8       	   51655	     23266 ns/op	 704.22 MB/s	   84992 B/op	       6 allocs/op
 BenchmarkDecryptAEAD/16KiB-XChaCha20_SHA256-8       	   31825	     36539 ns/op	 448.40 MB/s	   74448 B/op	      11 allocs/op
 BenchmarkDecryptAEAD/64KiB-XChaCha20_BLAKE3-8       	   14391	     83479 ns/op	 785.06 MB/s	  281410 B/op	       4 allocs/op
 BenchmarkDecryptAEAD/64KiB-XChaCha20_Poly1305-8     	   13089	     91549 ns/op	 715.86 MB/s	  270338 B/op	       1 allocs/op
@@ -422,7 +422,7 @@ BenchmarkDecryptAEAD/64KiB-ChaCha20_Poly1305-8      	   13411	     91140 ns/op	 
 BenchmarkDecryptAEAD/64KiB-AES_256_GCM-8            	   16125	     71322 ns/op	 918.88 MB/s	  270337 B/op	       1 allocs/op
 BenchmarkDecryptAEAD/64KiB-AES_128_GCM-8            	   16495	     73083 ns/op	 896.73 MB/s	  270337 B/op	       1 allocs/op
 BenchmarkDecryptAEAD/64KiB-BChaCha20_BLAKE3-8       	   13780	     87012 ns/op	 753.18 MB/s	  281506 B/op	       5 allocs/op
-BenchmarkDecryptAEAD/64KiB-ZChaCha20_BLAKE3-8       	   13495	     86037 ns/op	 761.72 MB/s	  281602 B/op	       6 allocs/op
+BenchmarkDecryptAEAD/64KiB-SChaCha20_BLAKE3-8       	   13495	     86037 ns/op	 761.72 MB/s	  281602 B/op	       6 allocs/op
 BenchmarkDecryptAEAD/64KiB-XChaCha20_SHA256-8       	    8846	    133661 ns/op	 490.32 MB/s	  271058 B/op	      11 allocs/op
 BenchmarkDecryptAEAD/1MiB-XChaCha20_BLAKE3-8        	     924	   1224339 ns/op	 856.44 MB/s	 4213583 B/op	       4 allocs/op
 BenchmarkDecryptAEAD/1MiB-XChaCha20_Poly1305-8      	     726	   1568068 ns/op	 668.71 MB/s	 4202509 B/op	       1 allocs/op
@@ -430,7 +430,7 @@ BenchmarkDecryptAEAD/1MiB-ChaCha20_Poly1305-8       	     830	   1456384 ns/op	 
 BenchmarkDecryptAEAD/1MiB-AES_256_GCM-8             	    1021	   1227154 ns/op	 854.48 MB/s	 4202513 B/op	       1 allocs/op
 BenchmarkDecryptAEAD/1MiB-AES_128_GCM-8             	    1258	   1178588 ns/op	 889.69 MB/s	 4202514 B/op	       1 allocs/op
 BenchmarkDecryptAEAD/1MiB-BChaCha20_BLAKE3-8        	     902	   1307495 ns/op	 801.97 MB/s	 4213674 B/op	       5 allocs/op
-BenchmarkDecryptAEAD/1MiB-ZChaCha20_BLAKE3-8        	     950	   1210646 ns/op	 866.13 MB/s	 4213774 B/op	       6 allocs/op
+BenchmarkDecryptAEAD/1MiB-SChaCha20_BLAKE3-8        	     950	   1210646 ns/op	 866.13 MB/s	 4213774 B/op	       6 allocs/op
 BenchmarkDecryptAEAD/1MiB-XChaCha20_SHA256-8        	     535	   2164119 ns/op	 484.53 MB/s	 4203222 B/op	      11 allocs/op
 BenchmarkDecryptAEAD/10MiB-XChaCha20_BLAKE3-8       	     120	   9801006 ns/op	1069.87 MB/s	41962324 B/op	       4 allocs/op
 BenchmarkDecryptAEAD/10MiB-XChaCha20_Poly1305-8     	     108	  10992786 ns/op	 953.88 MB/s	41951247 B/op	       1 allocs/op
@@ -438,7 +438,7 @@ BenchmarkDecryptAEAD/10MiB-ChaCha20_Poly1305-8      	     100	  11445452 ns/op	 
 BenchmarkDecryptAEAD/10MiB-AES_256_GCM-8            	     132	   9331712 ns/op	1123.67 MB/s	41951242 B/op	       1 allocs/op
 BenchmarkDecryptAEAD/10MiB-AES_128_GCM-8            	     140	   8281244 ns/op	1266.21 MB/s	41951245 B/op	       1 allocs/op
 BenchmarkDecryptAEAD/10MiB-BChaCha20_BLAKE3-8       	     120	   9575696 ns/op	1095.04 MB/s	41962403 B/op	       5 allocs/op
-BenchmarkDecryptAEAD/10MiB-ZChaCha20_BLAKE3-8       	     111	  10217344 ns/op	1026.27 MB/s	41962496 B/op	       6 allocs/op
+BenchmarkDecryptAEAD/10MiB-SChaCha20_BLAKE3-8       	     111	  10217344 ns/op	1026.27 MB/s	41962496 B/op	       6 allocs/op
 BenchmarkDecryptAEAD/10MiB-XChaCha20_SHA256-8       	      73	  16014704 ns/op	 654.76 MB/s	41951965 B/op	      11 allocs/op
 BenchmarkDecryptAEAD/100MiB-XChaCha20_BLAKE3-8      	      12	  91058078 ns/op	1151.55 MB/s	419449712 B/op	       4 allocs/op
 BenchmarkDecryptAEAD/100MiB-XChaCha20_Poly1305-8    	      10	 142292565 ns/op	 736.92 MB/s	419438611 B/op	       1 allocs/op
@@ -446,7 +446,7 @@ BenchmarkDecryptAEAD/100MiB-ChaCha20_Poly1305-8     	      13	 133288353 ns/op	 
 BenchmarkDecryptAEAD/100MiB-AES_256_GCM-8           	      16	  98816109 ns/op	1061.14 MB/s	419438598 B/op	       1 allocs/op
 BenchmarkDecryptAEAD/100MiB-AES_128_GCM-8           	      18	  89100631 ns/op	1176.84 MB/s	419438592 B/op	       1 allocs/op
 BenchmarkDecryptAEAD/100MiB-BChaCha20_BLAKE3-8      	      14	  83016602 ns/op	1263.09 MB/s	419449766 B/op	       5 allocs/op
-BenchmarkDecryptAEAD/100MiB-ZChaCha20_BLAKE3-8      	      12	  92800560 ns/op	1129.92 MB/s	419449856 B/op	       6 allocs/op
+BenchmarkDecryptAEAD/100MiB-SChaCha20_BLAKE3-8      	      12	  92800560 ns/op	1129.92 MB/s	419449856 B/op	       6 allocs/op
 BenchmarkDecryptAEAD/100MiB-XChaCha20_SHA256-8      	       6	 209776410 ns/op	 499.85 MB/s	419439312 B/op	      11 allocs/op
 BenchmarkDecryptAEAD/1GiB-XChaCha20_BLAKE3-8        	       1	2165332464 ns/op	 495.88 MB/s	4294986560 B/op	       4 allocs/op
 BenchmarkDecryptAEAD/1GiB-XChaCha20_Poly1305-8      	       1	2036185738 ns/op	 527.33 MB/s	4294975488 B/op	       1 allocs/op
@@ -454,7 +454,7 @@ BenchmarkDecryptAEAD/1GiB-ChaCha20_Poly1305-8       	       1	2036512517 ns/op	 
 BenchmarkDecryptAEAD/1GiB-AES_256_GCM-8             	       1	1814643798 ns/op	 591.71 MB/s	4294975584 B/op	       2 allocs/op
 BenchmarkDecryptAEAD/1GiB-AES_128_GCM-8             	       1	1761942680 ns/op	 609.41 MB/s	4294975488 B/op	       1 allocs/op
 BenchmarkDecryptAEAD/1GiB-BChaCha20_BLAKE3-8        	       1	1961675916 ns/op	 547.36 MB/s	4294986656 B/op	       5 allocs/op
-BenchmarkDecryptAEAD/1GiB-ZChaCha20_BLAKE3-8        	       1	2075274404 ns/op	 517.40 MB/s	4294986752 B/op	       6 allocs/op
+BenchmarkDecryptAEAD/1GiB-SChaCha20_BLAKE3-8        	       1	2075274404 ns/op	 517.40 MB/s	4294986752 B/op	       6 allocs/op
 BenchmarkDecryptAEAD/1GiB-XChaCha20_SHA256-8        	       1	2547900703 ns/op	 421.42 MB/s	4294976208 B/op	      11 allocs/op
 PASS
 ok  	github.com/skerkour/go-benchmarks/encryption_aead	299.491s
@@ -462,7 +462,7 @@ go test -benchmem -bench=. github.com/skerkour/go-benchmarks/encryption_unauthen
 goos: linux
 goarch: amd64
 pkg: github.com/skerkour/go-benchmarks/encryption_unauthenticated
-cpu: AMD EPYC 7543 32-Core Processor                
+cpu: AMD EPYC 7543 32-Core Processor
 BenchmarkEncryptUnauthenticated/64B-XChaCha20-8         	11805574	        99.24 ns/op	 644.93 MB/s	       0 B/op	       0 allocs/op
 BenchmarkEncryptUnauthenticated/64B-ChaCha12-8          	17398794	        63.05 ns/op	1015.02 MB/s	       0 B/op	       0 allocs/op
 BenchmarkEncryptUnauthenticated/64B-ChaCha20-8          	11702607	        99.30 ns/op	 644.52 MB/s	       0 B/op	       0 allocs/op
@@ -549,7 +549,7 @@ go test -timeout 1h -benchmem -bench=. github.com/skerkour/go-benchmarks/compres
 goos: linux
 goarch: amd64
 pkg: github.com/skerkour/go-benchmarks/compression
-cpu: AMD EPYC 7543 32-Core Processor                
+cpu: AMD EPYC 7543 32-Core Processor
 BenchmarkCompress/alices_adventures_in_wonderland.txt-klausp_s2_default-8         	    1332	    787743 ns/op	 221.24 MB/s	 2106761 B/op	       9 allocs/op
 BenchmarkCompress/alices_adventures_in_wonderland.txt-klausp_s2_better_compression-8         	     873	   1258244 ns/op	 138.51 MB/s	 2106776 B/op	       9 allocs/op
 BenchmarkCompress/alices_adventures_in_wonderland.txt-klausp_s2_best_compression-8           	     118	   9621213 ns/op	  18.11 MB/s	 2106793 B/op	       9 allocs/op
@@ -736,7 +736,7 @@ go test -benchmem -bench=. github.com/skerkour/go-benchmarks/signatures
 goos: linux
 goarch: amd64
 pkg: github.com/skerkour/go-benchmarks/signatures
-cpu: AMD EPYC 7543 32-Core Processor                
+cpu: AMD EPYC 7543 32-Core Processor
 BenchmarkSign/64B-ed25519-8         	   44638	     26973 ns/op	   2.37 MB/s	      64 B/op	       1 allocs/op
 BenchmarkSign/1KiB-ed25519-8        	   40896	     29505 ns/op	  34.71 MB/s	      64 B/op	       1 allocs/op
 BenchmarkSign/64KiB-ed25519-8       	    6198	    194507 ns/op	 336.93 MB/s	      64 B/op	       1 allocs/op
@@ -753,7 +753,7 @@ go test -benchmem  -bench=. -gcflags '-l' github.com/skerkour/go-benchmarks/cgo
 goos: linux
 goarch: amd64
 pkg: github.com/skerkour/go-benchmarks/cgo
-cpu: AMD EPYC 7543 32-Core Processor                
+cpu: AMD EPYC 7543 32-Core Processor
 BenchmarkCGO-8   	16369267	        74.31 ns/op	       0 B/op	       0 allocs/op
 BenchmarkGo-8    	587309834	         2.022 ns/op	       0 B/op	       0 allocs/op
 PASS
@@ -762,7 +762,7 @@ go test -benchmem -bench=. github.com/skerkour/go-benchmarks/encoding
 goos: linux
 goarch: amd64
 pkg: github.com/skerkour/go-benchmarks/encoding
-cpu: AMD EPYC 7543 32-Core Processor                
+cpu: AMD EPYC 7543 32-Core Processor
 BenchmarkEncode/64B-std_hex-8         	 5874129	       197.1 ns/op	 324.64 MB/s	     256 B/op	       2 allocs/op
 BenchmarkEncode/64B-std_base64-8      	 6242527	       195.4 ns/op	 327.60 MB/s	     192 B/op	       2 allocs/op
 BenchmarkEncode/64B-std_base32-8      	 4038028	       281.3 ns/op	 227.53 MB/s	     224 B/op	       2 allocs/op
