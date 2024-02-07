@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"testing"
 
+	stdxbase32 "git.sr.ht/~pingoo/stdx/base32"
 	akamenskybase58 "github.com/akamensky/base58"
-	stdxbase32 "github.com/bloom42/stdx/base32"
 	mrtronbase58 "github.com/mr-tron/base58"
 	"github.com/skerkour/go-benchmarks/utils"
 )

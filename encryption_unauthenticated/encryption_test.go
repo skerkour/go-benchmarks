@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/bloom42/stdx/crypto/chacha"
-	"github.com/bloom42/stdx/crypto/chacha20"
+	"git.sr.ht/~pingoo/stdx/crypto/chacha"
+	"git.sr.ht/~pingoo/stdx/crypto/chacha20"
 	"github.com/skerkour/go-benchmarks/utils"
 	"golang.org/x/crypto/chacha20poly1305"
 )

@@ -3,13 +3,13 @@ module github.com/skerkour/go-benchmarks
 go 1.21
 
 require (
+	git.sr.ht/~pingoo/stdx v0.0.0-20240206094048-8ec6ee9ddf91
 	github.com/DataDog/zstd v1.5.5
 	github.com/akamensky/base58 v0.0.0-20210829145138-ce8bf8802e8f
-	github.com/bloom42/stdx v0.0.0-20240126081149-e6c42714b074
 	github.com/cespare/xxhash/v2 v2.2.0
 	github.com/golang/snappy v0.0.4
 	github.com/jotfs/fastcdc-go v0.2.0
-	github.com/klauspost/compress v1.17.4
+	github.com/klauspost/compress v1.17.5
 	github.com/mr-tron/base58 v1.2.0
 	github.com/pierrec/lz4/v4 v4.1.17
 	github.com/restic/chunker v0.4.0
@@ -18,7 +18,7 @@ require (
 	github.com/zeebo/xxh3 v1.0.2
 	golang.org/x/crypto v0.18.0
 	golang.org/x/sys v0.16.0
-	lukechampine.com/blake3 v1.1.7
+	lukechampine.com/blake3 v1.2.1
 )
 
 require github.com/klauspost/cpuid/v2 v2.2.6 // indirect

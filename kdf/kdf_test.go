@@ -7,7 +7,7 @@ import (
 	"io"
 	"testing"
 
-	"github.com/bloom42/stdx/crypto/chacha20"
+	"git.sr.ht/~pingoo/stdx/crypto/chacha20"
 	"github.com/skerkour/go-benchmarks/utils"
 	zeeboblake3 "github.com/zeebo/blake3"
 	"golang.org/x/crypto/hkdf"

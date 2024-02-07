@@ -42,6 +42,7 @@ download_and_verify_deps:
 .PHONY: tidy
 tidy:
 	go mod tidy
+	go mod tidy
 
 .PHONY: update_deps
 update_deps:
