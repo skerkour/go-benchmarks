@@ -34,28 +34,28 @@ type Compresser interface {
 	Decompress(destination io.Writer, source io.Reader) (err error)
 }
 
-func BenchmarkCompress(b *testing.B) {
-	for _, file := range FILES {
-		benchmarkCompress(file, "klausp_s2_default", newKlauspostS2Compresser(1), b)
-		benchmarkCompress(file, "klausp_s2_better_compression", newKlauspostS2Compresser(2), b)
-		benchmarkCompress(file, "klausp_s2_best_compression", newKlauspostS2Compresser(3), b)
-		benchmarkCompress(file, "golang_snappy", golangSnappyCompresser{}, b)
-		benchmarkCompress(file, "klausp_snappy", klauspostSnappyCompresser{}, b)
-		benchmarkCompress(file, "pierrec_lz4", pierrecLz4Compresser{}, b)
-		benchmarkCompress(file, "klausp_zstd_1", newklauspostZstdCompresser(zstdkp.SpeedFastest), b)
-		benchmarkCompress(file, "klausp_zstd_3", newklauspostZstdCompresser(zstdkp.SpeedDefault), b)
-		benchmarkCompress(file, "klausp_zstd_better_compression", newklauspostZstdCompresser(zstdkp.SpeedBetterCompression), b)
-		benchmarkCompress(file, "klausp_zstd_best_compression", newklauspostZstdCompresser(zstdkp.SpeedBestCompression), b)
-		benchmarkCompress(file, "datadog_zstd_1", newdatadogZstdCompresser(zstddd.BestSpeed), b)
-		benchmarkCompress(file, "datadog_zstd_3", newdatadogZstdCompresser(3), b)
-		benchmarkCompress(file, "datadog_zstd_5", newdatadogZstdCompresser(zstddd.DefaultCompression), b)
-		benchmarkCompress(file, "datadog_zstd_7", newdatadogZstdCompresser(7), b)
-		benchmarkCompress(file, "datadog_zstd_20", newdatadogZstdCompresser(zstddd.BestCompression), b)
-		benchmarkCompress(file, "golang_gzip_fastest", newGolangGzipCompresser(gzip.BestSpeed), b)
-		benchmarkCompress(file, "golang_gzip_default", newGolangGzipCompresser(gzip.DefaultCompression), b)
-		benchmarkCompress(file, "golang_gzip_best_compression", newGolangGzipCompresser(gzip.BestCompression), b)
-	}
-}
+// func BenchmarkCompress(b *testing.B) {
+// 	for _, file := range FILES {
+// 		benchmarkCompress(file, "klausp_s2_default", newKlauspostS2Compresser(1), b)
+// 		benchmarkCompress(file, "klausp_s2_better_compression", newKlauspostS2Compresser(2), b)
+// 		benchmarkCompress(file, "klausp_s2_best_compression", newKlauspostS2Compresser(3), b)
+// 		benchmarkCompress(file, "golang_snappy", golangSnappyCompresser{}, b)
+// 		benchmarkCompress(file, "klausp_snappy", klauspostSnappyCompresser{}, b)
+// 		benchmarkCompress(file, "pierrec_lz4", pierrecLz4Compresser{}, b)
+// 		benchmarkCompress(file, "klausp_zstd_1", newklauspostZstdCompresser(zstdkp.SpeedFastest), b)
+// 		benchmarkCompress(file, "klausp_zstd_3", newklauspostZstdCompresser(zstdkp.SpeedDefault), b)
+// 		benchmarkCompress(file, "klausp_zstd_better_compression", newklauspostZstdCompresser(zstdkp.SpeedBetterCompression), b)
+// 		benchmarkCompress(file, "klausp_zstd_best_compression", newklauspostZstdCompresser(zstdkp.SpeedBestCompression), b)
+// 		benchmarkCompress(file, "datadog_zstd_1", newdatadogZstdCompresser(zstddd.BestSpeed), b)
+// 		benchmarkCompress(file, "datadog_zstd_3", newdatadogZstdCompresser(3), b)
+// 		benchmarkCompress(file, "datadog_zstd_5", newdatadogZstdCompresser(zstddd.DefaultCompression), b)
+// 		benchmarkCompress(file, "datadog_zstd_7", newdatadogZstdCompresser(7), b)
+// 		benchmarkCompress(file, "datadog_zstd_20", newdatadogZstdCompresser(zstddd.BestCompression), b)
+// 		benchmarkCompress(file, "golang_gzip_fastest", newGolangGzipCompresser(gzip.BestSpeed), b)
+// 		benchmarkCompress(file, "golang_gzip_default", newGolangGzipCompresser(gzip.DefaultCompression), b)
+// 		benchmarkCompress(file, "golang_gzip_best_compression", newGolangGzipCompresser(gzip.BestCompression), b)
+// 	}
+// }
 
 func benchmarkCompress[C Compresser](file, algorithm string, compresser C, b *testing.B) {
 	originaleFilename := strings.TrimSuffix(file, ".gz")
@@ -65,12 +65,12 @@ func benchmarkCompress[C Compresser](file, algorithm string, compresser C, b *te
 			b.Error(err)
 		}
 
+		originalDataReader := bytes.NewReader(originalData)
+		destinationBuffer := bytes.NewBuffer(make([]byte, 0, len(originalData)*2))
+
 		runtime.GC()
 		b.ReportAllocs()
 		b.SetBytes(int64(len(originalData)))
-		originalDataReader := bytes.NewReader(originalData)
-		compressedLen := len(originalData) + (len(originalData) / 2)
-		destinationBuffer := bytes.NewBuffer(make([]byte, 0, compressedLen))
 		b.ResetTimer()
 		for i := 0; i < b.N; i++ {
 			originalDataReader.Seek(0, io.SeekStart)
@@ -114,20 +114,19 @@ func benchmarkDecompress[C Compresser](file, algorithm string, compresser C, b *
 			b.Error(err)
 		}
 
-		runtime.GC()
-		b.ReportAllocs()
-		b.SetBytes(int64(len(originalData)))
 		originalDataBuffer := bytes.NewBuffer(originalData)
-		compressedLen := len(originalData) + (len(originalData) / 2)
-		compressedDataBuffer := bytes.NewBuffer(make([]byte, 0, compressedLen))
+		compressedDataBuffer := bytes.NewBuffer(make([]byte, 0, len(originalData)*2))
 		err = compresser.Compress(compressedDataBuffer, originalDataBuffer)
 		if err != nil {
 			b.Error(err)
 		}
 
 		compressedDataReader := bytes.NewReader(compressedDataBuffer.Bytes())
-		destinationBuffer := originalDataBuffer
+		destinationBuffer := bytes.NewBuffer(make([]byte, 0, len(originalData)*2))
 
+		runtime.GC()
+		b.ReportAllocs()
+		b.SetBytes(int64(len(originalData)))
 		b.ResetTimer()
 		for i := 0; i < b.N; i++ {
 			destinationBuffer.Reset()
