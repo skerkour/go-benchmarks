@@ -42,7 +42,7 @@ func (t *Time) Value() (driver.Value, error) {
 
 type entity struct {
 	ID        uuid.UUID
-	CreatedAt Time
+	Timestamp Time
 	Counter   int64
 }
 
@@ -68,9 +68,8 @@ func setupSqlite(db *sql.DB) (err error) {
 }
 
 func main() {
-	os.RemoveAll("./test.db")
-	os.RemoveAll("./test.db-shm")
-	os.RemoveAll("./test.db-wal")
+	cleanup()
+	defer cleanup()
 
 	uuid.EnableRandPool()
 
@@ -81,12 +80,9 @@ func main() {
 	connectionUrlParams.Add("_synchronous", "NORMAL")
 	connectionUrlParams.Add("_cache_size", "1000000000")
 	connectionUrlParams.Add("_foreign_keys", "true")
-	connectionUrl, err := url.Parse("./test.db?" + connectionUrlParams.Encode())
-	if err != nil {
-		log.Fatal(err)
-	}
+	connectionUrl := "./test.db?" + connectionUrlParams.Encode()
 
-	writeDB, err := sql.Open("sqlite3", connectionUrl.String())
+	writeDB, err := sql.Open("sqlite3", connectionUrl)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -97,7 +93,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	readDB, err := sql.Open("sqlite3", connectionUrl.String())
+	readDB, err := sql.Open("sqlite3", connectionUrl)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -110,7 +106,7 @@ func main() {
 
 	_, err = writeDB.Exec(`CREATE TABLE test (
 		id BLOB NOT NULL PRIMARY KEY,
-		created_at INTEGER NOT NULL,
+		timestamp INTEGER NOT NULL,
 		counter INT NOT NULL
 	) STRICT`)
 	if err != nil {
@@ -130,11 +126,11 @@ func main() {
 	wg.Add(concurrentReaders)
 	for c := 0; c < concurrentReaders; c += 1 {
 		go func() {
-			// we use a goroutine-local counter to avoid the performance impact of updating an atomic counter
+			// we use a goroutine-local counter to avoid the performance impact of updating a shared atomic counter
 			var readsLocal int64
 
 			for {
-				var something entity
+				var record entity
 
 				if len(ticker.C) > 0 {
 					break
@@ -149,7 +145,7 @@ func main() {
 					continue
 				}
 
-				rows.Scan(&something.ID, &something.CreatedAt, &something.Counter)
+				rows.Scan(&record.ID, &record.Timestamp, &record.Counter)
 				rows.Close()
 				readsLocal += 1
 			}
@@ -161,8 +157,8 @@ func main() {
 	wg.Add(concurrentWriters)
 	for c := 0; c < concurrentWriters; c += 1 {
 		go func() {
-			startUnixMilliseconds := start.UnixMilli()
-			// we use a goroutine-local counter to avoid the performance impact of updating an atomic counter
+			timestamp := start.UnixMilli()
+			// we use a goroutine-local counter to avoid the performance impact of updating a shared atomic counter
 			var writesLocal int64
 
 			for {
@@ -170,10 +166,10 @@ func main() {
 					break
 				}
 
-				uu := uuid.New()
+				recordID := uuid.Must(uuid.NewV7())
 
 				_, err = writeDB.Exec(`INSERT INTO test
-					(id, created_at, counter) VALUES (?, ?, ?)`, uu[:], startUnixMilliseconds, writes.Load())
+					(id, timestamp, counter) VALUES (?, ?, ?)`, recordID[:], timestamp, 1)
 				if err != nil {
 					log.Fatal(err)
 				}
@@ -201,4 +197,10 @@ func main() {
 	log.Printf("%d writes\n", writes.Load())
 	throughputWrite := float64(writes.Load()) / float64(elapsed.Seconds())
 	log.Printf("%f writes/s\n", throughputWrite)
+}
+
+func cleanup() {
+	os.RemoveAll("./test.db")
+	os.RemoveAll("./test.db-shm")
+	os.RemoveAll("./test.db-wal")
 }

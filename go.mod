@@ -5,9 +5,9 @@ go 1.22
 toolchain go1.22.0
 
 require (
-	git.sr.ht/~pingoo/stdx v0.0.0-20240217105719-1fd78f676abd
 	github.com/DataDog/zstd v1.5.5
 	github.com/akamensky/base58 v0.0.0-20210829145138-ce8bf8802e8f
+	github.com/bloom42/stdx v0.0.0-20240218143014-e4c67700e2a4
 	github.com/cespare/xxhash/v2 v2.2.0
 	github.com/golang/snappy v0.0.4
 	github.com/google/uuid v1.6.0

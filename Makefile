@@ -17,6 +17,7 @@ run:
 # disable inlining
 	go test -benchmem  -bench=. -gcflags '-l' github.com/skerkour/go-benchmarks/cgo
 	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/encoding
+	go test -cpu=5000 -bench=. github.com/skerkour/go-benchmarks/pointer_swap
 
 .PHONY: run_docker
 run_docker:
