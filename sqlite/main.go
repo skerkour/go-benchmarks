@@ -80,7 +80,7 @@ func main() {
 	connectionUrlParams.Add("_synchronous", "NORMAL")
 	connectionUrlParams.Add("_cache_size", "1000000000")
 	connectionUrlParams.Add("_foreign_keys", "true")
-	connectionUrl := "./test.db?" + connectionUrlParams.Encode()
+	connectionUrl := "file:test.db?" + connectionUrlParams.Encode()
 
 	writeDB, err := sql.Open("sqlite3", connectionUrl)
 	if err != nil {
@@ -169,7 +169,7 @@ func main() {
 				recordID := uuid.Must(uuid.NewV7())
 
 				_, err = writeDB.Exec(`INSERT INTO test
-					(id, timestamp, counter) VALUES (?, ?, ?)`, recordID[:], timestamp, 1)
+					(id, timestamp, counter) VALUES (?, ?, ?)`, recordID[:], timestamp, writesLocal)
 				if err != nil {
 					log.Fatal(err)
 				}
