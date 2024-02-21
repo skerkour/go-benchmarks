@@ -113,7 +113,49 @@ func main() {
 		log.Fatal(err)
 	}
 
-	log.Println("starting")
+	log.Println("Inserting 5,000,000 rows")
+
+	tx, err := writeDB.Begin()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	timestamp := time.Now().UTC().UnixMilli()
+	for i := range 5_000_000 {
+		recordID := uuid.Must(uuid.NewV7())
+		_, err = tx.Exec(`INSERT INTO test
+					(id, timestamp, counter) VALUES (?, ?, ?)`, recordID[:], timestamp, i)
+		if err != nil {
+			tx.Rollback()
+			log.Fatal(err)
+		}
+
+		if i%500_000 == 0 {
+			err = tx.Commit()
+			if err != nil {
+				tx.Rollback()
+				log.Fatal(err)
+			}
+			tx, err = writeDB.Begin()
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var recordIdToFind uuid.UUID
+	row := readDB.QueryRow("SELECT id FROM test ORDER BY id DESC LIMIT 1")
+	if row.Err() != nil {
+		log.Fatal(row.Err())
+	}
+	row.Scan(&recordIdToFind)
+
+	log.Println("Starting benchmark")
 
 	concurrentReaders := 500
 	concurrentWriters := 1
@@ -136,17 +178,12 @@ func main() {
 					break
 				}
 
-				rows, err := readDB.Query("SELECT * FROM test LIMIT 1")
-				if err != nil {
-					log.Fatal(err)
-				}
-				if !rows.Next() {
-					rows.Close()
-					continue
+				row := readDB.QueryRow("SELECT * FROM test WHERE id = ?", recordIdToFind)
+				if row.Err() != nil {
+					log.Fatal(row.Err())
 				}
 
-				rows.Scan(&record.ID, &record.Timestamp, &record.Counter)
-				rows.Close()
+				row.Scan(&record.ID, &record.Timestamp, &record.Counter)
 				readsLocal += 1
 			}
 			reads.Add(readsLocal)
@@ -184,7 +221,7 @@ func main() {
 
 	elapsed := time.Since(start)
 
-	log.Println("elapsed:", elapsed)
+	log.Println("Benchmark stopped:", elapsed)
 	fmt.Println("----------------------")
 
 	log.Printf("%d reads\n", reads.Load())
