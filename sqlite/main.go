@@ -114,36 +114,7 @@ func main() {
 	}
 
 	log.Println("Inserting 5,000,000 rows")
-
-	tx, err := writeDB.Begin()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	timestamp := time.Now().UTC().UnixMilli()
-	for i := range 5_000_000 {
-		recordID := uuid.Must(uuid.NewV7())
-		_, err = tx.Exec(`INSERT INTO test
-					(id, timestamp, counter) VALUES (?, ?, ?)`, recordID[:], timestamp, i)
-		if err != nil {
-			tx.Rollback()
-			log.Fatal(err)
-		}
-
-		if i%500_000 == 0 {
-			err = tx.Commit()
-			if err != nil {
-				tx.Rollback()
-				log.Fatal(err)
-			}
-			tx, err = writeDB.Begin()
-			if err != nil {
-				log.Fatal(err)
-			}
-		}
-	}
-
-	err = tx.Commit()
+	err = setupDB(writeDB)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -240,4 +211,52 @@ func cleanup() {
 	os.RemoveAll("./test.db")
 	os.RemoveAll("./test.db-shm")
 	os.RemoveAll("./test.db-wal")
+}
+
+func setupDB(db *sql.DB) (err error) {
+	tx, err := db.Begin()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer tx.Rollback()
+
+	timestamp := time.Now().UTC().UnixMilli()
+	for i := range 5_000_000 {
+		recordID := uuid.Must(uuid.NewV7())
+		_, err = tx.Exec(`INSERT INTO test
+					(id, timestamp, counter) VALUES (?, ?, ?)`, recordID[:], timestamp, i)
+		if err != nil {
+			return err
+		}
+
+		// insert by batches of 500,000 rows
+		if i%500_000 == 0 {
+			err = tx.Commit()
+			if err != nil {
+				tx.Rollback()
+				return err
+			}
+			tx, err = db.Begin()
+			if err != nil {
+				return err
+			}
+		}
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		return err
+	}
+
+	_, err = db.Exec("VACUUM")
+	if err != nil {
+		return err
+	}
+
+	_, err = db.Exec("ANALYZE")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return nil
 }
