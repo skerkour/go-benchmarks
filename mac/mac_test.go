@@ -65,7 +65,7 @@ func benchmarkMac[H Mac](size int64, algorithm string, hasher H, output []byte, 
 		buf := utils.RandBytes(b, size)
 		b.ResetTimer()
 		for i := 0; i < b.N; i++ {
-			hasher.Mac(key, buf, output)
+			hasher.Mac(key, buf, output[:0])
 		}
 	})
 }
