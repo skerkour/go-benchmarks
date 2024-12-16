@@ -37,20 +37,23 @@ func BenchmarkMac(b *testing.B) {
 	output512 := make([]byte, 64, 256)
 
 	for _, size := range benchmarks {
-		benchmarkMac(size, "sha256", sha256Mac{}, output256, b)
-		benchmarkMac(size, "zeebo_blake3_256", zeeboBlake3Mac{}, output256, b)
-		benchmarkMac(size, "lukechampine_blake3_256", lukechampineBlake3Mac{}, output256, b)
-		benchmarkMac(size, "blake2b_256", blake2bMac{}, output256, b)
-		benchmarkMac(size, "blake2s_256", blake2sMac{}, output256, b)
-		// benchmarkMac("sha512/256", sha512_256Hasher{}, b)
-		benchmarkMac(size, "sha3", sha3Mac{}, output256, b)
-		benchmarkMac(size, "poly1305", poly1305Mac{}, output128, b)
+		benchmarkMac(size, "HMAC-SHA2-256", sha256Mac{}, output256, b)
+		benchmarkMac(size, "HMAC-SHA2-512", sha512Hasher{}, output512, b)
 
-		benchmarkMac(size, "sha2_512", sha512Hasher{}, output512, b)
-		benchmarkMac(size, "zeebo_blake3_512", zeeboBlake3_512Mac{}, output512, b)
-		benchmarkMac(size, "lukechampine_blake3_512", lukechampineBlake3_512Mac{}, output512, b)
+		benchmarkMac(size, "HMAC-SHA3-256", sha3Mac{}, output256, b)
+		benchmarkMac(size, "HMAC-SHA3-512", sha3_512Mac{}, output512, b)
+
+		benchmarkMac(size, "BLAKE3-256_zeebo", zeeboBlake3Mac{}, output256, b)
+		benchmarkMac(size, "BLAKE3-512_zeebo", zeeboBlake3_512Mac{}, output512, b)
+		benchmarkMac(size, "BLAKE3-256_lukechampine", lukechampineBlake3Mac{}, output256, b)
+		benchmarkMac(size, "BLAKE3-512_lukechampine", lukechampineBlake3_512Mac{}, output512, b)
+
+		benchmarkMac(size, "BLAKE2b-256", blake2bMac{}, output256, b)
+		benchmarkMac(size, "BLAKE2s-256", blake2sMac{}, output256, b)
+
+		// benchmarkMac("sha512/256", sha512_256Hasher{}, b)
+		benchmarkMac(size, "poly1305", poly1305Mac{}, output128, b)
 		// benchmarkMac(size, "blake2b_512", blake2b512Hasher{}, b)
-		benchmarkMac(size, "sha3_512", sha3_512Mac{}, output512, b)
 	}
 }
 
