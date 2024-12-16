@@ -3,17 +3,27 @@ package main
 import (
 	"database/sql"
 	"database/sql/driver"
+	"flag"
 	"fmt"
 	"log"
 	"net/url"
 	"os"
 	"runtime"
+	"strings"
 	"sync"
 	"sync/atomic"
 	"time"
 
 	"github.com/google/uuid"
 	_ "github.com/mattn/go-sqlite3"
+	"golang.org/x/text/language"
+	"golang.org/x/text/message"
+)
+
+var (
+	flagPrefillRows   int64
+	flagDataSize      int64
+	concurrentReaders int
 )
 
 // Time is used to store timestamps as INT in SQLite
@@ -44,6 +54,7 @@ type entity struct {
 	ID        uuid.UUID
 	Timestamp Time
 	Counter   int64
+	Data      string
 }
 
 func setupSqlite(db *sql.DB) (err error) {
@@ -68,17 +79,30 @@ func setupSqlite(db *sql.DB) (err error) {
 }
 
 func main() {
+	flag.Int64Var(&flagPrefillRows, "rows", 5_000_000, "numer of rows to prefill. default: 5,000,000")
+	flag.Int64Var(&flagDataSize, "size", 5000, "the size of an individual data item. default: 5000")
+	flag.IntVar(&concurrentReaders, "reads", 500, "Concurrent readers default: 500")
+	flag.Parse()
+
+	numberPrinter := message.NewPrinter(language.English)
+	uuid.EnableRandPool()
+
+	log.Println(numberPrinter.Sprintf("data size: %d bytes", flagDataSize))
+	log.Println(numberPrinter.Sprintf("number of rows to prefill: %d", flagPrefillRows))
+	log.Println(numberPrinter.Sprintf("concurrent readers: %d", concurrentReaders))
+	// log.Println(numberPrinter.Sprintf("concurrent writers: %d", concurrentWriters))
+	// log.Println(numberPrinter.Sprintf("database pool size: %d", dbPoolSzie))
+	log.Println("----------------------")
+
 	cleanup()
 	defer cleanup()
-
-	uuid.EnableRandPool()
 
 	connectionUrlParams := make(url.Values)
 	connectionUrlParams.Add("_txlock", "immediate")
 	connectionUrlParams.Add("_journal_mode", "WAL")
 	connectionUrlParams.Add("_busy_timeout", "5000")
 	connectionUrlParams.Add("_synchronous", "NORMAL")
-	connectionUrlParams.Add("_cache_size", "1000000000")
+	connectionUrlParams.Add("_cache_size", "10000000000")
 	connectionUrlParams.Add("_foreign_keys", "true")
 	connectionUrl := "file:test.db?" + connectionUrlParams.Encode()
 
@@ -107,14 +131,17 @@ func main() {
 	_, err = writeDB.Exec(`CREATE TABLE test (
 		id BLOB NOT NULL PRIMARY KEY,
 		timestamp INTEGER NOT NULL,
-		counter INT NOT NULL
+		counter INT NOT NULL,
+		data TEXT NOT NULL
 	) STRICT`)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	log.Println("Inserting 5,000,000 rows")
-	err = setupDB(writeDB)
+	data := strings.Repeat("a", int(flagDataSize))
+
+	log.Println(numberPrinter.Sprintf("Inserting %d rows. It may takes some time.", flagPrefillRows))
+	err = setupDB(writeDB, data)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -128,7 +155,6 @@ func main() {
 
 	log.Println("Starting benchmark")
 
-	concurrentReaders := 500
 	concurrentWriters := 1
 	var wg sync.WaitGroup
 	var reads atomic.Int64
@@ -149,12 +175,12 @@ func main() {
 					break
 				}
 
-				row := readDB.QueryRow("SELECT * FROM test WHERE id = ?", recordIdToFind)
+				row := readDB.QueryRow("SELECT id, timestamp, counter, data FROM test WHERE id = ?", recordIdToFind)
 				if row.Err() != nil {
 					log.Fatal(row.Err())
 				}
 
-				row.Scan(&record.ID, &record.Timestamp, &record.Counter)
+				row.Scan(&record.ID, &record.Timestamp, &record.Counter, &record.Data)
 				readsLocal += 1
 			}
 			reads.Add(readsLocal)
@@ -176,8 +202,8 @@ func main() {
 
 				recordID := uuid.Must(uuid.NewV7())
 
-				_, err = writeDB.Exec(`INSERT INTO test
-					(id, timestamp, counter) VALUES (?, ?, ?)`, recordID[:], timestamp, writesLocal)
+				_, err = writeDB.Exec(`INSERT INTO test (id, timestamp, counter, data) VALUES (?, ?, ?, ?)`,
+					recordID[:], timestamp, writesLocal, data)
 				if err != nil {
 					log.Fatal(err)
 				}
@@ -213,7 +239,7 @@ func cleanup() {
 	os.RemoveAll("./test.db-wal")
 }
 
-func setupDB(db *sql.DB) (err error) {
+func setupDB(db *sql.DB, data string) (err error) {
 	tx, err := db.Begin()
 	if err != nil {
 		log.Fatal(err)
@@ -221,16 +247,16 @@ func setupDB(db *sql.DB) (err error) {
 	defer tx.Rollback()
 
 	timestamp := time.Now().UTC().UnixMilli()
-	for i := range 5_000_000 {
+	for i := range flagPrefillRows {
 		recordID := uuid.Must(uuid.NewV7())
-		_, err = tx.Exec(`INSERT INTO test
-					(id, timestamp, counter) VALUES (?, ?, ?)`, recordID[:], timestamp, i)
+		_, err = tx.Exec(`INSERT INTO test (id, timestamp, counter, data) VALUES (?, ?, ?, ?)`,
+			recordID[:], timestamp, i, data)
 		if err != nil {
 			return err
 		}
 
-		// insert by batches of 500,000 rows
-		if i%500_000 == 0 {
+		// insert by batches of 250,000 rows
+		if i%250_000 == 0 {
 			err = tx.Commit()
 			if err != nil {
 				tx.Rollback()
@@ -248,12 +274,22 @@ func setupDB(db *sql.DB) (err error) {
 		return err
 	}
 
+	_, err = db.Exec("PRAGMA wal_checkpoint")
+	if err != nil {
+		return err
+	}
+
 	_, err = db.Exec("VACUUM")
 	if err != nil {
 		return err
 	}
 
-	_, err = db.Exec("ANALYZE")
+	_, err = db.Exec("PRAGMA analysis_limit=1000")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	_, err = db.Exec("PRAGMA OPTIMIZE")
 	if err != nil {
 		log.Fatal(err)
 	}

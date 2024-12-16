@@ -32,20 +32,23 @@ func BenchmarkHashing(b *testing.B) {
 	}
 
 	for _, size := range benchmarks {
-		benchmarkHasher(size, "sha256", sha256Hasher{}, b)
-		benchmarkHasher(size, "zeebo_blake3", zeeboBlake3Hasher{}, b)
-		benchmarkHasher(size, "lukechampine_blake3", lukechampineBlake3Hasher{}, b)
-		benchmarkHasher(size, "blake2b_256", blake2bHasher{}, b)
-		benchmarkHasher(size, "blake2s_256", blake2sHasher{}, b)
+		benchmarkHasher(size, "SHA-256", sha256Hasher{}, b)
+		benchmarkHasher(size, "SHA-512", sha512Hasher{}, b)
+		benchmarkHasher(size, "SHA3-256", sha3Hasher{}, b)
+		benchmarkHasher(size, "SHA3-512", sha3_512Hasher{}, b)
+		benchmarkHasher(size, "SHAKE128-256", shake128_256Hasher{}, b)
+		benchmarkHasher(size, "SHAKE256-512", shake256_512Hasher{}, b)
+		benchmarkHasher(size, "BLAKE3_zeebo", zeeboBlake3Hasher{}, b)
+		benchmarkHasher(size, "BLAKE3_lukechampine", lukechampineBlake3Hasher{}, b)
+		benchmarkHasher(size, "BLAKE2b_256", blake2bHasher{}, b)
+		benchmarkHasher(size, "BLAKE2s_256", blake2sHasher{}, b)
+		benchmarkHasher(size, "BLAKE2b_512", blake2b512Hasher{}, b)
 		// benchmarkHasher("sha512/256", sha512_256Hasher{}, b)
-		benchmarkHasher(size, "sha3", sha3Hasher{}, b)
-		benchmarkHasher(size, "sha1", sha1Hasher{}, b)
+		benchmarkHasher(size, "SHA1", sha1Hasher{}, b)
 
-		benchmarkHasher(size, "sha2_512", sha512Hasher{}, b)
 		// benchmarkHasher(size, "zeebo_blake3_512", zeeboBlake3_512Hasher{}, b)
 		// benchmarkHasher(size, "lukechampine_blake3_512", lukechampineBlake3_512Hasher{}, b)
-		benchmarkHasher(size, "blake2b_512", blake2b512Hasher{}, b)
-		benchmarkHasher(size, "sha3_512", sha3_512Hasher{}, b)
+
 	}
 }
 
@@ -136,4 +139,18 @@ type sha3_512Hasher struct{}
 
 func (sha3_512Hasher) Hash(input []byte) {
 	sha3.Sum512(input)
+}
+
+type shake128_256Hasher struct{}
+
+func (shake128_256Hasher) Hash(input []byte) {
+	var hash [32]byte
+	sha3.ShakeSum128(hash[:], input)
+}
+
+type shake256_512Hasher struct{}
+
+func (shake256_512Hasher) Hash(input []byte) {
+	var hash [64]byte
+	sha3.ShakeSum256(hash[:], input)
 }

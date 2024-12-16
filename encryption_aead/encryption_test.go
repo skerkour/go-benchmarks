@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/bloom42/stdx/crypto/bchacha20blake3"
-	"github.com/bloom42/stdx/crypto/chacha20"
-	"github.com/bloom42/stdx/crypto/chacha20blake3"
-	"github.com/bloom42/stdx/crypto/schacha20blake3"
+	"github.com/pingooio/stdx/crypto/bchacha20blake3"
+	"github.com/pingooio/stdx/crypto/chacha20"
+	"github.com/pingooio/stdx/crypto/chacha20blake3"
+	"github.com/pingooio/stdx/crypto/schacha20blake3"
 	"github.com/skerkour/go-benchmarks/utils"
 	"golang.org/x/crypto/chacha20poly1305"
 )

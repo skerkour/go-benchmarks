@@ -5,7 +5,7 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/bloom42/stdx/cpuinfo"
+	"github.com/pingooio/stdx/cpuinfo"
 	"golang.org/x/sys/cpu"
 )
 
@@ -45,6 +45,7 @@ func main() {
 		fmt.Println("- SHA1:", cpuinfo.CPU.Supports(cpuinfo.SHA1))
 		fmt.Println("- SHA2:", cpuinfo.CPU.Supports(cpuinfo.SHA2))
 		fmt.Println("- SHA512:", cpuinfo.CPU.Supports(cpuinfo.SHA512))
+		fmt.Println("- SHA-3:", cpuinfo.CPU.Supports(cpuinfo.SHA3))
 		fmt.Println("- CRC32:", cpuinfo.CPU.Supports(cpuinfo.CRC32))
 		fmt.Println("- ATOMICS:", cpuinfo.CPU.Supports(cpuinfo.ATOMICS))
 	} else if runtime.GOARCH == "arm64" {

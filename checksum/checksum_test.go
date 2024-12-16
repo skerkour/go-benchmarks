@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"hash/crc32"
 	"hash/crc64"
+	"hash/fnv"
 	"testing"
 
 	"github.com/cespare/xxhash/v2"
@@ -24,15 +25,19 @@ func BenchmarkChecksum(b *testing.B) {
 		1024 * 1024,
 		10 * 1024 * 1024,
 		100 * 1024 * 1024,
-		1024 * 1024 * 1024,
+		// 1024 * 1024 * 1024,
 	}
 
 	for _, size := range benchmarks {
 		benchmarkChecksumer(size, "crc32", crc32Checksumer{}, b)
 		benchmarkChecksumer(size, "crc64", NewCrc64Checksumer(), b)
 		benchmarkChecksumer(size, "xxh3", xxh3Checksumer{}, b)
+		benchmarkChecksumer(size, "xxh3_seed", xxh3SeedChecksumer{}, b)
 		benchmarkChecksumer(size, "xxh3_128", xxh3_128Checksumer{}, b)
+		benchmarkChecksumer(size, "xxh3_128_seed", xxh3_128SeedChecksumer{}, b)
 		benchmarkChecksumer(size, "xxhash", xxh3_128Checksumer{}, b)
+		benchmarkChecksumer(size, "fnv64", fnv64Checksumer{}, b)
+		benchmarkChecksumer(size, "fnv64a", fnv64aChecksumer{}, b)
 	}
 }
 
@@ -74,14 +79,44 @@ func (xxh3Checksumer) Checksum(input []byte) {
 	xxh3.Hash(input)
 }
 
+type xxh3SeedChecksumer struct{}
+
+func (xxh3SeedChecksumer) Checksum(input []byte) {
+	xxh3.HashSeed(input, 3)
+}
+
 type xxh3_128Checksumer struct{}
 
 func (xxh3_128Checksumer) Checksum(input []byte) {
 	xxh3.Hash128(input)
 }
 
+type xxh3_128SeedChecksumer struct{}
+
+func (xxh3_128SeedChecksumer) Checksum(input []byte) {
+	xxh3.Hash128Seed(input, 1)
+}
+
 type xxhashChecksummer struct{}
 
 func (xxhashChecksummer) Checksum(input []byte) {
 	xxhash.Sum64(input)
+}
+
+type fnv64Checksumer struct {
+}
+
+func (fnv64Checksumer) Checksum(input []byte) {
+	hasher := fnv.New64()
+	hasher.Write(input)
+	hasher.Sum64()
+}
+
+type fnv64aChecksumer struct {
+}
+
+func (fnv64aChecksumer) Checksum(input []byte) {
+	hasher := fnv.New64a()
+	hasher.Write(input)
+	hasher.Sum64()
 }
