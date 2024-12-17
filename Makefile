@@ -19,6 +19,7 @@ run:
 	GOAMD64=v2 go test -benchmem -bench=. github.com/skerkour/go-benchmarks/encoding
 	GOAMD64=v2 go test -cpu=5000 -bench=. github.com/skerkour/go-benchmarks/pointer_swap
 	GOAMD64=v2 go test -benchmem -bench=. github.com/skerkour/go-benchmarks/cryptoencoding
+	GOAMD64=v2 go test -benchmem -bench=. github.com/skerkour/go-benchmarks/slices
 
 .PHONY: run_docker
 run_docker:

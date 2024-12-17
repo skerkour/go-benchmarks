@@ -50,13 +50,13 @@ func BenchmarkEncryptAEAD(b *testing.B) {
 	aes128GcmNonce := utils.RandBytes(b, 12)
 
 	for _, size := range BENCHMARKS {
-		benchmarkEncrypt(b, size, "XChaCha20_BLAKE3", newXChaCha20Blake3Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
-		benchmarkEncrypt(b, size, "XChaCha20_Poly1305", newXChaCha20Poly1305Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
-		benchmarkEncrypt(b, size, "ChaCha20_Poly1305", newChaCha20Poly1305Cipher(b, chaCha20Key), chaCha20Nonce, additionalData)
-		benchmarkEncrypt(b, size, "AES_256_GCM", newAesGcmCipher(b, aes256GcmKey), aes256GcmNonce, additionalData)
-		benchmarkEncrypt(b, size, "AES_128_GCM", newAesGcmCipher(b, aes128GcmKey), aes128GcmNonce, additionalData)
-		benchmarkEncrypt(b, size, "BChaCha20_BLAKE3", newBChaCha20Blake3Cipher(b, xChaCha20Key), bChaCha20Nonce, additionalData)
-		benchmarkEncrypt(b, size, "SChaCha20_BLAKE3", newSChaCha20Blake3Cipher(b, xChaCha20Key), bChaCha20Nonce, additionalData)
+		benchmarkEncrypt(b, size, "AES-256-GCM", newAesGcmCipher(b, aes256GcmKey), aes256GcmNonce, additionalData)
+		benchmarkEncrypt(b, size, "AES-128-GCM", newAesGcmCipher(b, aes128GcmKey), aes128GcmNonce, additionalData)
+		benchmarkEncrypt(b, size, "XChaCha20-Poly1305", newXChaCha20Poly1305Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
+		benchmarkEncrypt(b, size, "ChaCha20-Poly1305", newChaCha20Poly1305Cipher(b, chaCha20Key), chaCha20Nonce, additionalData)
+		benchmarkEncrypt(b, size, "XChaCha20-BLAKE3", newXChaCha20Blake3Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
+		benchmarkEncrypt(b, size, "BChaCha20-BLAKE3", newBChaCha20Blake3Cipher(b, xChaCha20Key), bChaCha20Nonce, additionalData)
+		benchmarkEncrypt(b, size, "SChaCha20-BLAKE3", newSChaCha20Blake3Cipher(b, xChaCha20Key), bChaCha20Nonce, additionalData)
 	}
 }
 
@@ -78,13 +78,13 @@ func BenchmarkDecryptAEAD(b *testing.B) {
 	bChaCha20Nonce := utils.RandBytes(b, bchacha20blake3.NonceSize)
 
 	for _, size := range BENCHMARKS {
-		benchmarkDecrypt(b, size, "XChaCha20_BLAKE3", newXChaCha20Blake3Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
-		benchmarkDecrypt(b, size, "XChaCha20_Poly1305", newXChaCha20Poly1305Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
-		benchmarkDecrypt(b, size, "ChaCha20_Poly1305", newChaCha20Poly1305Cipher(b, chaCha20Key), chaCha20Nonce, additionalData)
-		benchmarkDecrypt(b, size, "AES_256_GCM", newAesGcmCipher(b, aes256GcmKey), aes256GcmNonce, additionalData)
-		benchmarkDecrypt(b, size, "AES_128_GCM", newAesGcmCipher(b, aes128GcmKey), aes128GcmNonce, additionalData)
-		benchmarkDecrypt(b, size, "BChaCha20_BLAKE3", newBChaCha20Blake3Cipher(b, xChaCha20Key), bChaCha20Nonce, additionalData)
-		benchmarkDecrypt(b, size, "SChaCha20_BLAKE3", newSChaCha20Blake3Cipher(b, xChaCha20Key), bChaCha20Nonce, additionalData)
+		benchmarkDecrypt(b, size, "AES-256-GCM", newAesGcmCipher(b, aes256GcmKey), aes256GcmNonce, additionalData)
+		benchmarkDecrypt(b, size, "AES-128-GCM", newAesGcmCipher(b, aes128GcmKey), aes128GcmNonce, additionalData)
+		benchmarkDecrypt(b, size, "XChaCha20-Poly1305", newXChaCha20Poly1305Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
+		benchmarkDecrypt(b, size, "ChaCha20-Poly1305", newChaCha20Poly1305Cipher(b, chaCha20Key), chaCha20Nonce, additionalData)
+		benchmarkDecrypt(b, size, "XChaCha20-BLAKE3", newXChaCha20Blake3Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
+		benchmarkDecrypt(b, size, "BChaCha20-BLAKE3", newBChaCha20Blake3Cipher(b, xChaCha20Key), bChaCha20Nonce, additionalData)
+		benchmarkDecrypt(b, size, "SChaCha20-BLAKE3", newSChaCha20Blake3Cipher(b, xChaCha20Key), bChaCha20Nonce, additionalData)
 	}
 }
 

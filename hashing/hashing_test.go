@@ -40,9 +40,9 @@ func BenchmarkHashing(b *testing.B) {
 		benchmarkHasher(size, "SHAKE256-512", shake256_512Hasher{}, b)
 		benchmarkHasher(size, "BLAKE3_zeebo", zeeboBlake3Hasher{}, b)
 		benchmarkHasher(size, "BLAKE3_lukechampine", lukechampineBlake3Hasher{}, b)
-		benchmarkHasher(size, "BLAKE2b_256", blake2bHasher{}, b)
-		benchmarkHasher(size, "BLAKE2s_256", blake2sHasher{}, b)
-		benchmarkHasher(size, "BLAKE2b_512", blake2b512Hasher{}, b)
+		benchmarkHasher(size, "BLAKE2b-256", blake2bHasher{}, b)
+		benchmarkHasher(size, "BLAKE2s-256", blake2sHasher{}, b)
+		benchmarkHasher(size, "BLAKE2b-512", blake2b512Hasher{}, b)
 		// benchmarkHasher("sha512/256", sha512_256Hasher{}, b)
 		benchmarkHasher(size, "SHA1", sha1Hasher{}, b)
 
