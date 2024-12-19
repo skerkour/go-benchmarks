@@ -16,7 +16,7 @@ require (
 	github.com/mattn/go-sqlite3 v1.14.24
 	github.com/mr-tron/base58 v1.2.0
 	github.com/pierrec/lz4/v4 v4.1.17
-	github.com/pingooio/stdx v0.0.0-20241216085533-de413dc788ff
+	github.com/pingooio/stdx v0.0.0-20241219090444-0c512a4de33c
 	github.com/restic/chunker v0.4.0
 	github.com/tigerwill90/fastcdc v1.2.2
 	github.com/zeebo/blake3 v0.2.4
