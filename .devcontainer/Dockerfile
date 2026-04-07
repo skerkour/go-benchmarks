@@ -1,15 +1,15 @@
-FROM golang:1.23 AS go
+FROM golang:1.26 AS go
 
-FROM ubuntu:24.04
+FROM debian:13
 
-ENV TZ="Europe/London"
+ENV TZ="UTC"
 ENV LC_ALL="en_US.UTF-8"
 ENV LANG="en_US.UTF-8"
 ENV LANGUAGE="en_US.UTF-8"
 
 RUN apt update && apt upgrade -y \
-    && apt install -y git git-lfs ca-certificates make vim postgresql-client-16 \
-    bash gcc g++ zsh curl wget zip coreutils sqlite3 python3 gnupg libpcre3-dev pkg-config build-essential binutils jq b3sum \
+    && apt install -y git git-lfs ca-certificates make vim postgresql-client-17 \
+    bash gcc g++ zsh curl wget zip coreutils sqlite3 python3 gnupg libpcre2-dev pkg-config build-essential binutils jq b3sum \
     coreutils clang lld
     #  \
     # gcc-multilib gcc-mingw-w64

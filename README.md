@@ -18,14 +18,15 @@ Comprehensive and reproducible benchmarks for Go developers.
 ## Usage
 
 ```shell
-$ make run
+# or GOAMD64=v4
+$ GOAMD64=v3 make run
 ```
 
 or with `docker` (amd64, arm64):
 
 ```shell
 $ make docker_build # optional
-$ docker run --pull=always -ti --rm ghcr.io/skerkour/go-benchmarks:latest
+$ docker run -e GOAMD64=v4 --pull=always -ti --rm ghcr.io/skerkour/go-benchmarks:latest
 ```
 <!--
 sudo apt update && sudo apt upgrade -y && sudo apt dist-upgrade -y

@@ -4,13 +4,16 @@ import (
 	"bytes"
 	"crypto/aes"
 	"crypto/cipher"
+	"crypto/rand"
+	"crypto/subtle"
 	"errors"
 	"fmt"
 	"testing"
+	"unsafe"
 
-	"github.com/pingooio/stdx/crypto/chacha"
-	"github.com/pingooio/stdx/crypto/chacha20"
 	"github.com/skerkour/go-benchmarks/utils"
+	"github.com/skerkour/stdx-go/crypto/chacha"
+	"github.com/skerkour/stdx-go/crypto/chacha20"
 	"golang.org/x/crypto/chacha20poly1305"
 )
 
@@ -23,7 +26,6 @@ var (
 		1024 * 1024,
 		10 * 1024 * 1024,
 		100 * 1024 * 1024,
-		1024 * 1024 * 1024,
 	}
 )
 
@@ -50,6 +52,9 @@ func BenchmarkEncryptUnauthenticated(b *testing.B) {
 		benchmarkEncrypt(b, size, "ChaCha12", newChaCha12Cipher(b, xChaCha20Key, chaCha20Nonce), chaCha20Nonce)
 		benchmarkEncrypt(b, size, "AES_256_CBC", newAesCbcCipher(b, aes256CbcKey), aes256CbcIv)
 		benchmarkEncrypt(b, size, "AES_256_CFB", newAesCfbCipher(b, aes256CfbKey), aes256CfbIv)
+		benchmarkEncrypt(b, size, "XOR_SWAR", newXorSwar(size), nil)
+		benchmarkEncrypt(b, size, "XOR", newXor(size), nil)
+		benchmarkEncrypt(b, size, "XOR_SUBTLE", newXorSubtle(size), nil)
 	}
 }
 
@@ -72,6 +77,9 @@ func BenchmarkDecryptUnauthenticated(b *testing.B) {
 		benchmarkDecrypt(b, size, "ChaCha12", newChaCha12Cipher(b, xChaCha20Key, chaCha20Nonce), chaCha20Nonce)
 		benchmarkDecrypt(b, size, "AES_256_CBC", newAesCbcCipher(b, aes256CbcKey), aes256CbcIv)
 		benchmarkDecrypt(b, size, "AES_256_CFB", newAesCfbCipher(b, aes256CfbKey), aes256CfbIv)
+		benchmarkDecrypt(b, size, "XOR_SWAR", newXorSwar(size), nil)
+		benchmarkDecrypt(b, size, "XOR", newXor(size), nil)
+		benchmarkDecrypt(b, size, "XOR_SUBTLE", newXorSubtle(size), nil)
 	}
 }
 
@@ -291,4 +299,111 @@ func (aesCfbCipher aesCfbCipher) Encrypt(dst, nonce, plaintext []byte) []byte {
 func (aesCfbCipher aesCfbCipher) Decrypt(dst, nonce, ciphertext []byte) {
 	decrypter := cipher.NewCFBDecrypter(aesCfbCipher.aesCipher, nonce)
 	decrypter.XORKeyStream(dst, ciphertext)
+}
+
+type xorSwar struct {
+	oneTimePad []byte
+}
+
+func newXorSwar(size int64) *xorSwar {
+	oneTimePad := make([]byte, size)
+	rand.Read(oneTimePad)
+
+	return &xorSwar{
+		oneTimePad: oneTimePad,
+	}
+}
+
+func (cipher xorSwar) xor(dst, input []byte) {
+	length := len(input)
+	i := 0
+	if length >= 8 {
+		bytesInput := unsafe.SliceData(input)
+		bytesDest := unsafe.SliceData(dst)
+		oneTimePadBytes := unsafe.SliceData(cipher.oneTimePad)
+		for ; i < length-7; i += 8 {
+			dataInput := GetBytesUint64(bytesInput, i)
+			dataOneTimePad := GetBytesUint64(oneTimePadBytes, i)
+			SetBytesUint64(bytesDest, i, dataInput^dataOneTimePad)
+		}
+	}
+
+	for ; i < length; i++ {
+		dst[i] = cipher.oneTimePad[i] ^ input[i]
+	}
+}
+
+// return 8 bytes at offset as an uint64
+func GetBytesUint64(bytes *byte, offset int) uint64 {
+	// add offset to the pointer and convert bytes to an uint64
+	data := *(*uint64)(unsafe.Add(unsafe.Pointer(bytes), offset))
+	return data
+}
+
+func SetBytesUint64(bytes *byte, offset int, data uint64) {
+	*(*uint64)(unsafe.Add(unsafe.Pointer(bytes), offset)) = data
+}
+
+func (cipher xorSwar) Encrypt(dst, nonce, plaintext []byte) []byte {
+	cipher.xor(dst, plaintext)
+	return dst
+}
+
+func (cipher xorSwar) Decrypt(dst, nonce, ciphertext []byte) {
+	cipher.xor(dst, ciphertext)
+}
+
+type xor struct {
+	oneTimePad []byte
+}
+
+func newXor(size int64) *xor {
+	oneTimePad := make([]byte, size)
+	rand.Read(oneTimePad)
+
+	return &xor{
+		oneTimePad: oneTimePad,
+	}
+}
+
+func (cipher xor) xor(dst, input []byte) {
+	length := len(input)
+	for i := 0; i < length; i++ {
+		dst[i] = cipher.oneTimePad[i] ^ input[i]
+	}
+}
+
+func (cipher xor) Encrypt(dst, nonce, plaintext []byte) []byte {
+	cipher.xor(dst, plaintext)
+	return dst
+}
+
+func (cipher xor) Decrypt(dst, nonce, ciphertext []byte) {
+	cipher.xor(dst, ciphertext)
+}
+
+type xorSubtle struct {
+	oneTimePad []byte
+}
+
+func newXorSubtle(size int64) *xor {
+	oneTimePad := make([]byte, size)
+	rand.Read(oneTimePad)
+
+	return &xor{
+		oneTimePad: oneTimePad,
+	}
+}
+
+func (cipher xorSubtle) xor(dst, input []byte) {
+	subtle.XORBytes(dst, dst, input)
+}
+
+func (cipher xorSubtle) Encrypt(dst, nonce, plaintext []byte) []byte {
+	cipher.xor(dst, plaintext)
+	return dst
+}
+
+func (cipher xorSubtle) Decrypt(dst, nonce, ciphertext []byte) {
+	cipher.xor(dst, ciphertext)
 }

@@ -5,7 +5,7 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/pingooio/stdx/cpuinfo"
+	"github.com/skerkour/stdx-go/cpuinfo"
 	"golang.org/x/sys/cpu"
 )
 
@@ -35,7 +35,8 @@ func main() {
 	// more details here: https://pkg.go.dev/internal/cpu
 	// and here: https://github.com/golang/go/blob/master/src/go/build/syslist.go
 
-	if runtime.GOARCH == "amd64" {
+	switch runtime.GOARCH {
+	case "amd64":
 		fmt.Println("- AVX:", cpu.X86.HasAVX)
 		fmt.Println("- AVX2:", cpu.X86.HasAVX2)
 		fmt.Println("- AVX512:", cpu.X86.HasAVX512)
@@ -48,7 +49,7 @@ func main() {
 		fmt.Println("- SHA-3:", cpuinfo.CPU.Supports(cpuinfo.SHA3))
 		fmt.Println("- CRC32:", cpuinfo.CPU.Supports(cpuinfo.CRC32))
 		fmt.Println("- ATOMICS:", cpuinfo.CPU.Supports(cpuinfo.ATOMICS))
-	} else if runtime.GOARCH == "arm64" {
+	case "arm64":
 		// fmt.Println("- NEON:", cpu.ARM.HasNEON)
 		fmt.Println("- SVE:", cpu.ARM64.HasSVE)
 		fmt.Println("- AES:", cpu.ARM64.HasAES)

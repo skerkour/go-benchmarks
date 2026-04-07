@@ -2,24 +2,26 @@ DOCKER_IMAGE = ghcr.io/skerkour/go-benchmarks:latest
 GO_MODULE = github.com/skerkour/go-benchmarks
 GIT_COMMIT := $(shell git rev-parse HEAD)
 
+# GOAMD64=v3
 .PHONY: run
 run:
-	GOAMD64=v2 go run -ldflags "-X main.GitCommit=$(GIT_COMMIT)" tools/system_info/main.go
-	GOAMD64=v2 go test -benchmem -bench=. github.com/skerkour/go-benchmarks/hashing
-	GOAMD64=v2 go test -benchmem -bench=. github.com/skerkour/go-benchmarks/mac
-	GOAMD64=v2 go test -benchmem -bench=. github.com/skerkour/go-benchmarks/kdf
-	GOAMD64=v2 go test -benchmem -bench=. github.com/skerkour/go-benchmarks/checksum
-	GOAMD64=v2 go test -benchmem -bench=. github.com/skerkour/go-benchmarks/chunking
-	GOAMD64=v2 go test -benchmem -bench=. github.com/skerkour/go-benchmarks/encryption_aead
-	GOAMD64=v2 go test -benchmem -bench=. github.com/skerkour/go-benchmarks/encryption_unauthenticated
-	GOAMD64=v2 go test -timeout 1h -benchmem -bench=. github.com/skerkour/go-benchmarks/compression
-	GOAMD64=v2 go test -benchmem -bench=. github.com/skerkour/go-benchmarks/signatures
+	go run -ldflags "-X main.GitCommit=$(GIT_COMMIT)" tools/system_info/main.go
+	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/hashing
+	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/mac
+	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/kdf
+	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/kem
+	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/checksum
+	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/chunking
+	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/encryption_aead
+	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/encryption_unauthenticated
+	go test -timeout 1h -benchmem -bench=. github.com/skerkour/go-benchmarks/compression
+	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/signatures
 # disable inlining
-	GOAMD64=v2 go test -benchmem  -bench=. -gcflags '-l' github.com/skerkour/go-benchmarks/cgo
-	GOAMD64=v2 go test -benchmem -bench=. github.com/skerkour/go-benchmarks/encoding
-	GOAMD64=v2 go test -cpu=5000 -bench=. github.com/skerkour/go-benchmarks/pointer_swap
-	GOAMD64=v2 go test -benchmem -bench=. github.com/skerkour/go-benchmarks/cryptoencoding
-	GOAMD64=v2 go test -benchmem -bench=. github.com/skerkour/go-benchmarks/slices
+	go test -benchmem  -bench=. -gcflags '-l' github.com/skerkour/go-benchmarks/cgo
+	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/encoding
+	go test -cpu=5000 -bench=. github.com/skerkour/go-benchmarks/pointer_swap
+	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/cryptoencoding
+	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/slices
 
 .PHONY: run_docker
 run_docker:

@@ -6,11 +6,11 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/pingooio/stdx/crypto/bchacha20blake3"
-	"github.com/pingooio/stdx/crypto/chacha20"
-	"github.com/pingooio/stdx/crypto/chacha20blake3"
-	"github.com/pingooio/stdx/crypto/schacha20blake3"
+	"github.com/skerkour/go-benchmarks/crypto/ericlagergren/lwcrypto/ascon"
+	"github.com/skerkour/go-benchmarks/encryption_aead/bchacha20blake3"
 	"github.com/skerkour/go-benchmarks/utils"
+	"github.com/skerkour/stdx-go/crypto/chacha20"
+	"github.com/skerkour/stdx-go/crypto/chacha20blake3"
 	"golang.org/x/crypto/chacha20poly1305"
 )
 
@@ -23,7 +23,6 @@ var (
 		1024 * 1024,
 		10 * 1024 * 1024,
 		100 * 1024 * 1024,
-		1024 * 1024 * 1024,
 	}
 )
 
@@ -49,14 +48,18 @@ func BenchmarkEncryptAEAD(b *testing.B) {
 	aes128GcmKey := utils.RandBytes(b, 16)
 	aes128GcmNonce := utils.RandBytes(b, 12)
 
+	asconKey := utils.RandBytes(b, ascon.KeySize)
+	asconNonce := utils.RandBytes(b, ascon.NonceSize)
+
 	for _, size := range BENCHMARKS {
 		benchmarkEncrypt(b, size, "AES-256-GCM", newAesGcmCipher(b, aes256GcmKey), aes256GcmNonce, additionalData)
 		benchmarkEncrypt(b, size, "AES-128-GCM", newAesGcmCipher(b, aes128GcmKey), aes128GcmNonce, additionalData)
 		benchmarkEncrypt(b, size, "XChaCha20-Poly1305", newXChaCha20Poly1305Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
 		benchmarkEncrypt(b, size, "ChaCha20-Poly1305", newChaCha20Poly1305Cipher(b, chaCha20Key), chaCha20Nonce, additionalData)
-		benchmarkEncrypt(b, size, "XChaCha20-BLAKE3", newXChaCha20Blake3Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
+		// benchmarkEncrypt(b, size, "XChaCha20-BLAKE3", newXChaCha20Blake3Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
 		benchmarkEncrypt(b, size, "BChaCha20-BLAKE3", newBChaCha20Blake3Cipher(b, xChaCha20Key), bChaCha20Nonce, additionalData)
-		benchmarkEncrypt(b, size, "SChaCha20-BLAKE3", newSChaCha20Blake3Cipher(b, xChaCha20Key), bChaCha20Nonce, additionalData)
+		// benchmarkEncrypt(b, size, "SChaCha20-BLAKE3", newSChaCha20Blake3Cipher(b, xChaCha20Key), bChaCha20Nonce, additionalData)
+		benchmarkEncrypt(b, size, "Ascon", newAsconCipher(b, asconKey), asconNonce, additionalData)
 	}
 }
 
@@ -77,14 +80,18 @@ func BenchmarkDecryptAEAD(b *testing.B) {
 
 	bChaCha20Nonce := utils.RandBytes(b, bchacha20blake3.NonceSize)
 
+	asconKey := utils.RandBytes(b, ascon.KeySize)
+	asconNonce := utils.RandBytes(b, ascon.NonceSize)
+
 	for _, size := range BENCHMARKS {
 		benchmarkDecrypt(b, size, "AES-256-GCM", newAesGcmCipher(b, aes256GcmKey), aes256GcmNonce, additionalData)
 		benchmarkDecrypt(b, size, "AES-128-GCM", newAesGcmCipher(b, aes128GcmKey), aes128GcmNonce, additionalData)
-		benchmarkDecrypt(b, size, "XChaCha20-Poly1305", newXChaCha20Poly1305Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
 		benchmarkDecrypt(b, size, "ChaCha20-Poly1305", newChaCha20Poly1305Cipher(b, chaCha20Key), chaCha20Nonce, additionalData)
-		benchmarkDecrypt(b, size, "XChaCha20-BLAKE3", newXChaCha20Blake3Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
+		benchmarkDecrypt(b, size, "XChaCha20-Poly1305", newXChaCha20Poly1305Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
+		benchmarkDecrypt(b, size, "ChaCha20-BLAKE3", newChaCha20Blake3Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
 		benchmarkDecrypt(b, size, "BChaCha20-BLAKE3", newBChaCha20Blake3Cipher(b, xChaCha20Key), bChaCha20Nonce, additionalData)
-		benchmarkDecrypt(b, size, "SChaCha20-BLAKE3", newSChaCha20Blake3Cipher(b, xChaCha20Key), bChaCha20Nonce, additionalData)
+		// benchmarkDecrypt(b, size, "SChaCha20-BLAKE3", newSChaCha20Blake3Cipher(b, xChaCha20Key), bChaCha20Nonce, additionalData)
+		benchmarkDecrypt(b, size, "Ascon", newAsconCipher(b, asconKey), asconNonce, additionalData)
 	}
 }
 
@@ -116,26 +123,26 @@ func benchmarkDecrypt[C AEADCipher](b *testing.B, size int64, algorithm string, 
 	})
 }
 
-type xChaCha20Blake3Cipher struct {
+type chaCha20Blake3Cipher struct {
 	cipher cipher.AEAD
 }
 
-func newXChaCha20Blake3Cipher(b *testing.B, key []byte) xChaCha20Blake3Cipher {
-	cipher, err := chacha20blake3.NewX(key)
+func newChaCha20Blake3Cipher(b *testing.B, key []byte) chaCha20Blake3Cipher {
+	cipher, err := chacha20blake3.New(key)
 	if err != nil {
 		b.Error(err)
 	}
 
-	return xChaCha20Blake3Cipher{
+	return chaCha20Blake3Cipher{
 		cipher: cipher,
 	}
 }
 
-func (cipher xChaCha20Blake3Cipher) Encrypt(dst, nonce, plaintext, additionalData []byte) []byte {
+func (cipher chaCha20Blake3Cipher) Encrypt(dst, nonce, plaintext, additionalData []byte) []byte {
 	return cipher.cipher.Seal(dst, nonce, plaintext, additionalData)
 }
 
-func (cipher xChaCha20Blake3Cipher) Decrypt(dst, nonce, ciphertext, additionalData []byte) {
+func (cipher chaCha20Blake3Cipher) Decrypt(dst, nonce, ciphertext, additionalData []byte) {
 	_, _ = cipher.cipher.Open(dst, nonce, ciphertext, additionalData)
 }
 
@@ -159,29 +166,6 @@ func (cipher bChaCha20Blake3Cipher) Encrypt(dst, nonce, plaintext, additionalDat
 }
 
 func (cipher bChaCha20Blake3Cipher) Decrypt(dst, nonce, ciphertext, additionalData []byte) {
-	_, _ = cipher.cipher.Open(dst, nonce, ciphertext, additionalData)
-}
-
-type sChaCha20Blake3Cipher struct {
-	cipher cipher.AEAD
-}
-
-func newSChaCha20Blake3Cipher(b *testing.B, key []byte) sChaCha20Blake3Cipher {
-	cipher, err := schacha20blake3.New(key)
-	if err != nil {
-		b.Error(err)
-	}
-
-	return sChaCha20Blake3Cipher{
-		cipher: cipher,
-	}
-}
-
-func (cipher sChaCha20Blake3Cipher) Encrypt(dst, nonce, plaintext, additionalData []byte) []byte {
-	return cipher.cipher.Seal(dst, nonce, plaintext, additionalData)
-}
-
-func (cipher sChaCha20Blake3Cipher) Decrypt(dst, nonce, ciphertext, additionalData []byte) {
 	_, _ = cipher.cipher.Open(dst, nonce, ciphertext, additionalData)
 }
 
@@ -256,5 +240,28 @@ func (cipher aesGcmCipher) Encrypt(dst, nonce, plaintext, additionalData []byte)
 }
 
 func (cipher aesGcmCipher) Decrypt(dst, nonce, plaintext, additionalData []byte) {
+	_, _ = cipher.cipher.Open(dst, nonce, plaintext, additionalData)
+}
+
+type asconCipher struct {
+	cipher cipher.AEAD
+}
+
+func newAsconCipher(b *testing.B, key []byte) asconCipher {
+	cipher, err := ascon.New128a(key)
+	if err != nil {
+		b.Error(err)
+	}
+
+	return asconCipher{
+		cipher: cipher,
+	}
+}
+
+func (cipher asconCipher) Encrypt(dst, nonce, plaintext, additionalData []byte) []byte {
+	return cipher.cipher.Seal(dst, nonce, plaintext, additionalData)
+}
+
+func (cipher asconCipher) Decrypt(dst, nonce, plaintext, additionalData []byte) {
 	_, _ = cipher.cipher.Open(dst, nonce, plaintext, additionalData)
 }

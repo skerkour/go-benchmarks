@@ -9,8 +9,9 @@ import (
 
 	akamenskybase58 "github.com/akamensky/base58"
 	mrtronbase58 "github.com/mr-tron/base58"
-	stdxbase32 "github.com/pingooio/stdx/base32"
+	base64simd "github.com/segmentio/asm/base64"
 	"github.com/skerkour/go-benchmarks/utils"
+	stdxbase32 "github.com/skerkour/stdx-go/base32"
 )
 
 type Encoder interface {
@@ -30,6 +31,7 @@ func BenchmarkEncode(b *testing.B) {
 		benchmarkEncode(size, "std_hex", stdHex{}, b)
 		benchmarkEncode(size, "std_base64", stdBase64{}, b)
 		benchmarkEncode(size, "std_base32", stdBase32{}, b)
+		benchmarkEncode(size, "base64_simd", base64Simd{}, b)
 		benchmarkEncode(size, "stdx_base32", stdxBase32{}, b)
 		benchmarkEncode(size, "akamensky_base58", akamenskyBase58{}, b)
 		benchmarkEncode(size, "mr-tron_base58", mrTronBase58{}, b)
@@ -58,6 +60,12 @@ type stdBase64 struct{}
 
 func (stdBase64) Encode(data []byte) {
 	base64.StdEncoding.EncodeToString(data)
+}
+
+type base64Simd struct{}
+
+func (base64Simd) Encode(data []byte) {
+	base64simd.StdEncoding.EncodeToString(data)
 }
 
 type akamenskyBase58 struct{}

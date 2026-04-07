@@ -3,6 +3,7 @@ package hashing
 import (
 	"crypto/sha1"
 	"crypto/sha256"
+	"crypto/sha3"
 	"crypto/sha512"
 	"fmt"
 	"testing"
@@ -11,7 +12,6 @@ import (
 	zeeboblake3 "github.com/zeebo/blake3"
 	"golang.org/x/crypto/blake2b"
 	"golang.org/x/crypto/blake2s"
-	"golang.org/x/crypto/sha3"
 	lukechampineblake3 "lukechampine.com/blake3"
 )
 
@@ -28,7 +28,6 @@ func BenchmarkHashing(b *testing.B) {
 		1024 * 1024,
 		10 * 1024 * 1024,
 		100 * 1024 * 1024,
-		1024 * 1024 * 1024,
 	}
 
 	for _, size := range benchmarks {
@@ -144,13 +143,11 @@ func (sha3_512Hasher) Hash(input []byte) {
 type shake128_256Hasher struct{}
 
 func (shake128_256Hasher) Hash(input []byte) {
-	var hash [32]byte
-	sha3.ShakeSum128(hash[:], input)
+	sha3.SumSHAKE128(input, 32)
 }
 
 type shake256_512Hasher struct{}
 
 func (shake256_512Hasher) Hash(input []byte) {
-	var hash [64]byte
-	sha3.ShakeSum256(hash[:], input)
+	sha3.SumSHAKE256(input, 64)
 }

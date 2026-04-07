@@ -3,16 +3,18 @@ package mac
 import (
 	"crypto/hmac"
 	"crypto/sha256"
+	"crypto/sha3"
 	"crypto/sha512"
 	"fmt"
+	"hash"
 	"testing"
 
+	"github.com/skerkour/go-benchmarks/crypto/kmac"
 	"github.com/skerkour/go-benchmarks/utils"
 	zeeboblake3 "github.com/zeebo/blake3"
 	"golang.org/x/crypto/blake2b"
 	"golang.org/x/crypto/blake2s"
 	"golang.org/x/crypto/poly1305"
-	"golang.org/x/crypto/sha3"
 	lukechampineblake3 "lukechampine.com/blake3"
 )
 
@@ -29,7 +31,6 @@ func BenchmarkMac(b *testing.B) {
 		1024 * 1024,
 		10 * 1024 * 1024,
 		100 * 1024 * 1024,
-		1024 * 1024 * 1024,
 	}
 
 	output128 := make([]byte, 16, 256)
@@ -40,8 +41,15 @@ func BenchmarkMac(b *testing.B) {
 		benchmarkMac(size, "HMAC-SHA2-256", sha256Mac{}, output256, b)
 		benchmarkMac(size, "HMAC-SHA2-512", sha512Hasher{}, output512, b)
 
-		benchmarkMac(size, "HMAC-SHA3-256", sha3Mac{}, output256, b)
-		benchmarkMac(size, "HMAC-SHA3-512", sha3_512Mac{}, output512, b)
+		benchmarkMac(size, "SHA3-256", sha3Mac{}, output256, b)
+		benchmarkMac(size, "SHA3-512", sha3_512Mac{}, output512, b)
+		benchmarkMac(size, "SHAKE256-512", shake256{}, output512, b)
+
+		benchmarkMac(size, "KMAC-128", kmac128{}, output256, b)
+		benchmarkMac(size, "KMAC-256", kmac256{}, output512, b)
+
+		benchmarkMac(size, "HMAC-SHA3-256", sha3Hmac{}, output256, b)
+		benchmarkMac(size, "HMAC-SHA3-512", sha3_512Hmac{}, output512, b)
 
 		benchmarkMac(size, "BLAKE3-256_zeebo", zeeboBlake3Mac{}, output256, b)
 		benchmarkMac(size, "BLAKE3-512_zeebo", zeeboBlake3_512Mac{}, output512, b)
@@ -158,15 +166,58 @@ func (sha512Hasher) Mac(key, input, output []byte) {
 type sha3Mac struct{}
 
 func (sha3Mac) Mac(key, input, output []byte) {
-	hmac := hmac.New(sha3.New256, key)
-	hmac.Write(input)
-	hmac.Sum(output)
+	hasher := sha3.New256()
+	hasher.Write(input)
+	hasher.Write(key)
+	hasher.Sum(output)
 }
 
 type sha3_512Mac struct{}
 
 func (sha3_512Mac) Mac(key, input, output []byte) {
-	hmac := hmac.New(sha3.New512, key)
+	hasher := sha3.New512()
+	hasher.Write(input)
+	hasher.Write(key)
+	hasher.Sum(output)
+}
+
+type sha3Hmac struct{}
+
+func (sha3Hmac) Mac(key, input, output []byte) {
+	hmac := hmac.New(func() hash.Hash { return sha3.New256() }, key)
 	hmac.Write(input)
 	hmac.Sum(output)
+}
+
+type sha3_512Hmac struct{}
+
+func (sha3_512Hmac) Mac(key, input, output []byte) {
+	hmac := hmac.New(func() hash.Hash { return sha3.New512() }, key)
+	hmac.Write(input)
+	hmac.Sum(output)
+}
+
+type kmac128 struct{}
+
+func (kmac128) Mac(key, input, output []byte) {
+	hasher := kmac.NewKMAC128(key, 32, []byte("KDF"))
+	hasher.Write(input)
+	hasher.Sum(output)
+}
+
+type kmac256 struct{}
+
+func (kmac256) Mac(key, input, output []byte) {
+	hasher := kmac.NewKMAC256(key, 32, []byte("KDF"))
+	hasher.Write(input)
+	hasher.Sum(output)
+}
+
+type shake256 struct{}
+
+func (shake256) Mac(key, input, output []byte) {
+	hasher := sha3.NewSHAKE256()
+	hasher.Write(input)
+	hasher.Write(key)
+	hasher.Read(output)
 }

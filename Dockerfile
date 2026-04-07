@@ -19,5 +19,6 @@ RUN git config --global --add safe.directory /home/${USERNAME}/go-benchmarks
 
 RUN make download_and_verify_deps
 
-ENTRYPOINT ["/bin/sh", "-c"]
+ENV GOAMD64=v3
+
 CMD ["make", "run"]

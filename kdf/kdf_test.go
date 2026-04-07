@@ -1,17 +1,19 @@
 package kdf
 
 import (
+	"crypto/hkdf"
 	"crypto/rand"
 	"crypto/sha256"
+	"crypto/sha3"
 	"crypto/sha512"
+	"encoding/base64"
 	"fmt"
-	"io"
 	"testing"
 
-	"github.com/pingooio/stdx/crypto/chacha20"
+	"github.com/skerkour/go-benchmarks/crypto/kmac"
 	"github.com/skerkour/go-benchmarks/utils"
+	"github.com/skerkour/stdx-go/crypto/chacha20"
 	zeeboblake3 "github.com/zeebo/blake3"
-	"golang.org/x/crypto/hkdf"
 	lukechampineblake3 "lukechampine.com/blake3"
 )
 
@@ -27,21 +29,23 @@ func BenchmarkKDF(b *testing.B) {
 		256,
 	}
 
-	info := utils.RandBytes(b, 24)
+	info := []byte(base64.StdEncoding.EncodeToString(utils.RandBytes(b, 30)))
 	key := utils.RandBytes(b, 32)
-	output256 := make([]byte, 32, 256)
-	output512 := make([]byte, 64, 256)
 
 	for _, size := range benchmarks {
-		benchmarkKDF(size, "HKDF-SHA2-256", sha256KDF{}, key, info, output256, b)
-		benchmarkKDF(size, "HKDF-SHA2-512", sha512KDF{}, key, info, output512, b)
+		benchmarkKDF(size, "HKDF-SHA2-256", sha256KDF{}, key, info, b)
+		benchmarkKDF(size, "HKDF-SHA2-512", sha512KDF{}, key, info, b)
+		benchmarkKDF(size, "SHAKE-256", shake256Kdf{}, key, info, b)
 
-		benchmarkKDF(size, "BLAKE3_zeebo", zeeboBlake3KDF{}, key, info, output256, b)
+		benchmarkKDF(size, "KMAC-128", kmac128{}, key, info, b)
+		benchmarkKDF(size, "KMAC-256", kmac256{}, key, info, b)
+
+		benchmarkKDF(size, "BLAKE3_zeebo", zeeboBlake3KDF{}, key, info, b)
 		// benchmarkKDF(size, "BLAKE3-512_zeebo", zeeboBlake3_512KDF{}, key, info, output512, b)
-		benchmarkKDF(size, "BLAKE3_lukechampine", lukechampineBlake3KDF{}, key, info, output256, b)
+		benchmarkKDF(size, "BLAKE3_lukechampine", lukechampineBlake3KDF{}, key, info, b)
 		// benchmarkKDF(size, "BLAKE3-512_lukechampine", lukechampineBlake3_512KDF{}, key, info, output512, b)
 
-		benchmarkKDF(size, "ChaCha20", newChacha20KDF(key), key, info, output256, b)
+		benchmarkKDF(size, "ChaCha20", newChacha20KDF(key), key, info, b)
 		// benchmarkHasher(size, "blake2b_256", blake2bHasher{}, b)
 		// benchmarkHasher(size, "blake2s_256", blake2sHasher{}, b)
 		// benchmarkHasher("sha512/256", sha512_256Hasher{}, b)
@@ -52,11 +56,12 @@ func BenchmarkKDF(b *testing.B) {
 	}
 }
 
-func benchmarkKDF[H KDF](size int64, algorithm string, kdf H, key, info, output []byte, b *testing.B) {
+func benchmarkKDF[H KDF](size int64, algorithm string, kdf H, key, info []byte, b *testing.B) {
 	b.Run(fmt.Sprintf("%s-%s", utils.BytesCount(size), algorithm), func(b *testing.B) {
 		b.ReportAllocs()
 		b.SetBytes(size)
 		b.ResetTimer()
+		output := make([]byte, size)
 		for i := 0; i < b.N; i++ {
 			kdf.DeriveKey(key, info, output)
 		}
@@ -130,15 +135,28 @@ func (kdf chacha20KDF) DeriveKey(secret, info, out []byte) {
 type sha256KDF struct{}
 
 func (sha256KDF) DeriveKey(secret, info, out []byte) {
-	hkdf := hkdf.New(sha256.New, secret, nil, info)
-	_, _ = io.ReadFull(hkdf, out)
+	out, err := hkdf.Key(sha256.New, secret, nil, string(info), len(out))
+	if err != nil {
+		panic(err)
+	}
 }
 
 type sha512KDF struct{}
 
 func (sha512KDF) DeriveKey(secret, info, out []byte) {
-	hkdf := hkdf.New(sha512.New, secret, nil, info)
-	_, _ = io.ReadFull(hkdf, out)
+	out, err := hkdf.Key(sha512.New, secret, nil, string(info), len(out))
+	if err != nil {
+		panic(err)
+	}
+}
+
+type shake256Kdf struct{}
+
+func (shake256Kdf) DeriveKey(secret, info, out []byte) {
+	hasher := sha3.NewSHAKE256()
+	hasher.Write(info)
+	hasher.Write(secret)
+	hasher.Read(out)
 }
 
 // type sha512_256Hasher struct{}
@@ -157,3 +175,19 @@ func (sha512KDF) DeriveKey(secret, info, out []byte) {
 // func (sha3_512Hasher) Hash(input []byte) {
 // 	sha3.Sum512(input)
 // }
+
+type kmac128 struct{}
+
+func (kmac128) DeriveKey(key, input, output []byte) {
+	hasher := kmac.NewKMAC128(key, 64, []byte("KDF"))
+	hasher.Write(input)
+	hasher.Sum(output[:0])
+}
+
+type kmac256 struct{}
+
+func (kmac256) DeriveKey(key, input, output []byte) {
+	hasher := kmac.NewKMAC256(key, len(output), []byte("KDF"))
+	hasher.Write(input)
+	hasher.Sum(output[:0])
+}
