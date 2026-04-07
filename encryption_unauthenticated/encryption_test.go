@@ -42,6 +42,7 @@ func BenchmarkEncryptUnauthenticated(b *testing.B) {
 	chaCha20Nonce := utils.RandBytes(b, chacha20.NonceSize)
 	aes256CbcKey := utils.RandBytes(b, 32)
 	aes256CbcIv := utils.RandBytes(b, 16)
+	aes256CtrIv := utils.RandBytes(b, 16)
 
 	aes256CfbKey := utils.RandBytes(b, 32)
 	aes256CfbIv := utils.RandBytes(b, 16)
@@ -50,6 +51,7 @@ func BenchmarkEncryptUnauthenticated(b *testing.B) {
 		benchmarkEncrypt(b, size, "ChaCha20", newChaCha20Cipher(b, chaCha20Key, chaCha20Nonce), chaCha20Nonce)
 		benchmarkEncrypt(b, size, "XChaCha20", newXChaCha20Cipher(b, xChaCha20Key, xChaCha20Nonce), xChaCha20Nonce)
 		benchmarkEncrypt(b, size, "ChaCha12", newChaCha12Cipher(b, xChaCha20Key, chaCha20Nonce), chaCha20Nonce)
+		benchmarkEncrypt(b, size, "AES_256_CTR", newAesCtrCipher(b, aes256CbcKey, aes256CtrIv), aes256CtrIv)
 		benchmarkEncrypt(b, size, "AES_256_CBC", newAesCbcCipher(b, aes256CbcKey), aes256CbcIv)
 		benchmarkEncrypt(b, size, "AES_256_CFB", newAesCfbCipher(b, aes256CfbKey), aes256CfbIv)
 		benchmarkEncrypt(b, size, "XOR_SWAR", newXorSwar(size), nil)
@@ -80,6 +82,7 @@ func BenchmarkDecryptUnauthenticated(b *testing.B) {
 
 	aes256CbcKey := utils.RandBytes(b, 32)
 	aes256CbcIv := utils.RandBytes(b, 16)
+	aes256CtrIv := utils.RandBytes(b, 16)
 
 	aes256CfbKey := utils.RandBytes(b, 32)
 	aes256CfbIv := utils.RandBytes(b, 16)
@@ -88,6 +91,7 @@ func BenchmarkDecryptUnauthenticated(b *testing.B) {
 		benchmarkDecrypt(b, size, "ChaCha20", newChaCha20Cipher(b, chaCha20Key, chaCha20Nonce), chaCha20Nonce)
 		benchmarkDecrypt(b, size, "XChaCha20", newXChaCha20Cipher(b, xChaCha20Key, xChaCha20Nonce), xChaCha20Nonce)
 		benchmarkDecrypt(b, size, "ChaCha12", newChaCha12Cipher(b, xChaCha20Key, chaCha20Nonce), chaCha20Nonce)
+		benchmarkDecrypt(b, size, "AES_256_CTR", newAesCtrCipher(b, aes256CbcKey, aes256CtrIv), aes256CbcIv)
 		benchmarkDecrypt(b, size, "AES_256_CBC", newAesCbcCipher(b, aes256CbcKey), aes256CbcIv)
 		benchmarkDecrypt(b, size, "AES_256_CFB", newAesCfbCipher(b, aes256CfbKey), aes256CfbIv)
 		benchmarkDecrypt(b, size, "XOR_SWAR", newXorSwar(size), nil)
@@ -181,6 +185,32 @@ func (cipher chaCha20Cipher) Encrypt(dst, _nonce, plaintext []byte) []byte {
 
 func (cipher chaCha20Cipher) Decrypt(dst, _nonce, ciphertext []byte) {
 	cipher.cipher.XORKeyStream(dst, ciphertext)
+}
+
+type aesCtrCipher struct {
+	cipher cipher.Stream
+}
+
+func newAesCtrCipher(b *testing.B, key []byte, iv []byte) aesCtrCipher {
+	aesCipher, err := aes.NewCipher(key)
+	if err != nil {
+		b.Error(err)
+	}
+
+	aesCtr := cipher.NewCTR(aesCipher, iv)
+
+	return aesCtrCipher{
+		cipher: aesCtr,
+	}
+}
+
+func (aesCtr aesCtrCipher) Encrypt(dst, nonce, plaintext []byte) []byte {
+	aesCtr.cipher.XORKeyStream(dst, plaintext)
+	return dst
+}
+
+func (aesCtr aesCtrCipher) Decrypt(dst, nonce, ciphertext []byte) {
+	aesCtr.cipher.XORKeyStream(dst, ciphertext)
 }
 
 type aesCbcCipher struct {
