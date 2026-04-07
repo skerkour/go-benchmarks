@@ -52,10 +52,11 @@ func BenchmarkEncryptAEAD(b *testing.B) {
 	asconNonce := utils.RandBytes(b, ascon.NonceSize)
 
 	for _, size := range BENCHMARKS {
-		benchmarkEncrypt(b, size, "AES-256-GCM", newAesGcmCipher(b, aes256GcmKey), aes256GcmNonce, additionalData)
 		benchmarkEncrypt(b, size, "AES-128-GCM", newAesGcmCipher(b, aes128GcmKey), aes128GcmNonce, additionalData)
-		benchmarkEncrypt(b, size, "XChaCha20-Poly1305", newXChaCha20Poly1305Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
+		benchmarkEncrypt(b, size, "AES-256-GCM", newAesGcmCipher(b, aes256GcmKey), aes256GcmNonce, additionalData)
 		benchmarkEncrypt(b, size, "ChaCha20-Poly1305", newChaCha20Poly1305Cipher(b, chaCha20Key), chaCha20Nonce, additionalData)
+		benchmarkEncrypt(b, size, "XChaCha20-Poly1305", newXChaCha20Poly1305Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
+		benchmarkEncrypt(b, size, "ChaCha20-BLAKE3", newChaCha20Blake3Cipher(b, chaCha20Key), xChaCha20Nonce, additionalData)
 		// benchmarkEncrypt(b, size, "XChaCha20-BLAKE3", newXChaCha20Blake3Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
 		benchmarkEncrypt(b, size, "BChaCha20-BLAKE3", newBChaCha20Blake3Cipher(b, xChaCha20Key), bChaCha20Nonce, additionalData)
 		// benchmarkEncrypt(b, size, "SChaCha20-BLAKE3", newSChaCha20Blake3Cipher(b, xChaCha20Key), bChaCha20Nonce, additionalData)
@@ -84,8 +85,8 @@ func BenchmarkDecryptAEAD(b *testing.B) {
 	asconNonce := utils.RandBytes(b, ascon.NonceSize)
 
 	for _, size := range BENCHMARKS {
-		benchmarkDecrypt(b, size, "AES-256-GCM", newAesGcmCipher(b, aes256GcmKey), aes256GcmNonce, additionalData)
 		benchmarkDecrypt(b, size, "AES-128-GCM", newAesGcmCipher(b, aes128GcmKey), aes128GcmNonce, additionalData)
+		benchmarkDecrypt(b, size, "AES-256-GCM", newAesGcmCipher(b, aes256GcmKey), aes256GcmNonce, additionalData)
 		benchmarkDecrypt(b, size, "ChaCha20-Poly1305", newChaCha20Poly1305Cipher(b, chaCha20Key), chaCha20Nonce, additionalData)
 		benchmarkDecrypt(b, size, "XChaCha20-Poly1305", newXChaCha20Poly1305Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
 		benchmarkDecrypt(b, size, "ChaCha20-BLAKE3", newChaCha20Blake3Cipher(b, xChaCha20Key), xChaCha20Nonce, additionalData)
