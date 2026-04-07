@@ -367,8 +367,7 @@ func newXor(size int64) *xor {
 }
 
 func (cipher xor) xor(dst, input []byte) {
-	length := len(input)
-	for i := 0; i < length; i++ {
+	for i := 0; i < min(len(input), len(dst)); i++ {
 		dst[i] = cipher.oneTimePad[i] ^ input[i]
 	}
 }

@@ -126,10 +126,10 @@ TEXT ·p6(SB), NOSPLIT, $0-8
 	PERM_STORE
 	RET
 
-// func round(s *state, C uint64)
+// func round(s *state, c uint64)
 TEXT ·round(SB), NOSPLIT, $0-16
 	PERM_LOAD
-	MOVD C+8(FP), R11
+	MOVD c+8(FP), R11
 	ROUND(R11)
 	PERM_STORE
 	RET
