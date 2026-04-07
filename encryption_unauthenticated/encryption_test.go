@@ -58,12 +58,25 @@ func BenchmarkEncryptUnauthenticated(b *testing.B) {
 	}
 }
 
+func benchmarkEncrypt[C Cipher](b *testing.B, size int64, algorithm string, cipher C, nonce []byte) {
+	b.Run(fmt.Sprintf("%s-%s", utils.BytesCount(size), algorithm), func(b *testing.B) {
+		b.ReportAllocs()
+		b.SetBytes(size)
+		plaintext := utils.RandBytes(b, size)
+		dst := make([]byte, len(plaintext)+64)
+		b.ResetTimer()
+		for i := 0; i < b.N; i++ {
+			cipher.Encrypt(dst, nonce, plaintext)
+		}
+	})
+}
+
 func BenchmarkDecryptUnauthenticated(b *testing.B) {
 	xChaCha20Key := utils.RandBytes(b, chacha20.KeySize)
 	xChaCha20Nonce := utils.RandBytes(b, chacha20.NonceSizeX)
 
 	chaCha20Key := utils.RandBytes(b, chacha20poly1305.KeySize)
-	chaCha20Nonce := utils.RandBytes(b, chacha20poly1305.NonceSize)
+	chaCha20Nonce := utils.RandBytes(b, chacha20.NonceSize)
 
 	aes256CbcKey := utils.RandBytes(b, 32)
 	aes256CbcIv := utils.RandBytes(b, 16)
@@ -83,25 +96,12 @@ func BenchmarkDecryptUnauthenticated(b *testing.B) {
 	}
 }
 
-func benchmarkEncrypt[C Cipher](b *testing.B, size int64, algorithm string, cipher C, nonce []byte) {
-	b.Run(fmt.Sprintf("%s-%s", utils.BytesCount(size), algorithm), func(b *testing.B) {
-		b.ReportAllocs()
-		b.SetBytes(size)
-		plaintext := utils.RandBytes(b, size)
-		dst := make([]byte, len(plaintext)+64)
-		b.ResetTimer()
-		for i := 0; i < b.N; i++ {
-			cipher.Encrypt(dst, nonce, plaintext)
-		}
-	})
-}
-
 func benchmarkDecrypt[C Cipher](b *testing.B, size int64, algorithm string, cipher C, nonce []byte) {
 	b.Run(fmt.Sprintf("%s-%s", utils.BytesCount(size), algorithm), func(b *testing.B) {
 		b.ReportAllocs()
 		b.SetBytes(size)
 		plaintext := utils.RandBytes(b, size)
-		cipherText := make([]byte, len(plaintext)+512)
+		cipherText := make([]byte, len(plaintext)+64)
 		cipherText = cipher.Encrypt(cipherText, nonce, plaintext)
 		dst := make([]byte, len(cipherText))
 		b.ResetTimer()

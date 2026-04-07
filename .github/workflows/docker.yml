@@ -7,51 +7,114 @@ on:
     branches:
       - main
 
+env:
+  DOCKER_IMAGE: "ghcr.io/skerkour/go-benchmarks"
+
+
 jobs:
-  build_and_release:
-    runs-on: ubuntu-latest
+  docker_build:
+    # Builds are ran on the default runners for x64 and on 'sepcialized' runners for arm64.
+    # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/expressions
+    runs-on:  ${{ matrix.arch == 'arm64' && 'ubuntu-24.04-arm' || 'ubuntu-24.04' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        arch:
+          - amd64
+          - arm64
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      # - name: Build and tag Docker image
-      #   run: make docker_build
+      # - name: Update packages
+      #   run: |
+      #     sudo apt update && sudo apt upgrade -y
 
-      # - name: Docker image info
-      #   run: docker images
+      - name: Docker build image
+        run: |
+          make docker_build
+          docker image tag ${{ env.DOCKER_IMAGE }}:latest ${{ env.DOCKER_IMAGE }}:latest-${{ matrix.arch }}
 
-      - name: Login to container registries
-        run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u skerkour --password-stdin
+      - name: Docker images info
+        run: |
+          docker images
 
-      # - name: Push Docker images
-      #   # see here for the details of the release phase https://devcenter.heroku.com/articles/container-registry-and-runtime#release-phase
-      #   run: make docker_push
+      - name: Login to container registry
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-        with:
-          platforms: 'arm64'
+      - name: Docker push image
+        run: |
+          docker push ${{ env.DOCKER_IMAGE }}:latest-${{ matrix.arch }}
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
 
-      - name: Build and push
-        uses: docker/build-push-action@v4
-        with:
-          # We need to change the context, as by default we can't access the .git directory
-          # https://github.com/docker/build-push-action#git-context
-          # https://docs.docker.com/engine/reference/commandline/build/
-          context: "."
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: ghcr.io/skerkour/go-benchmarks:latest
+  docker_push_manifest:
+    runs-on: ubuntu-24.04
+    needs:
+      - docker_build
+    steps:
+      - name: Login to container registry
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $ --password-stdin
+
+
+      - name: Push Docker manifest
+        run: |
+          docker manifest create ${{ env.DOCKER_IMAGE }}:latest \
+            --amend ${{ env.DOCKER_IMAGE }}:latest-amd64 \
+            --amend ${{ env.DOCKER_IMAGE }}:latest-arm64
+          docker manifest push ${{ env.DOCKER_IMAGE }}:latest
+
+  # build_and_release:
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - uses: actions/checkout@v3
+
+  #     # - name: Build and tag Docker image
+  #     #   run: make docker_build
+
+  #     # - name: Docker image info
+  #     #   run: docker images
+
+  #     - name: Login to container registries
+  #       run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u skerkour --password-stdin
+
+  #     # - name: Push Docker images
+  #     #   # see here for the details of the release phase https://devcenter.heroku.com/articles/container-registry-and-runtime#release-phase
+  #     #   run: make docker_push
+
+  #     - name: Set up QEMU
+  #       uses: docker/setup-qemu-action@v2
+  #       with:
+  #         platforms: 'arm64'
+
+  #     - name: Set up Docker Buildx
+  #       uses: docker/setup-buildx-action@v2
+
+  #     - name: Build and push
+  #       uses: docker/build-push-action@v4
+  #       with:
+  #         # We need to change the context, as by default we can't access the .git directory
+  #         # https://github.com/docker/build-push-action#git-context
+  #         # https://docs.docker.com/engine/reference/commandline/build/
+  #         context: "."
+  #         platforms: linux/amd64,linux/arm64
+  #         push: true
+  #         tags: ghcr.io/skerkour/go-benchmarks:latest
 
 
   benchmarks:
-    runs-on: ubuntu-latest
+    runs-on:  ${{ matrix.image }}
+    strategy:
+      fail-fast: false
+      matrix:
+        image:
+          - ubuntu-24.04-arm
+          - ubuntu-24.04
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Run Benchmarks
         env:
