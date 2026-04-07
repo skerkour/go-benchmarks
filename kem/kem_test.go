@@ -45,7 +45,7 @@ func BenchmarkDecapsulate(b *testing.B) {
 		b.Fatal(err)
 	}
 	mlKem768EncapsulationKey := mlKem768.EncapsulationKey()
-	mlKem768Ciphertext, _ := mlKem768EncapsulationKey.Encapsulate()
+	_, mlKem768Ciphertext := mlKem768EncapsulationKey.Encapsulate()
 	// TODO: the mlkem API is likely to change due to a mismatch between the Go API and the spec
 	// https://github.com/golang/go/issues/70950
 	if len(mlKem768Ciphertext) != mlkem.CiphertextSize768 {
@@ -57,7 +57,7 @@ func BenchmarkDecapsulate(b *testing.B) {
 		b.Fatal(err)
 	}
 	mlKem1024EncapsulationKey := mlKem1024.EncapsulationKey()
-	mlKem1024Ciphertext, _ := mlKem1024EncapsulationKey.Encapsulate()
+	_, mlKem1024Ciphertext := mlKem1024EncapsulationKey.Encapsulate()
 	// TODO: the mlkem API is likely to change due to a mismatch between the Go API and the spec
 	// https://github.com/golang/go/issues/70950
 	if len(mlKem1024Ciphertext) != mlkem.CiphertextSize1024 {

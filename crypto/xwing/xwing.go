@@ -141,7 +141,7 @@ func (encapsulationKey *EncapsulationKey) Encapsulate() (ciphertext, sharedKey [
 		panic(err)
 	}
 
-	ctM, ssM := encapsulationKey.mlKemEncapsulationKey.Encapsulate()
+	ssM, ctM := encapsulationKey.mlKemEncapsulationKey.Encapsulate()
 
 	ss := combiner(ssM, ssX, ctX, encapsulationKey.x25519Key.Bytes())
 	ct := append(ctM, ctX...)
