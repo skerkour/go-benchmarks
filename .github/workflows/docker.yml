@@ -47,11 +47,11 @@ jobs:
           tags: ghcr.io/skerkour/go-benchmarks:latest
 
 
-  # benchmarks:
-  #   runs-on: ubuntu-latest
+  benchmarks:
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - uses: actions/checkout@v3
+    steps:
+      - uses: actions/checkout@v3
 
-  #     - name: Run Benchmarks
-  #       run: make run
+      - name: Run Benchmarks
+        run: make run
