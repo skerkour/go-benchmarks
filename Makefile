@@ -14,7 +14,6 @@ run:
 	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/chunking
 	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/encryption_aead
 	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/encryption_unauthenticated
-	go test -timeout 1h -benchmem -bench=. github.com/skerkour/go-benchmarks/compression
 	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/signatures
 # disable inlining
 	go test -benchmem  -bench=. -gcflags '-l' github.com/skerkour/go-benchmarks/cgo
@@ -22,6 +21,7 @@ run:
 	go test -cpu=5000 -bench=. github.com/skerkour/go-benchmarks/pointer_swap
 	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/cryptoencoding
 	go test -benchmem -bench=. github.com/skerkour/go-benchmarks/slices
+	go test -timeout 1h -benchmem -bench=. github.com/skerkour/go-benchmarks/compression
 
 .PHONY: run_docker
 run_docker:
