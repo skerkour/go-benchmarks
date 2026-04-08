@@ -17,7 +17,7 @@ require (
 	github.com/pierrec/lz4/v4 v4.1.17
 	github.com/restic/chunker v0.4.0
 	github.com/segmentio/asm v1.2.0
-	github.com/skerkour/stdx-go v0.0.0-20260407100316-d87a93b21fbf
+	github.com/skerkour/stdx-go v0.0.0-20260408072150-50be9c0efd08
 	github.com/tigerwill90/fastcdc v1.2.2
 	github.com/zeebo/blake3 v0.2.4
 	github.com/zeebo/xxh3 v1.0.2

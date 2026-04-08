@@ -6,8 +6,8 @@ import (
 	"encoding/binary"
 	"errors"
 
-	"github.com/skerkour/stdx-go/crypto/blake3"
 	"github.com/skerkour/stdx-go/crypto/chacha20"
+	"github.com/zeebo/blake3"
 	// "golang.org/x/crypto/chacha20"
 )
 
@@ -60,7 +60,7 @@ func (x *BChaCha20Blake3) Seal(dst, nonce, plaintext, additionalData []byte) []b
 	chacha20Cipher.XORKeyStream(ciphertext, plaintext)
 
 	// _ = tag
-	macHasher := blake3.New(32, authenticationKey[:])
+	macHasher, _ := blake3.NewKeyed(authenticationKey[:])
 	macHasher.Write(additionalData)
 	// macHasher.Write(nonce)
 	macHasher.Write(ciphertext)
@@ -89,7 +89,7 @@ func (x *BChaCha20Blake3) Open(dst, nonce, ciphertext, additionalData []byte) ([
 	// chacha20Cipher, _ := chacha20.NewUnauthenticatedCipher(encryptionKey[:], nonce[20:32])
 
 	var computedTag [TagSize]byte
-	macHasher := blake3.New(32, authenticationKey[:])
+	macHasher, _ := blake3.NewKeyed(authenticationKey[:])
 	macHasher.Write(additionalData)
 	// macHasher.Write(nonce)
 	macHasher.Write(ciphertext)
@@ -119,7 +119,7 @@ func deriveKey(out, parentKey []byte, context string, nonce []byte) {
 	copy(keyMaterial[:], nonce)
 	copy(keyMaterial[len(nonce):], parentKey[:])
 
-	blake3.DeriveKey(out[:], context, keyMaterial[:len(nonce)+len(parentKey)])
+	blake3.DeriveKey(context, keyMaterial[:len(nonce)+len(parentKey)], out[:])
 
 	// hasher := blake3.NewDeriveKey(context)
 	// hasher.Write(nonce)

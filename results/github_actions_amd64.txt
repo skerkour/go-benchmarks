@@ -1,0 +1,974 @@
+--------------------------------------------------------------------------------
+-- SYSTEM INFO
+--------------------------------------------------------------------------------
+
+Date: 2026-04-07
+Commit: f914b06aa67d742b65ba9cda6601f55c4a644d72
+
+Go version: go1.26.0
+
+CPU:
+- arch: amd64
+- physical cores: 8
+- logical cores: 16
+
+CPU features:
+- AVX: true
+- AVX2: true
+- AVX512: false
+- SSE: true
+- SSE2: true
+- AES: true
+- SHA1: false
+- SHA2: false
+- SHA512: false
+- SHA-3: false
+- CRC32: false
+- ATOMICS: false
+
+--------------------------------------------------------------------------------
+
+go test -benchmem -bench=. github.com/skerkour/go-benchmarks/hashing
+go: downloading github.com/zeebo/blake3 v0.2.4
+go: downloading golang.org/x/crypto v0.49.0
+go: downloading lukechampine.com/blake3 v1.2.1
+go: downloading github.com/klauspost/cpuid/v2 v2.3.0
+goos: linux
+goarch: amd64
+pkg: github.com/skerkour/go-benchmarks/hashing
+cpu: AMD EPYC 7763 64-Core Processor
+BenchmarkHashing/64B-SHA-256-4         	 9245281	       129.6 ns/op	 493.64 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/64B-SHA-512-4         	 4632987	       260.3 ns/op	 245.90 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/64B-SHA3-256-4        	 2746843	       437.0 ns/op	 146.45 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/64B-SHA3-512-4        	 2646849	       447.8 ns/op	 142.92 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/64B-SHAKE128-256-4    	 2847464	       421.9 ns/op	 151.69 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/64B-SHAKE256-512-4    	 2766316	       433.7 ns/op	 147.55 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/64B-BLAKE3_zeebo-4    	14716581	        81.37 ns/op	 786.51 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/64B-BLAKE3_lukechampine-4         	10346242	       116.5 ns/op	 549.49 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/64B-BLAKE2b-256-4                 	 6558175	       182.9 ns/op	 349.85 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/64B-BLAKE2s-256-4                 	 8994891	       133.0 ns/op	 481.22 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/64B-BLAKE2b-512-4                 	 6868424	       174.7 ns/op	 366.37 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/64B-SHA1-4                        	 9700114	       124.9 ns/op	 512.52 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/1KiB-SHA-256-4                    	 1639234	       732.0 ns/op	1398.91 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/1KiB-SHA-512-4                    	  682630	      1750 ns/op	 585.30 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/1KiB-SHA3-256-4                   	  369568	      3200 ns/op	 319.97 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/1KiB-SHA3-512-4                   	  193135	      6043 ns/op	 169.45 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/1KiB-SHAKE128-256-4               	  428566	      2802 ns/op	 365.49 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/1KiB-SHAKE256-512-4               	  375884	      3196 ns/op	 320.38 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/1KiB-BLAKE3_zeebo-4               	  986564	      1213 ns/op	 843.91 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/1KiB-BLAKE3_lukechampine-4        	  613564	      1961 ns/op	 522.19 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/1KiB-BLAKE2b-256-4                	  926989	      1291 ns/op	 792.90 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/1KiB-BLAKE2s-256-4                	  694934	      1724 ns/op	 594.05 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/1KiB-BLAKE2b-512-4                	  929637	      1284 ns/op	 797.61 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/1KiB-SHA1-4                       	 1740302	       689.4 ns/op	1485.35 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/16KiB-SHA-256-4                   	  115668	     10382 ns/op	1578.15 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/16KiB-SHA-512-4                   	   48916	     24330 ns/op	 673.42 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/16KiB-SHA3-256-4                  	   25164	     47671 ns/op	 343.69 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/16KiB-SHA3-512-4                  	   13435	     89303 ns/op	 183.46 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/16KiB-SHAKE128-256-4              	   31126	     38668 ns/op	 423.71 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/16KiB-SHAKE256-512-4              	   25192	     47898 ns/op	 342.06 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/16KiB-BLAKE3_zeebo-4              	  237902	      5079 ns/op	3225.90 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/16KiB-BLAKE3_lukechampine-4       	  162607	      7368 ns/op	2223.75 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/16KiB-BLAKE2b-256-4               	   59439	     20171 ns/op	 812.25 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/16KiB-BLAKE2s-256-4               	   44398	     27013 ns/op	 606.52 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/16KiB-BLAKE2b-512-4               	   59433	     20163 ns/op	 812.59 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/16KiB-SHA1-4                      	  123226	      9737 ns/op	1682.68 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/64KiB-SHA-256-4                   	   29080	     41279 ns/op	1587.63 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/64KiB-SHA-512-4                   	   12402	     96612 ns/op	 678.34 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/64KiB-SHA3-256-4                  	    6307	    189365 ns/op	 346.08 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/64KiB-SHA3-512-4                  	    3356	    357863 ns/op	 183.13 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/64KiB-SHAKE128-256-4              	    7731	    154319 ns/op	 424.68 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/64KiB-SHAKE256-512-4              	    6262	    189714 ns/op	 345.45 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/64KiB-BLAKE3_zeebo-4              	   67297	     17839 ns/op	3673.83 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/64KiB-BLAKE3_lukechampine-4       	   41544	     28895 ns/op	2268.10 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/64KiB-BLAKE2b-256-4               	   14878	     80615 ns/op	 812.95 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/64KiB-BLAKE2s-256-4               	   10000	    107924 ns/op	 607.24 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/64KiB-BLAKE2b-512-4               	   14886	     80635 ns/op	 812.75 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/64KiB-SHA1-4                      	   30991	     38679 ns/op	1694.33 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/1MiB-SHA-256-4                    	    1813	    660958 ns/op	1586.45 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/1MiB-SHA-512-4                    	     769	   1546723 ns/op	 677.93 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/1MiB-SHA3-256-4                   	     388	   3042516 ns/op	 344.64 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/1MiB-SHA3-512-4                   	     210	   5723535 ns/op	 183.20 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/1MiB-SHAKE128-256-4               	     486	   2473478 ns/op	 423.93 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/1MiB-SHAKE256-512-4               	     392	   3050071 ns/op	 343.79 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/1MiB-BLAKE3_zeebo-4               	    4279	    279237 ns/op	3755.15 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/1MiB-BLAKE3_lukechampine-4        	    2574	    466097 ns/op	2249.70 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/1MiB-BLAKE2b-256-4                	     928	   1291793 ns/op	 811.72 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/1MiB-BLAKE2s-256-4                	     692	   1743768 ns/op	 601.33 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/1MiB-BLAKE2b-512-4                	     928	   1291810 ns/op	 811.71 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/1MiB-SHA1-4                       	    1936	    619176 ns/op	1693.50 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/10MiB-SHA-256-4                   	     181	   6619489 ns/op	1584.07 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/10MiB-SHA-512-4                   	      76	  15475475 ns/op	 677.57 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/10MiB-SHA3-256-4                  	      38	  30421238 ns/op	 344.69 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/10MiB-SHA3-512-4                  	      20	  57089295 ns/op	 183.67 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/10MiB-SHAKE128-256-4              	      48	  24642285 ns/op	 425.52 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/10MiB-SHAKE256-512-4              	      38	  30448118 ns/op	 344.38 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/10MiB-BLAKE3_zeebo-4              	     429	   2791774 ns/op	3755.95 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/10MiB-BLAKE3_lukechampine-4       	     258	   4663519 ns/op	2248.47 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/10MiB-BLAKE2b-256-4               	      92	  12919550 ns/op	 811.62 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/10MiB-BLAKE2s-256-4               	      68	  17298823 ns/op	 606.15 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/10MiB-BLAKE2b-512-4               	      92	  12932976 ns/op	 810.78 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/10MiB-SHA1-4                      	     193	   6197718 ns/op	1691.87 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/100MiB-SHA-256-4                  	      18	  66081540 ns/op	1586.79 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/100MiB-SHA-512-4                  	       7	 154683049 ns/op	 677.89 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/100MiB-SHA3-256-4                 	       4	 304604319 ns/op	 344.24 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/100MiB-SHA3-512-4                 	       2	 570811459 ns/op	 183.70 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/100MiB-SHAKE128-256-4             	       5	 246570496 ns/op	 425.26 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/100MiB-SHAKE256-512-4             	       4	 304545320 ns/op	 344.31 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/100MiB-BLAKE3_zeebo-4             	      37	  31973898 ns/op	3279.48 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/100MiB-BLAKE3_lukechampine-4      	      24	  49267025 ns/op	2128.35 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/100MiB-BLAKE2b-256-4              	       8	 129220393 ns/op	 811.46 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/100MiB-BLAKE2s-256-4              	       6	 172943767 ns/op	 606.31 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/100MiB-BLAKE2b-512-4              	       8	 129172417 ns/op	 811.76 MB/s	       0 B/op	       0 allocs/op
+BenchmarkHashing/100MiB-SHA1-4                     	      19	  61932306 ns/op	1693.10 MB/s	       0 B/op	       0 allocs/op
+PASS
+ok  	github.com/skerkour/go-benchmarks/hashing	127.491s
+go test -benchmem -bench=. github.com/skerkour/go-benchmarks/mac
+goos: linux
+goarch: amd64
+pkg: github.com/skerkour/go-benchmarks/mac
+cpu: AMD EPYC 7763 64-Core Processor
+BenchmarkMac/64B-HMAC-SHA2-256-4         	 2063806	       584.8 ns/op	 109.44 MB/s	     480 B/op	       5 allocs/op
+BenchmarkMac/64B-HMAC-SHA2-512-4         	  821470	      1326 ns/op	  48.26 MB/s	     800 B/op	       5 allocs/op
+BenchmarkMac/64B-SHA3-256-4              	 2622438	       457.2 ns/op	 139.99 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/64B-SHA3-512-4              	 1379325	       870.6 ns/op	  73.51 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/64B-SHAKE256-512-4          	 2724348	       440.9 ns/op	 145.16 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/64B-KMAC-128-4              	  661634	      1650 ns/op	  38.78 MB/s	     608 B/op	       5 allocs/op
+BenchmarkMac/64B-KMAC-256-4              	  738792	      1609 ns/op	  39.76 MB/s	     576 B/op	       5 allocs/op
+BenchmarkMac/64B-HMAC-SHA3-256-4         	  510843	      2199 ns/op	  29.10 MB/s	     864 B/op	       5 allocs/op
+BenchmarkMac/64B-HMAC-SHA3-512-4         	  563881	      2096 ns/op	  30.54 MB/s	     736 B/op	       5 allocs/op
+BenchmarkMac/64B-BLAKE3-256_zeebo-4      	  900127	      1313 ns/op	  48.75 MB/s	   10880 B/op	       1 allocs/op
+BenchmarkMac/64B-BLAKE3-512_zeebo-4      	  871317	      1289 ns/op	  49.63 MB/s	   10880 B/op	       1 allocs/op
+BenchmarkMac/64B-BLAKE3-256_lukechampine-4         	 3075483	       384.5 ns/op	 166.45 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/64B-BLAKE3-512_lukechampine-4         	 3075589	       390.3 ns/op	 163.97 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/64B-BLAKE2b-256-4                     	 2785629	       418.9 ns/op	 152.80 MB/s	     384 B/op	       1 allocs/op
+BenchmarkMac/64B-BLAKE2s-256-4                     	 3981850	       299.4 ns/op	 213.76 MB/s	     192 B/op	       1 allocs/op
+BenchmarkMac/64B-poly1305-4                        	31627387	        37.24 ns/op	1718.37 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/1KiB-HMAC-SHA2-256-4                  	  846850	      1217 ns/op	 841.42 MB/s	     480 B/op	       5 allocs/op
+BenchmarkMac/1KiB-HMAC-SHA2-512-4                  	  404790	      2840 ns/op	 360.60 MB/s	     800 B/op	       5 allocs/op
+BenchmarkMac/1KiB-SHA3-256-4                       	  360428	      3292 ns/op	 311.03 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/1KiB-SHA3-512-4                       	  196064	      6119 ns/op	 167.34 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/1KiB-SHAKE256-512-4                   	  365509	      3283 ns/op	 311.92 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/1KiB-KMAC-128-4                       	  281792	      4099 ns/op	 249.79 MB/s	     608 B/op	       5 allocs/op
+BenchmarkMac/1KiB-KMAC-256-4                       	  260618	      4507 ns/op	 227.22 MB/s	     576 B/op	       5 allocs/op
+BenchmarkMac/1KiB-HMAC-SHA3-256-4                  	  232426	      5058 ns/op	 202.45 MB/s	     864 B/op	       5 allocs/op
+BenchmarkMac/1KiB-HMAC-SHA3-512-4                  	  152781	      7760 ns/op	 131.96 MB/s	     736 B/op	       5 allocs/op
+BenchmarkMac/1KiB-BLAKE3-256_zeebo-4               	  504502	      2339 ns/op	 437.74 MB/s	   10880 B/op	       1 allocs/op
+BenchmarkMac/1KiB-BLAKE3-512_zeebo-4               	  540699	      2272 ns/op	 450.65 MB/s	   10880 B/op	       1 allocs/op
+BenchmarkMac/1KiB-BLAKE3-256_lukechampine-4        	  540072	      2215 ns/op	 462.29 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/1KiB-BLAKE3-512_lukechampine-4        	  539659	      2220 ns/op	 461.31 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/1KiB-BLAKE2b-256-4                    	  720152	      1532 ns/op	 668.20 MB/s	     384 B/op	       1 allocs/op
+BenchmarkMac/1KiB-BLAKE2s-256-4                    	  609426	      1896 ns/op	 539.96 MB/s	     192 B/op	       1 allocs/op
+BenchmarkMac/1KiB-poly1305-4                       	 3332038	       359.8 ns/op	2845.86 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/16KiB-HMAC-SHA2-256-4                 	  107860	     10945 ns/op	1497.00 MB/s	     480 B/op	       5 allocs/op
+BenchmarkMac/16KiB-HMAC-SHA2-512-4                 	   46665	     25533 ns/op	 641.68 MB/s	     800 B/op	       5 allocs/op
+BenchmarkMac/16KiB-SHA3-256-4                      	   24494	     49006 ns/op	 334.33 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/16KiB-SHA3-512-4                      	   13028	     92378 ns/op	 177.36 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/16KiB-SHAKE256-512-4                  	   24500	     48879 ns/op	 335.19 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/16KiB-KMAC-128-4                      	   29073	     41055 ns/op	 399.07 MB/s	     608 B/op	       5 allocs/op
+BenchmarkMac/16KiB-KMAC-256-4                      	   23841	     50527 ns/op	 324.26 MB/s	     576 B/op	       5 allocs/op
+BenchmarkMac/16KiB-HMAC-SHA3-256-4                 	   22987	     51036 ns/op	 321.03 MB/s	     864 B/op	       5 allocs/op
+BenchmarkMac/16KiB-HMAC-SHA3-512-4                 	   12789	     93745 ns/op	 174.77 MB/s	     736 B/op	       5 allocs/op
+BenchmarkMac/16KiB-BLAKE3-256_zeebo-4              	  198822	      5980 ns/op	2739.74 MB/s	   10880 B/op	       1 allocs/op
+BenchmarkMac/16KiB-BLAKE3-512_zeebo-4              	  202194	      5848 ns/op	2801.54 MB/s	   10880 B/op	       1 allocs/op
+BenchmarkMac/16KiB-BLAKE3-256_lukechampine-4       	  163262	      7344 ns/op	2230.92 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/16KiB-BLAKE3-512_lukechampine-4       	  163306	      7351 ns/op	2228.74 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/16KiB-BLAKE2b-256-4                   	   58377	     20493 ns/op	 799.50 MB/s	     384 B/op	       1 allocs/op
+BenchmarkMac/16KiB-BLAKE2s-256-4                   	   44012	     27230 ns/op	 601.70 MB/s	     192 B/op	       1 allocs/op
+BenchmarkMac/16KiB-poly1305-4                      	  215986	      5548 ns/op	2953.27 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/64KiB-HMAC-SHA2-256-4                 	   28518	     41919 ns/op	1563.40 MB/s	     480 B/op	       5 allocs/op
+BenchmarkMac/64KiB-HMAC-SHA2-512-4                 	   12216	     98082 ns/op	 668.18 MB/s	     800 B/op	       5 allocs/op
+BenchmarkMac/64KiB-SHA3-256-4                      	    5286	    194905 ns/op	 336.25 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/64KiB-SHA3-512-4                      	    3274	    366047 ns/op	 179.04 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/64KiB-SHAKE256-512-4                  	    6138	    195039 ns/op	 336.01 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/64KiB-KMAC-128-4                      	    7435	    161098 ns/op	 406.81 MB/s	     608 B/op	       5 allocs/op
+BenchmarkMac/64KiB-KMAC-256-4                      	    5997	    199703 ns/op	 328.17 MB/s	     576 B/op	       5 allocs/op
+BenchmarkMac/64KiB-HMAC-SHA3-256-4                 	    5947	    197196 ns/op	 332.34 MB/s	     864 B/op	       5 allocs/op
+BenchmarkMac/64KiB-HMAC-SHA3-512-4                 	    3230	    371359 ns/op	 176.48 MB/s	     736 B/op	       5 allocs/op
+BenchmarkMac/64KiB-BLAKE3-256_zeebo-4              	   63518	     18734 ns/op	3498.28 MB/s	   10880 B/op	       1 allocs/op
+BenchmarkMac/64KiB-BLAKE3-512_zeebo-4              	   63529	     18867 ns/op	3473.50 MB/s	   10880 B/op	       1 allocs/op
+BenchmarkMac/64KiB-BLAKE3-256_lukechampine-4       	   39648	     29790 ns/op	2199.97 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/64KiB-BLAKE3-512_lukechampine-4       	   40201	     29812 ns/op	2198.34 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/64KiB-BLAKE2b-256-4                   	   14800	     81076 ns/op	 808.33 MB/s	     384 B/op	       1 allocs/op
+BenchmarkMac/64KiB-BLAKE2s-256-4                   	   10000	    108269 ns/op	 605.30 MB/s	     192 B/op	       1 allocs/op
+BenchmarkMac/64KiB-poly1305-4                      	   54195	     22143 ns/op	2959.72 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/1MiB-HMAC-SHA2-256-4                  	    1813	    661883 ns/op	1584.23 MB/s	     480 B/op	       5 allocs/op
+BenchmarkMac/1MiB-HMAC-SHA2-512-4                  	     775	   1546820 ns/op	 677.89 MB/s	     800 B/op	       5 allocs/op
+BenchmarkMac/1MiB-SHA3-256-4                       	     384	   3119831 ns/op	 336.10 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/1MiB-SHA3-512-4                       	     204	   5859651 ns/op	 178.95 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/1MiB-SHAKE256-512-4                   	     384	   3118246 ns/op	 336.27 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/1MiB-KMAC-128-4                       	     471	   2541518 ns/op	 412.58 MB/s	     608 B/op	       5 allocs/op
+BenchmarkMac/1MiB-KMAC-256-4                       	     381	   3126191 ns/op	 335.42 MB/s	     576 B/op	       5 allocs/op
+BenchmarkMac/1MiB-HMAC-SHA3-256-4                  	     382	   3130307 ns/op	 334.98 MB/s	     864 B/op	       5 allocs/op
+BenchmarkMac/1MiB-HMAC-SHA3-512-4                  	     204	   5857578 ns/op	 179.01 MB/s	     736 B/op	       5 allocs/op
+BenchmarkMac/1MiB-BLAKE3-256_zeebo-4               	    4246	    277932 ns/op	3772.78 MB/s	   10880 B/op	       1 allocs/op
+BenchmarkMac/1MiB-BLAKE3-512_zeebo-4               	    4257	    279249 ns/op	3754.98 MB/s	   10880 B/op	       1 allocs/op
+BenchmarkMac/1MiB-BLAKE3-256_lukechampine-4        	    2474	    483757 ns/op	2167.57 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/1MiB-BLAKE3-512_lukechampine-4        	    2479	    481811 ns/op	2176.32 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/1MiB-BLAKE2b-256-4                    	     928	   1293088 ns/op	 810.91 MB/s	     384 B/op	       1 allocs/op
+BenchmarkMac/1MiB-BLAKE2s-256-4                    	     693	   1730303 ns/op	 606.01 MB/s	     192 B/op	       1 allocs/op
+BenchmarkMac/1MiB-poly1305-4                       	    3376	    355064 ns/op	2953.20 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/10MiB-HMAC-SHA2-256-4                 	     181	   6614803 ns/op	1585.20 MB/s	     480 B/op	       5 allocs/op
+BenchmarkMac/10MiB-HMAC-SHA2-512-4                 	      76	  15470421 ns/op	 677.79 MB/s	     800 B/op	       5 allocs/op
+BenchmarkMac/10MiB-SHA3-256-4                      	      37	  31193110 ns/op	 336.16 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/10MiB-SHA3-512-4                      	      20	  58576949 ns/op	 179.01 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/10MiB-SHAKE256-512-4                  	      37	  31220831 ns/op	 335.86 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/10MiB-KMAC-128-4                      	      46	  25347945 ns/op	 413.67 MB/s	     608 B/op	       5 allocs/op
+BenchmarkMac/10MiB-KMAC-256-4                      	      38	  31229222 ns/op	 335.77 MB/s	     576 B/op	       5 allocs/op
+BenchmarkMac/10MiB-HMAC-SHA3-256-4                 	      38	  31201600 ns/op	 336.06 MB/s	     864 B/op	       5 allocs/op
+BenchmarkMac/10MiB-HMAC-SHA3-512-4                 	      20	  58611912 ns/op	 178.90 MB/s	     736 B/op	       5 allocs/op
+BenchmarkMac/10MiB-BLAKE3-256_zeebo-4              	     432	   2758131 ns/op	3801.76 MB/s	   10880 B/op	       1 allocs/op
+BenchmarkMac/10MiB-BLAKE3-512_zeebo-4              	     434	   2773898 ns/op	3780.15 MB/s	   10880 B/op	       1 allocs/op
+BenchmarkMac/10MiB-BLAKE3-256_lukechampine-4       	     247	   4839947 ns/op	2166.50 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/10MiB-BLAKE3-512_lukechampine-4       	     248	   4873596 ns/op	2151.54 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/10MiB-BLAKE2b-256-4                   	      92	  12921920 ns/op	 811.47 MB/s	     384 B/op	       1 allocs/op
+BenchmarkMac/10MiB-BLAKE2s-256-4                   	      68	  17295326 ns/op	 606.28 MB/s	     192 B/op	       1 allocs/op
+BenchmarkMac/10MiB-poly1305-4                      	     337	   3554530 ns/op	2949.97 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/100MiB-HMAC-SHA2-256-4                	      18	  66117961 ns/op	1585.92 MB/s	     480 B/op	       5 allocs/op
+BenchmarkMac/100MiB-HMAC-SHA2-512-4                	       7	 154891812 ns/op	 676.97 MB/s	     800 B/op	       5 allocs/op
+BenchmarkMac/100MiB-SHA3-256-4                     	       4	 311971181 ns/op	 336.11 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/100MiB-SHA3-512-4                     	       2	 585065933 ns/op	 179.22 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/100MiB-SHAKE256-512-4                 	       4	 312501000 ns/op	 335.54 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/100MiB-KMAC-128-4                     	       4	 253476580 ns/op	 413.68 MB/s	     608 B/op	       5 allocs/op
+BenchmarkMac/100MiB-KMAC-256-4                     	       4	 312623439 ns/op	 335.41 MB/s	     576 B/op	       5 allocs/op
+BenchmarkMac/100MiB-HMAC-SHA3-256-4                	       4	 316062652 ns/op	 331.76 MB/s	     864 B/op	       5 allocs/op
+BenchmarkMac/100MiB-HMAC-SHA3-512-4                	       2	 585095308 ns/op	 179.21 MB/s	     736 B/op	       5 allocs/op
+BenchmarkMac/100MiB-BLAKE3-256_zeebo-4             	      38	  30675511 ns/op	3418.28 MB/s	   10880 B/op	       1 allocs/op
+BenchmarkMac/100MiB-BLAKE3-512_zeebo-4             	      38	  30688975 ns/op	3416.78 MB/s	   10880 B/op	       1 allocs/op
+BenchmarkMac/100MiB-BLAKE3-256_lukechampine-4      	      24	  50784542 ns/op	2064.75 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/100MiB-BLAKE3-512_lukechampine-4      	      24	  50714455 ns/op	2067.61 MB/s	       0 B/op	       0 allocs/op
+BenchmarkMac/100MiB-BLAKE2b-256-4                  	       8	 129301527 ns/op	 810.95 MB/s	     384 B/op	       1 allocs/op
+BenchmarkMac/100MiB-BLAKE2s-256-4                  	       6	 172974132 ns/op	 606.20 MB/s	     192 B/op	       1 allocs/op
+BenchmarkMac/100MiB-poly1305-4                     	      33	  35551883 ns/op	2949.42 MB/s	       0 B/op	       0 allocs/op
+PASS
+ok  	github.com/skerkour/go-benchmarks/mac	169.552s
+go test -benchmem -bench=. github.com/skerkour/go-benchmarks/kdf
+goos: linux
+goarch: amd64
+pkg: github.com/skerkour/go-benchmarks/kdf
+cpu: AMD EPYC 7763 64-Core Processor
+BenchmarkKDF/32B-HKDF-SHA2-256-4         	  909336	      1349 ns/op	  23.73 MB/s	    1441 B/op	      19 allocs/op
+BenchmarkKDF/32B-HKDF-SHA2-512-4         	  372018	      3059 ns/op	  10.46 MB/s	    2369 B/op	      19 allocs/op
+BenchmarkKDF/32B-SHAKE-256-4             	 2659149	       451.4 ns/op	  70.89 MB/s	       0 B/op	       0 allocs/op
+BenchmarkKDF/32B-KMAC-128-4              	  631657	      1737 ns/op	  18.43 MB/s	     736 B/op	       7 allocs/op
+BenchmarkKDF/32B-KMAC-256-4              	  664984	      1650 ns/op	  19.39 MB/s	     576 B/op	       5 allocs/op
+BenchmarkKDF/32B-BLAKE3_zeebo-4          	  841386	      1340 ns/op	  23.88 MB/s	   10928 B/op	       2 allocs/op
+BenchmarkKDF/32B-BLAKE3_lukechampine-4   	  915464	      1302 ns/op	  24.58 MB/s	      48 B/op	       1 allocs/op
+BenchmarkKDF/32B-ChaCha20-4              	13390260	        91.66 ns/op	 349.13 MB/s	       0 B/op	       0 allocs/op
+BenchmarkKDF/64B-HKDF-SHA2-256-4         	  596502	      1808 ns/op	  35.39 MB/s	    1746 B/op	      23 allocs/op
+BenchmarkKDF/64B-HKDF-SHA2-512-4         	  374754	      3052 ns/op	  20.97 MB/s	    2401 B/op	      19 allocs/op
+BenchmarkKDF/64B-SHAKE-256-4             	 2657166	       453.8 ns/op	 141.02 MB/s	       0 B/op	       0 allocs/op
+BenchmarkKDF/64B-KMAC-128-4              	  668694	      1676 ns/op	  38.20 MB/s	     672 B/op	       6 allocs/op
+BenchmarkKDF/64B-KMAC-256-4              	  666410	      1668 ns/op	  38.37 MB/s	     640 B/op	       6 allocs/op
+BenchmarkKDF/64B-BLAKE3_zeebo-4          	  860524	      1321 ns/op	  48.46 MB/s	   10928 B/op	       2 allocs/op
+BenchmarkKDF/64B-BLAKE3_lukechampine-4   	  874399	      1294 ns/op	  49.45 MB/s	      48 B/op	       1 allocs/op
+BenchmarkKDF/64B-ChaCha20-4              	10667095	       112.5 ns/op	 568.98 MB/s	       0 B/op	       0 allocs/op
+BenchmarkKDF/128B-HKDF-SHA2-256-4        	  437296	      2364 ns/op	  54.13 MB/s	    1908 B/op	      27 allocs/op
+BenchmarkKDF/128B-HKDF-SHA2-512-4        	  271959	      4209 ns/op	  30.41 MB/s	    2930 B/op	      23 allocs/op
+BenchmarkKDF/128B-SHAKE-256-4            	 2647842	       456.9 ns/op	 280.13 MB/s	       0 B/op	       0 allocs/op
+BenchmarkKDF/128B-KMAC-128-4             	  669584	      1665 ns/op	  76.88 MB/s	     672 B/op	       6 allocs/op
+BenchmarkKDF/128B-KMAC-256-4             	  659089	      1681 ns/op	  76.17 MB/s	     704 B/op	       6 allocs/op
+BenchmarkKDF/128B-BLAKE3_zeebo-4         	  794869	      1348 ns/op	  94.95 MB/s	   10928 B/op	       2 allocs/op
+BenchmarkKDF/128B-BLAKE3_lukechampine-4  	  916467	      1297 ns/op	  98.71 MB/s	      48 B/op	       1 allocs/op
+BenchmarkKDF/128B-ChaCha20-4             	10414380	       115.2 ns/op	1110.79 MB/s	       0 B/op	       0 allocs/op
+BenchmarkKDF/256B-HKDF-SHA2-256-4        	  320899	      3452 ns/op	  74.15 MB/s	    2232 B/op	      35 allocs/op
+BenchmarkKDF/256B-HKDF-SHA2-512-4        	  218616	      5398 ns/op	  47.43 MB/s	    3156 B/op	      27 allocs/op
+BenchmarkKDF/256B-SHAKE-256-4            	 1390834	       863.9 ns/op	 296.34 MB/s	       0 B/op	       0 allocs/op
+BenchmarkKDF/256B-KMAC-128-4             	  660865	      1667 ns/op	 153.53 MB/s	     672 B/op	       6 allocs/op
+BenchmarkKDF/256B-KMAC-256-4             	  540462	      2132 ns/op	 120.10 MB/s	     832 B/op	       6 allocs/op
+BenchmarkKDF/256B-BLAKE3_zeebo-4         	  883411	      1328 ns/op	 192.83 MB/s	   10928 B/op	       2 allocs/op
+BenchmarkKDF/256B-BLAKE3_lukechampine-4  	  902788	      1302 ns/op	 196.63 MB/s	      48 B/op	       1 allocs/op
+BenchmarkKDF/256B-ChaCha20-4             	 8950478	       134.0 ns/op	1910.10 MB/s	       0 B/op	       0 allocs/op
+PASS
+ok  	github.com/skerkour/go-benchmarks/kdf	40.088s
+go test -benchmem -bench=. github.com/skerkour/go-benchmarks/kem
+goos: linux
+goarch: amd64
+pkg: github.com/skerkour/go-benchmarks/kem
+cpu: AMD EPYC 7763 64-Core Processor
+BenchmarkEncapsulate/ML-KEM-768-4         	   23869	     50054 ns/op	    1216 B/op	       2 allocs/op
+BenchmarkEncapsulate/ML-KEM-1024-4        	   16075	     74512 ns/op	    1856 B/op	       2 allocs/op
+BenchmarkEncapsulate/X-Wing-4             	    7579	    153795 ns/op	    3296 B/op	      10 allocs/op
+BenchmarkDecapsulate/ML-KEM-768-4         	   16266	     73647 ns/op	      64 B/op	       2 allocs/op
+BenchmarkDecapsulate/ML-KEM-1024-4        	   10000	    111701 ns/op	      64 B/op	       2 allocs/op
+BenchmarkDecapsulate/X-Wing-4             	    9548	    125852 ns/op	     224 B/op	       6 allocs/op
+PASS
+ok  	github.com/skerkour/go-benchmarks/kem	9.137s
+go test -benchmem -bench=. github.com/skerkour/go-benchmarks/checksum
+go: downloading github.com/zeebo/xxh3 v1.0.2
+go: downloading github.com/cespare/xxhash/v2 v2.2.0
+goos: linux
+goarch: amd64
+pkg: github.com/skerkour/go-benchmarks/checksum
+cpu: AMD EPYC 7763 64-Core Processor
+BenchmarkChecksum/64B-crc32-4         	68492907	        16.88 ns/op	3791.61 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/64B-crc64-4         	24453735	        49.38 ns/op	1296.20 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/64B-xxh3-4          	191119722	         6.286 ns/op	10181.44 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/64B-xxh3_seed-4     	174064179	         6.895 ns/op	9281.65 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/64B-xxh3_128-4      	137168212	         8.730 ns/op	7331.17 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/64B-xxh3_128_seed-4 	129473586	         9.301 ns/op	6880.92 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/64B-xxhash-4        	137375979	         8.741 ns/op	7322.23 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/64B-fnv64-4         	51926026	        23.07 ns/op	2774.20 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/64B-fnv64a-4        	49742580	        23.23 ns/op	2755.26 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/1KiB-crc32-4        	13401025	        89.54 ns/op	11436.69 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/1KiB-crc64-4        	 1952150	       615.0 ns/op	1665.16 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/1KiB-xxh3-4         	36374420	        32.67 ns/op	31347.58 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/1KiB-xxh3_seed-4    	27643394	        42.96 ns/op	23838.60 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/1KiB-xxh3_128-4     	32903149	        36.70 ns/op	27898.39 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/1KiB-xxh3_128_seed-4         	23764046	        50.43 ns/op	20306.86 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/1KiB-xxhash-4                	32209111	        36.75 ns/op	27866.71 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/1KiB-fnv64-4                 	 3652143	       327.4 ns/op	3127.36 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/1KiB-fnv64a-4                	 3662845	       326.9 ns/op	3132.71 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/16KiB-crc32-4                	  922477	      1293 ns/op	12670.36 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/16KiB-crc64-4                	  124384	      9655 ns/op	1696.99 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/16KiB-xxh3-4                 	 3799933	       315.4 ns/op	51947.12 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/16KiB-xxh3_seed-4            	 3686288	       326.0 ns/op	50254.10 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/16KiB-xxh3_128-4             	 3766402	       318.6 ns/op	51424.48 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/16KiB-xxh3_128_seed-4        	 3589886	       332.4 ns/op	49288.34 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/16KiB-xxhash-4               	 3744837	       318.8 ns/op	51392.40 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/16KiB-fnv64-4                	  233310	      5114 ns/op	3203.85 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/16KiB-fnv64a-4               	  234687	      5135 ns/op	3190.45 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/64KiB-crc32-4                	  233923	      5132 ns/op	12770.83 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/64KiB-crc64-4                	   31082	     38618 ns/op	1697.02 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/64KiB-xxh3-4                 	  965042	      1230 ns/op	53293.37 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/64KiB-xxh3_seed-4            	  942040	      1240 ns/op	52869.09 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/64KiB-xxh3_128-4             	  961149	      1239 ns/op	52875.42 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/64KiB-xxh3_128_seed-4        	  944943	      1245 ns/op	52650.38 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/64KiB-xxhash-4               	  948326	      1238 ns/op	52955.59 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/64KiB-fnv64-4                	   58513	     20532 ns/op	3191.87 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/64KiB-fnv64a-4               	   58563	     20724 ns/op	3162.30 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/1MiB-crc32-4                 	   14588	     82490 ns/op	12711.60 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/1MiB-crc64-4                 	    1917	    622383 ns/op	1684.78 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/1MiB-xxh3-4                  	   57936	     20410 ns/op	51376.33 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/1MiB-xxh3_seed-4             	   58718	     20465 ns/op	51238.66 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/1MiB-xxh3_128-4              	   58512	     20534 ns/op	51064.33 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/1MiB-xxh3_128_seed-4         	   58857	     20431 ns/op	51322.53 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/1MiB-xxhash-4                	   58527	     20525 ns/op	51088.78 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/1MiB-fnv64-4                 	    3643	    326615 ns/op	3210.44 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/1MiB-fnv64a-4                	    3667	    326903 ns/op	3207.60 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/10MiB-crc32-4                	    1446	    825401 ns/op	12703.84 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/10MiB-crc64-4                	     192	   6224762 ns/op	1684.52 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/10MiB-xxh3-4                 	    5690	    207440 ns/op	50548.36 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/10MiB-xxh3_seed-4            	    5599	    207911 ns/op	50434.01 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/10MiB-xxh3_128-4             	    5739	    207659 ns/op	50495.00 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/10MiB-xxh3_128_seed-4        	    5635	    207437 ns/op	50549.04 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/10MiB-xxhash-4               	    5788	    207551 ns/op	50521.45 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/10MiB-fnv64-4                	     354	   3341635 ns/op	3137.91 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/10MiB-fnv64a-4               	     361	   3278091 ns/op	3198.74 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/100MiB-crc32-4               	     139	   8554499 ns/op	12257.60 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/100MiB-crc64-4               	      19	  62305807 ns/op	1682.95 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/100MiB-xxh3-4                	     250	   4887332 ns/op	21454.98 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/100MiB-xxh3_seed-4           	     252	   5006849 ns/op	20942.83 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/100MiB-xxh3_128-4            	     248	   4800510 ns/op	21843.01 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/100MiB-xxh3_128_seed-4       	     259	   4775575 ns/op	21957.06 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/100MiB-xxhash-4              	     256	   4677490 ns/op	22417.49 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/100MiB-fnv64-4               	      36	  32723793 ns/op	3204.32 MB/s	       0 B/op	       0 allocs/op
+BenchmarkChecksum/100MiB-fnv64a-4              	      36	  32719408 ns/op	3204.75 MB/s	       0 B/op	       0 allocs/op
+PASS
+ok  	github.com/skerkour/go-benchmarks/checksum	96.110s
+go test -benchmem -bench=. github.com/skerkour/go-benchmarks/chunking
+go: downloading github.com/jotfs/fastcdc-go v0.2.0
+go: downloading github.com/restic/chunker v0.4.0
+go: downloading github.com/tigerwill90/fastcdc v1.2.2
+goos: linux
+goarch: amd64
+pkg: github.com/skerkour/go-benchmarks/chunking
+cpu: AMD EPYC 7763 64-Core Processor
+BenchmarkChunking/64B-jotfs_fastcdc-4         	   30958	     74553 ns/op	   0.86 MB/s	  524451 B/op	       3 allocs/op
+BenchmarkChunking/64B-tigerwill90_fastcdc-4   	   18792	     64532 ns/op	   0.99 MB/s	  459027 B/op	       6 allocs/op
+BenchmarkChunking/64B-restic_chunker-4        	    2617	    451530 ns/op	   0.14 MB/s	 8917810 B/op	       4 allocs/op
+BenchmarkChunking/1KiB-jotfs_fastcdc-4        	   15931	     75558 ns/op	  13.55 MB/s	  524450 B/op	       3 allocs/op
+BenchmarkChunking/1KiB-tigerwill90_fastcdc-4  	   19140	     62332 ns/op	  16.43 MB/s	  459027 B/op	       6 allocs/op
+BenchmarkChunking/1KiB-restic_chunker-4       	    2684	    454972 ns/op	   2.25 MB/s	 8917809 B/op	       4 allocs/op
+BenchmarkChunking/16KiB-jotfs_fastcdc-4       	   15433	     78256 ns/op	 209.36 MB/s	  524451 B/op	       3 allocs/op
+BenchmarkChunking/16KiB-tigerwill90_fastcdc-4 	   18435	     64378 ns/op	 254.50 MB/s	  459027 B/op	       6 allocs/op
+BenchmarkChunking/16KiB-restic_chunker-4      	    2606	    452741 ns/op	  36.19 MB/s	 8917810 B/op	       4 allocs/op
+BenchmarkChunking/64KiB-jotfs_fastcdc-4       	    9855	    126266 ns/op	 519.03 MB/s	  524449 B/op	       3 allocs/op
+BenchmarkChunking/64KiB-tigerwill90_fastcdc-4 	   14418	     88195 ns/op	 743.08 MB/s	  459025 B/op	       6 allocs/op
+BenchmarkChunking/64KiB-restic_chunker-4      	    2875	    466559 ns/op	 140.47 MB/s	 8917809 B/op	       4 allocs/op
+BenchmarkChunking/1MiB-jotfs_fastcdc-4        	    1344	    891177 ns/op	1176.62 MB/s	  524449 B/op	       3 allocs/op
+BenchmarkChunking/1MiB-tigerwill90_fastcdc-4  	    2492	    492751 ns/op	2128.01 MB/s	  459264 B/op	      11 allocs/op
+BenchmarkChunking/1MiB-restic_chunker-4       	     500	   2394169 ns/op	 437.97 MB/s	 8917808 B/op	       4 allocs/op
+BenchmarkChunking/10MiB-jotfs_fastcdc-4       	     153	   7816273 ns/op	1341.53 MB/s	  524448 B/op	       3 allocs/op
+BenchmarkChunking/10MiB-tigerwill90_fastcdc-4 	     298	   4043173 ns/op	2593.45 MB/s	  461568 B/op	      59 allocs/op
+BenchmarkChunking/10MiB-restic_chunker-4      	      55	  19255861 ns/op	 544.55 MB/s	 8917808 B/op	       4 allocs/op
+BenchmarkChunking/100MiB-jotfs_fastcdc-4      	      14	  78019271 ns/op	1344.00 MB/s	  524448 B/op	       3 allocs/op
+BenchmarkChunking/100MiB-tigerwill90_fastcdc-4         	      27	  41619922 ns/op	2519.41 MB/s	  484608 B/op	     539 allocs/op
+BenchmarkChunking/100MiB-restic_chunker-4              	       5	 252671683 ns/op	 415.00 MB/s	 8917808 B/op	       4 allocs/op
+BenchmarkChunking/1GiB-jotfs_fastcdc-4                 	       2	 800981472 ns/op	1340.53 MB/s	  524448 B/op	       3 allocs/op
+BenchmarkChunking/1GiB-tigerwill90_fastcdc-4           	       3	 422895261 ns/op	2539.03 MB/s	  721152 B/op	    5467 allocs/op
+BenchmarkChunking/1GiB-restic_chunker-4                	       1	2464922196 ns/op	 435.61 MB/s	 8917808 B/op	       4 allocs/op
+PASS
+ok  	github.com/skerkour/go-benchmarks/chunking	57.396s
+go test -benchmem -bench=. github.com/skerkour/go-benchmarks/encryption_aead
+goos: linux
+goarch: amd64
+pkg: github.com/skerkour/go-benchmarks/encryption_aead
+cpu: AMD EPYC 7763 64-Core Processor
+BenchmarkEncryptAEAD/64B-AES-128-GCM-4         	 4558263	       262.7 ns/op	 243.61 MB/s	     704 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/64B-AES-256-GCM-4         	 4541533	       270.3 ns/op	 236.74 MB/s	     704 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/64B-ChaCha20-Poly1305-4   	 3811880	       310.9 ns/op	 205.84 MB/s	     704 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/64B-XChaCha20-Poly1305-4  	 2758342	       439.1 ns/op	 145.76 MB/s	     704 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/64B-ChaCha20-BLAKE3-4     	  709178	      1517 ns/op	  42.19 MB/s	     864 B/op	       2 allocs/op
+BenchmarkEncryptAEAD/64B-BChaCha20-BLAKE3-4    	  393158	      2909 ns/op	  22.00 MB/s	     864 B/op	       2 allocs/op
+BenchmarkEncryptAEAD/64B-Ascon-4               	 1946221	       615.9 ns/op	 103.92 MB/s	     704 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/1KiB-AES-128-GCM-4        	 1628790	       738.1 ns/op	1387.29 MB/s	    2688 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/1KiB-AES-256-GCM-4        	 1560500	       778.1 ns/op	1316.02 MB/s	    2688 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/1KiB-ChaCha20-Poly1305-4  	 1229088	       969.6 ns/op	1056.10 MB/s	    2688 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/1KiB-XChaCha20-Poly1305-4 	  992548	      1092 ns/op	 937.72 MB/s	    2688 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/1KiB-ChaCha20-BLAKE3-4    	  298749	      3963 ns/op	 258.41 MB/s	    2848 B/op	       2 allocs/op
+BenchmarkEncryptAEAD/1KiB-BChaCha20-BLAKE3-4   	  217006	      5370 ns/op	 190.68 MB/s	    2848 B/op	       2 allocs/op
+BenchmarkEncryptAEAD/1KiB-Ascon-4              	  399349	      2869 ns/op	 356.87 MB/s	    2688 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/16KiB-AES-128-GCM-4       	  150098	      8592 ns/op	1906.92 MB/s	   40960 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/16KiB-AES-256-GCM-4       	  129272	      8845 ns/op	1852.35 MB/s	   40960 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/16KiB-ChaCha20-Poly1305-4 	  106819	     10702 ns/op	1530.91 MB/s	   40960 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/16KiB-XChaCha20-Poly1305-4         	  112368	     11028 ns/op	1485.70 MB/s	   40960 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/16KiB-ChaCha20-BLAKE3-4            	   67627	     17679 ns/op	 926.74 MB/s	   41120 B/op	       2 allocs/op
+BenchmarkEncryptAEAD/16KiB-BChaCha20-BLAKE3-4           	   63309	     18989 ns/op	 862.79 MB/s	   41120 B/op	       2 allocs/op
+BenchmarkEncryptAEAD/16KiB-Ascon-4                      	   31389	     38246 ns/op	 428.39 MB/s	   40960 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/64KiB-AES-128-GCM-4                	   48782	     24164 ns/op	2712.10 MB/s	  139264 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/64KiB-AES-256-GCM-4                	   45597	     26254 ns/op	2496.20 MB/s	  139264 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/64KiB-ChaCha20-Poly1305-4          	   33400	     40947 ns/op	1600.50 MB/s	  139264 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/64KiB-XChaCha20-Poly1305-4         	   29660	     40565 ns/op	1615.59 MB/s	  139264 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/64KiB-ChaCha20-BLAKE3-4            	   17977	     66781 ns/op	 981.36 MB/s	  139424 B/op	       2 allocs/op
+BenchmarkEncryptAEAD/64KiB-BChaCha20-BLAKE3-4           	   17853	     68674 ns/op	 954.30 MB/s	  139424 B/op	       2 allocs/op
+BenchmarkEncryptAEAD/64KiB-Ascon-4                      	    7203	    152127 ns/op	 430.80 MB/s	  139264 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/1MiB-AES-128-GCM-4                 	    1888	    719002 ns/op	1458.38 MB/s	 2105357 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/1MiB-AES-256-GCM-4                 	    1429	    765741 ns/op	1369.36 MB/s	 2105357 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/1MiB-ChaCha20-Poly1305-4           	    1183	   1018176 ns/op	1029.86 MB/s	 2105359 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/1MiB-XChaCha20-Poly1305-4          	    1434	    939281 ns/op	1116.36 MB/s	 2105362 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/1MiB-ChaCha20-BLAKE3-4             	    1200	   1066040 ns/op	 983.62 MB/s	 2105508 B/op	       2 allocs/op
+BenchmarkEncryptAEAD/1MiB-BChaCha20-BLAKE3-4            	    1100	   1068945 ns/op	 980.94 MB/s	 2105505 B/op	       2 allocs/op
+BenchmarkEncryptAEAD/1MiB-Ascon-4                       	     462	   2620968 ns/op	 400.07 MB/s	 2105346 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/10MiB-AES-128-GCM-4                	     301	   4024736 ns/op	2605.33 MB/s	20979721 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/10MiB-AES-256-GCM-4                	     266	   4261917 ns/op	2460.34 MB/s	20979719 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/10MiB-ChaCha20-Poly1305-4          	     212	   5549037 ns/op	1889.65 MB/s	20979722 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/10MiB-XChaCha20-Poly1305-4         	     214	   5636797 ns/op	1860.23 MB/s	20979724 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/10MiB-ChaCha20-BLAKE3-4            	     120	   9887508 ns/op	1060.51 MB/s	20979873 B/op	       2 allocs/op
+BenchmarkEncryptAEAD/10MiB-BChaCha20-BLAKE3-4           	     122	   9537590 ns/op	1099.41 MB/s	20979872 B/op	       2 allocs/op
+BenchmarkEncryptAEAD/10MiB-Ascon-4                      	      50	  23282614 ns/op	 450.37 MB/s	20979716 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/100MiB-AES-128-GCM-4               	      34	  33703538 ns/op	3111.17 MB/s	209723398 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/100MiB-AES-256-GCM-4               	      31	  37042028 ns/op	2830.77 MB/s	209723406 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/100MiB-ChaCha20-Poly1305-4         	      24	  49645420 ns/op	2112.13 MB/s	209723392 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/100MiB-XChaCha20-Poly1305-4        	      24	  48887826 ns/op	2144.86 MB/s	209723396 B/op	       1 allocs/op
+BenchmarkEncryptAEAD/100MiB-ChaCha20-BLAKE3-4           	      12	  93940051 ns/op	1116.22 MB/s	209723552 B/op	       2 allocs/op
+BenchmarkEncryptAEAD/100MiB-BChaCha20-BLAKE3-4          	      12	  94158954 ns/op	1113.62 MB/s	209723552 B/op	       2 allocs/op
+BenchmarkEncryptAEAD/100MiB-Ascon-4                     	       5	 231678628 ns/op	 452.60 MB/s	209723392 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/64B-AES-128-GCM-4                  	 2767250	       435.7 ns/op	 146.90 MB/s	    1408 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/64B-AES-256-GCM-4                  	 2635140	       452.9 ns/op	 141.32 MB/s	    1408 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/64B-ChaCha20-Poly1305-4            	 1774089	       676.2 ns/op	  94.65 MB/s	    1408 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/64B-XChaCha20-Poly1305-4           	 1504189	       789.7 ns/op	  81.04 MB/s	    1408 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/64B-ChaCha20-BLAKE3-4              	  526056	      2274 ns/op	  28.14 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptAEAD/64B-BChaCha20-BLAKE3-4             	  291538	      4024 ns/op	  15.91 MB/s	    1568 B/op	       2 allocs/op
+BenchmarkDecryptAEAD/64B-Ascon-4                        	  578113	      1945 ns/op	  32.90 MB/s	    1408 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/1KiB-AES-128-GCM-4                 	  806598	      1381 ns/op	 741.53 MB/s	    5376 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/1KiB-AES-256-GCM-4                 	  788624	      1449 ns/op	 706.60 MB/s	    5376 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/1KiB-ChaCha20-Poly1305-4           	  601476	      1850 ns/op	 553.61 MB/s	    5376 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/1KiB-XChaCha20-Poly1305-4          	  577269	      1961 ns/op	 522.05 MB/s	    5376 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/1KiB-ChaCha20-BLAKE3-4             	  231981	      5176 ns/op	 197.83 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptAEAD/1KiB-BChaCha20-BLAKE3-4            	  158158	      7435 ns/op	 137.73 MB/s	    5536 B/op	       2 allocs/op
+BenchmarkDecryptAEAD/1KiB-Ascon-4                       	  180093	      6584 ns/op	 155.53 MB/s	    5376 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/16KiB-AES-128-GCM-4                	   73059	     17487 ns/op	 936.92 MB/s	   73728 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/16KiB-AES-256-GCM-4                	   59222	     20444 ns/op	 801.42 MB/s	   73728 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/16KiB-ChaCha20-Poly1305-4          	   50528	     23758 ns/op	 689.61 MB/s	   73728 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/16KiB-XChaCha20-Poly1305-4         	   51444	     23432 ns/op	 699.23 MB/s	   73728 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/16KiB-ChaCha20-BLAKE3-4            	   78727	     15235 ns/op	1075.44 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptAEAD/16KiB-BChaCha20-BLAKE3-4           	   45549	     26261 ns/op	 623.90 MB/s	   73888 B/op	       2 allocs/op
+BenchmarkDecryptAEAD/16KiB-Ascon-4                      	   14584	     80980 ns/op	 202.32 MB/s	   73728 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/64KiB-AES-128-GCM-4                	   17554	     99835 ns/op	 656.44 MB/s	  270336 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/64KiB-AES-256-GCM-4                	   17912	     92125 ns/op	 711.38 MB/s	  270336 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/64KiB-ChaCha20-Poly1305-4          	   10000	    104522 ns/op	 627.00 MB/s	  270336 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/64KiB-XChaCha20-Poly1305-4         	   10000	    102157 ns/op	 641.52 MB/s	  270336 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/64KiB-ChaCha20-BLAKE3-4            	   21909	     54935 ns/op	1192.97 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptAEAD/64KiB-BChaCha20-BLAKE3-4           	   13514	     90182 ns/op	 726.71 MB/s	  270497 B/op	       2 allocs/op
+BenchmarkDecryptAEAD/64KiB-Ascon-4                      	    3679	    316597 ns/op	 207.00 MB/s	  270336 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/1MiB-AES-128-GCM-4                 	    1524	    823695 ns/op	1273.02 MB/s	 4202507 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/1MiB-AES-256-GCM-4                 	    1332	    887004 ns/op	1182.15 MB/s	 4202509 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/1MiB-ChaCha20-Poly1305-4           	    1044	   1162894 ns/op	 901.70 MB/s	 4202511 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/1MiB-XChaCha20-Poly1305-4          	     987	   1152874 ns/op	 909.53 MB/s	 4202508 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/1MiB-ChaCha20-BLAKE3-4             	    1401	    856126 ns/op	1224.79 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptAEAD/1MiB-BChaCha20-BLAKE3-4            	     895	   1362998 ns/op	 769.32 MB/s	 4202659 B/op	       2 allocs/op
+BenchmarkDecryptAEAD/1MiB-Ascon-4                       	     244	   4804323 ns/op	 218.26 MB/s	 4202501 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/10MiB-AES-128-GCM-4                	     140	   8958084 ns/op	1170.54 MB/s	41951248 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/10MiB-AES-256-GCM-4                	     126	   9432514 ns/op	1111.66 MB/s	41951256 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/10MiB-ChaCha20-Poly1305-4          	      92	  11948554 ns/op	 877.58 MB/s	41951249 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/10MiB-XChaCha20-Poly1305-4         	     103	  11711985 ns/op	 895.30 MB/s	41951250 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/10MiB-ChaCha20-BLAKE3-4            	     136	   8846181 ns/op	1185.34 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptAEAD/10MiB-BChaCha20-BLAKE3-4           	      90	  12646017 ns/op	 829.17 MB/s	41951398 B/op	       2 allocs/op
+BenchmarkDecryptAEAD/10MiB-Ascon-4                      	      24	  48334554 ns/op	 216.94 MB/s	41951232 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/100MiB-AES-128-GCM-4               	      15	  70231748 ns/op	1493.02 MB/s	419438621 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/100MiB-AES-256-GCM-4               	      15	  79225596 ns/op	1323.53 MB/s	419438599 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/100MiB-ChaCha20-Poly1305-4         	      12	 104157302 ns/op	1006.72 MB/s	419438592 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/100MiB-XChaCha20-Poly1305-4        	      10	 111689223 ns/op	 938.83 MB/s	419438636 B/op	       1 allocs/op
+BenchmarkDecryptAEAD/100MiB-ChaCha20-BLAKE3-4           	      13	  90393078 ns/op	1160.02 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptAEAD/100MiB-BChaCha20-BLAKE3-4          	      10	 107620032 ns/op	 974.33 MB/s	419438752 B/op	       2 allocs/op
+BenchmarkDecryptAEAD/100MiB-Ascon-4                     	       3	 481881917 ns/op	 217.60 MB/s	419438592 B/op	       1 allocs/op
+PASS
+ok  	github.com/skerkour/go-benchmarks/encryption_aead	163.143s
+go test -benchmem -bench=. github.com/skerkour/go-benchmarks/encryption_unauthenticated
+goos: linux
+goarch: amd64
+pkg: github.com/skerkour/go-benchmarks/encryption_unauthenticated
+cpu: AMD EPYC 7763 64-Core Processor
+BenchmarkEncryptUnauthenticated/64B-ChaCha20-4         	10526254	       114.1 ns/op	 561.08 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/64B-XChaCha20-4        	10524519	       114.0 ns/op	 561.31 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/64B-ChaCha12-4         	16569002	        72.50 ns/op	 882.78 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/64B-AES_256_CTR-4      	46195792	        25.75 ns/op	2485.34 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/64B-AES_256_CBC-4      	 4017736	       300.7 ns/op	 212.84 MB/s	     608 B/op	       3 allocs/op
+BenchmarkEncryptUnauthenticated/64B-AES_256_CFB-4      	 5959778	       201.2 ns/op	 318.08 MB/s	     112 B/op	       3 allocs/op
+BenchmarkEncryptUnauthenticated/64B-XOR_SWAR-4         	126175387	         9.513 ns/op	6727.67 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/64B-XOR-4              	17173569	        69.90 ns/op	 915.58 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/64B-XOR_SUBTLE-4       	17161426	        69.89 ns/op	 915.79 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/1KiB-ChaCha20-4        	 3343888	       358.5 ns/op	2856.65 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/1KiB-XChaCha20-4       	 3343702	       358.3 ns/op	2857.89 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/1KiB-ChaCha12-4        	 5324181	       225.2 ns/op	4546.87 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/1KiB-AES_256_CTR-4     	 6658870	       180.2 ns/op	5682.41 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/1KiB-AES_256_CBC-4     	  593924	      1864 ns/op	 549.33 MB/s	    1680 B/op	       3 allocs/op
+BenchmarkEncryptUnauthenticated/1KiB-AES_256_CFB-4     	  591189	      2007 ns/op	 510.18 MB/s	     112 B/op	       3 allocs/op
+BenchmarkEncryptUnauthenticated/1KiB-XOR_SWAR-4        	13202794	        92.33 ns/op	11090.95 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/1KiB-XOR-4             	 1240182	       980.4 ns/op	1044.43 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/1KiB-XOR_SUBTLE-4      	 1238989	       971.8 ns/op	1053.72 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/16KiB-ChaCha20-4       	  217647	      5522 ns/op	2966.91 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/16KiB-XChaCha20-4      	  217008	      5519 ns/op	2968.46 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/16KiB-ChaCha12-4       	  353859	      3386 ns/op	4838.09 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/16KiB-AES_256_CTR-4    	  440511	      2728 ns/op	6006.45 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/16KiB-AES_256_CBC-4    	   45234	     26571 ns/op	 616.61 MB/s	   18960 B/op	       3 allocs/op
+BenchmarkEncryptUnauthenticated/16KiB-AES_256_CFB-4    	   38890	     31227 ns/op	 524.68 MB/s	     112 B/op	       3 allocs/op
+BenchmarkEncryptUnauthenticated/16KiB-XOR_SWAR-4       	  928123	      1288 ns/op	12716.22 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/16KiB-XOR-4            	   78171	     15533 ns/op	1054.81 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/16KiB-XOR_SUBTLE-4     	   78285	     15344 ns/op	1067.75 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/64KiB-ChaCha20-4       	   54483	     22041 ns/op	2973.32 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/64KiB-XChaCha20-4      	   54451	     22028 ns/op	2975.11 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/64KiB-ChaCha12-4       	   88725	     13510 ns/op	4851.09 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/64KiB-AES_256_CTR-4    	  110143	     10888 ns/op	6019.11 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/64KiB-AES_256_CBC-4    	    9614	    105302 ns/op	 622.36 MB/s	   74256 B/op	       3 allocs/op
+BenchmarkEncryptUnauthenticated/64KiB-AES_256_CFB-4    	    9782	    124418 ns/op	 526.74 MB/s	     112 B/op	       3 allocs/op
+BenchmarkEncryptUnauthenticated/64KiB-XOR_SWAR-4       	  234079	      5122 ns/op	12795.95 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/64KiB-XOR-4            	   19560	     61376 ns/op	1067.78 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/64KiB-XOR_SUBTLE-4     	   19521	     61308 ns/op	1068.96 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/1MiB-ChaCha20-4        	    3376	    354822 ns/op	2955.22 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/1MiB-XChaCha20-4       	    3378	    355276 ns/op	2951.44 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/1MiB-ChaCha12-4        	    5484	    218219 ns/op	4805.16 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/1MiB-AES_256_CTR-4     	    6756	    177893 ns/op	5894.43 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/1MiB-AES_256_CBC-4     	     691	   1710647 ns/op	 612.97 MB/s	 1057296 B/op	       3 allocs/op
+BenchmarkEncryptUnauthenticated/1MiB-AES_256_CFB-4     	     614	   1954576 ns/op	 536.47 MB/s	     112 B/op	       3 allocs/op
+BenchmarkEncryptUnauthenticated/1MiB-XOR_SWAR-4        	   14544	     82740 ns/op	12673.10 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/1MiB-XOR-4             	    1221	    985550 ns/op	1063.95 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/1MiB-XOR_SUBTLE-4      	    1220	    982875 ns/op	1066.85 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/10MiB-ChaCha20-4       	     334	   3543499 ns/op	2959.15 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/10MiB-XChaCha20-4      	     338	   3551617 ns/op	2952.39 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/10MiB-ChaCha12-4       	     549	   2180802 ns/op	4808.21 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/10MiB-AES_256_CTR-4    	     675	   1772794 ns/op	5914.82 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/10MiB-AES_256_CBC-4    	      70	  16566977 ns/op	 632.93 MB/s	10494481 B/op	       3 allocs/op
+BenchmarkEncryptUnauthenticated/10MiB-AES_256_CFB-4    	      61	  19572578 ns/op	 535.74 MB/s	     112 B/op	       3 allocs/op
+BenchmarkEncryptUnauthenticated/10MiB-XOR_SWAR-4       	    1354	    883651 ns/op	11866.41 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/10MiB-XOR-4            	     121	  10022557 ns/op	1046.22 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/10MiB-XOR_SUBTLE-4     	     121	   9860232 ns/op	1063.44 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/100MiB-ChaCha20-4      	      33	  35610332 ns/op	2944.58 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/100MiB-XChaCha20-4     	      33	  35521089 ns/op	2951.98 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/100MiB-ChaCha12-4      	      54	  21929165 ns/op	4781.65 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/100MiB-AES_256_CTR-4   	      67	  17888109 ns/op	5861.86 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/100MiB-AES_256_CBC-4   	       6	 166793572 ns/op	 628.67 MB/s	104866320 B/op	       3 allocs/op
+BenchmarkEncryptUnauthenticated/100MiB-AES_256_CFB-4   	       6	 195201803 ns/op	 537.18 MB/s	     112 B/op	       3 allocs/op
+BenchmarkEncryptUnauthenticated/100MiB-XOR_SWAR-4      	     100	  10410767 ns/op	10072.03 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/100MiB-XOR-4           	      12	  98457401 ns/op	1065.00 MB/s	       0 B/op	       0 allocs/op
+BenchmarkEncryptUnauthenticated/100MiB-XOR_SUBTLE-4    	      12	  98388386 ns/op	1065.75 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/64B-ChaCha20-4         	10352658	       115.8 ns/op	 552.82 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/64B-XChaCha20-4        	10363728	       115.8 ns/op	 552.60 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/64B-ChaCha12-4         	16141269	        74.30 ns/op	 861.32 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/64B-AES_256_CTR-4      	39177015	        30.63 ns/op	2089.26 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/64B-AES_256_CBC-4      	 4835016	       248.9 ns/op	 257.12 MB/s	     512 B/op	       1 allocs/op
+BenchmarkDecryptUnauthenticated/64B-AES_256_CFB-4      	 4045015	       294.4 ns/op	 217.41 MB/s	     112 B/op	       3 allocs/op
+BenchmarkDecryptUnauthenticated/64B-XOR_SWAR-4         	84281073	        14.24 ns/op	4493.00 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/64B-XOR-4              	17055396	        69.64 ns/op	 918.99 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/64B-XOR_SUBTLE-4       	17237450	        69.75 ns/op	 917.53 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/1KiB-ChaCha20-4        	 2629358	       456.6 ns/op	2242.44 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/1KiB-XChaCha20-4       	 2624974	       456.3 ns/op	2243.93 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/1KiB-ChaCha12-4        	 4252959	       281.5 ns/op	3637.20 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/1KiB-AES_256_CTR-4     	 6190465	       194.7 ns/op	5258.74 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/1KiB-AES_256_CBC-4     	  885637	      1231 ns/op	 831.77 MB/s	     512 B/op	       1 allocs/op
+BenchmarkDecryptUnauthenticated/1KiB-AES_256_CFB-4     	  640833	      1852 ns/op	 552.77 MB/s	     112 B/op	       3 allocs/op
+BenchmarkDecryptUnauthenticated/1KiB-XOR_SWAR-4        	12582231	        95.62 ns/op	10708.50 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/1KiB-XOR-4             	 1207660	       967.6 ns/op	1058.24 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/1KiB-XOR_SUBTLE-4      	 1231048	       969.6 ns/op	1056.08 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/16KiB-ChaCha20-4       	  213416	      5617 ns/op	2916.94 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/16KiB-XChaCha20-4      	  213678	      5625 ns/op	2912.58 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/16KiB-ChaCha12-4       	  347912	      3439 ns/op	4763.50 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/16KiB-AES_256_CTR-4    	  438024	      2739 ns/op	5981.48 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/16KiB-AES_256_CBC-4    	   74538	     16063 ns/op	1019.96 MB/s	     512 B/op	       1 allocs/op
+BenchmarkDecryptUnauthenticated/16KiB-AES_256_CFB-4    	   43932	     26729 ns/op	 612.96 MB/s	     112 B/op	       3 allocs/op
+BenchmarkDecryptUnauthenticated/16KiB-XOR_SWAR-4       	  921165	      1294 ns/op	12657.31 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/16KiB-XOR-4            	   78163	     15334 ns/op	1068.45 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/16KiB-XOR_SUBTLE-4     	   78030	     15349 ns/op	1067.45 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/64KiB-ChaCha20-4       	   54226	     22132 ns/op	2961.11 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/64KiB-XChaCha20-4      	   54268	     22119 ns/op	2962.86 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/64KiB-ChaCha12-4       	   88572	     13550 ns/op	4836.59 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/64KiB-AES_256_CTR-4    	  109779	     10900 ns/op	6012.27 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/64KiB-AES_256_CBC-4    	   18885	     64160 ns/op	1021.44 MB/s	     512 B/op	       1 allocs/op
+BenchmarkDecryptUnauthenticated/64KiB-AES_256_CFB-4    	   10000	    109451 ns/op	 598.77 MB/s	     112 B/op	       3 allocs/op
+BenchmarkDecryptUnauthenticated/64KiB-XOR_SWAR-4       	  231994	      5132 ns/op	12771.04 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/64KiB-XOR-4            	   19482	     61388 ns/op	1067.57 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/64KiB-XOR_SUBTLE-4     	   19554	     61395 ns/op	1067.45 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/1MiB-ChaCha20-4        	    3381	    354631 ns/op	2956.81 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/1MiB-XChaCha20-4       	    3385	    354593 ns/op	2957.13 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/1MiB-ChaCha12-4        	    5512	    217853 ns/op	4813.23 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/1MiB-AES_256_CTR-4     	    6718	    177847 ns/op	5895.93 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/1MiB-AES_256_CBC-4     	    1174	   1014012 ns/op	1034.09 MB/s	     512 B/op	       1 allocs/op
+BenchmarkDecryptUnauthenticated/1MiB-AES_256_CFB-4     	     680	   1756441 ns/op	 596.99 MB/s	     112 B/op	       3 allocs/op
+BenchmarkDecryptUnauthenticated/1MiB-XOR_SWAR-4        	   14503	     82656 ns/op	12686.09 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/1MiB-XOR-4             	    1218	    986514 ns/op	1062.91 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/1MiB-XOR_SUBTLE-4      	    1210	    986416 ns/op	1063.02 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/10MiB-ChaCha20-4       	     337	   3554051 ns/op	2950.37 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/10MiB-XChaCha20-4      	     336	   3552557 ns/op	2951.61 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/10MiB-ChaCha12-4       	     547	   2181020 ns/op	4807.73 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/10MiB-AES_256_CTR-4    	     674	   1778736 ns/op	5895.06 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/10MiB-AES_256_CBC-4    	     100	  10049372 ns/op	1043.42 MB/s	     512 B/op	       1 allocs/op
+BenchmarkDecryptUnauthenticated/10MiB-AES_256_CFB-4    	      64	  17554824 ns/op	 597.32 MB/s	     112 B/op	       3 allocs/op
+BenchmarkDecryptUnauthenticated/10MiB-XOR_SWAR-4       	    1387	    875407 ns/op	11978.16 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/10MiB-XOR-4            	     121	   9843182 ns/op	1065.28 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/10MiB-XOR_SUBTLE-4     	     121	   9853414 ns/op	1064.18 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/100MiB-ChaCha20-4      	      33	  35508317 ns/op	2953.04 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/100MiB-XChaCha20-4     	      33	  35568737 ns/op	2948.03 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/100MiB-ChaCha12-4      	      54	  21908887 ns/op	4786.08 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/100MiB-AES_256_CTR-4   	      66	  17908622 ns/op	5855.15 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/100MiB-AES_256_CBC-4   	      10	 101778773 ns/op	1030.25 MB/s	     512 B/op	       1 allocs/op
+BenchmarkDecryptUnauthenticated/100MiB-AES_256_CFB-4   	       6	 175905254 ns/op	 596.10 MB/s	     112 B/op	       3 allocs/op
+BenchmarkDecryptUnauthenticated/100MiB-XOR_SWAR-4      	     100	  10217602 ns/op	10262.45 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/100MiB-XOR-4           	      12	  98296338 ns/op	1066.75 MB/s	       0 B/op	       0 allocs/op
+BenchmarkDecryptUnauthenticated/100MiB-XOR_SUBTLE-4    	      12	  98413497 ns/op	1065.48 MB/s	       0 B/op	       0 allocs/op
+PASS
+ok  	github.com/skerkour/go-benchmarks/encryption_unauthenticated	191.475s
+go test -timeout 1h -benchmem -bench=. github.com/skerkour/go-benchmarks/compression
+go: downloading github.com/DataDog/zstd v1.5.5
+go: downloading github.com/golang/snappy v0.0.4
+go: downloading github.com/klauspost/compress v1.18.5
+go: downloading github.com/pierrec/lz4/v4 v4.1.17
+goos: linux
+goarch: amd64
+pkg: github.com/skerkour/go-benchmarks/compression
+cpu: AMD EPYC 7763 64-Core Processor
+BenchmarkCompress/alices_adventures_in_wonderland.txt-klausp_s2_default-4         	    1940	    602433 ns/op	 289.29 MB/s	 2106977 B/op	       8 allocs/op
+BenchmarkCompress/alices_adventures_in_wonderland.txt-klausp_s2_better_compression-4         	    1257	    936095 ns/op	 186.18 MB/s	 2115658 B/op	       8 allocs/op
+BenchmarkCompress/alices_adventures_in_wonderland.txt-klausp_s2_best_compression-4           	      85	  15822264 ns/op	  11.01 MB/s	 6825092 B/op	      12 allocs/op
+BenchmarkCompress/alices_adventures_in_wonderland.txt-golang_snappy-4                        	    2148	    524196 ns/op	 332.47 MB/s	  147552 B/op	       3 allocs/op
+BenchmarkCompress/alices_adventures_in_wonderland.txt-klausp_snappy-4                        	    1520	    759111 ns/op	 229.58 MB/s	  141776 B/op	      10 allocs/op
+BenchmarkCompress/alices_adventures_in_wonderland.txt-pierrec_lz4-4                          	    1376	    860619 ns/op	 202.51 MB/s	    6647 B/op	       5 allocs/op
+BenchmarkCompress/alices_adventures_in_wonderland.txt-klausp_zstd_1-4                        	     616	   1971942 ns/op	  88.38 MB/s	 9408994 B/op	      49 allocs/op
+BenchmarkCompress/alices_adventures_in_wonderland.txt-klausp_zstd_3-4                        	     400	   2892496 ns/op	  60.25 MB/s	19556833 B/op	      52 allocs/op
+BenchmarkCompress/alices_adventures_in_wonderland.txt-klausp_zstd_better_compression-4       	     348	   3620151 ns/op	  48.14 MB/s	22241762 B/op	      51 allocs/op
+BenchmarkCompress/alices_adventures_in_wonderland.txt-klausp_zstd_best_compression-4         	      92	  12494242 ns/op	  13.95 MB/s	53893601 B/op	      52 allocs/op
+BenchmarkCompress/alices_adventures_in_wonderland.txt-datadog_zstd_1-4                       	    1580	    761870 ns/op	 228.75 MB/s	  181528 B/op	       4 allocs/op
+BenchmarkCompress/alices_adventures_in_wonderland.txt-datadog_zstd_3-4                       	     961	   1204415 ns/op	 144.70 MB/s	  181533 B/op	       4 allocs/op
+BenchmarkCompress/alices_adventures_in_wonderland.txt-datadog_zstd_5-4                       	     600	   2537029 ns/op	  68.69 MB/s	  181528 B/op	       4 allocs/op
+BenchmarkCompress/alices_adventures_in_wonderland.txt-datadog_zstd_7-4                       	     346	   3012148 ns/op	  57.86 MB/s	  181528 B/op	       4 allocs/op
+BenchmarkCompress/alices_adventures_in_wonderland.txt-datadog_zstd_20-4                      	      15	  73121956 ns/op	   2.38 MB/s	  181528 B/op	       4 allocs/op
+BenchmarkCompress/alices_adventures_in_wonderland.txt-golang_gzip_fastest-4                  	     514	   2327011 ns/op	  74.89 MB/s	 1207078 B/op	      19 allocs/op
+BenchmarkCompress/alices_adventures_in_wonderland.txt-golang_gzip_default-4                  	     142	   8353232 ns/op	  20.86 MB/s	  813857 B/op	      17 allocs/op
+BenchmarkCompress/alices_adventures_in_wonderland.txt-golang_gzip_best_compression-4         	     122	  10185450 ns/op	  17.11 MB/s	  813856 B/op	      17 allocs/op
+BenchmarkCompress/illiad.txt-klausp_s2_default-4                                             	     337	   3529946 ns/op	 328.94 MB/s	 2108682 B/op	      10 allocs/op
+BenchmarkCompress/illiad.txt-klausp_s2_better_compression-4                                  	     187	   6305400 ns/op	 184.15 MB/s	 2128422 B/op	      10 allocs/op
+BenchmarkCompress/illiad.txt-klausp_s2_best_compression-4                                    	      12	  94758861 ns/op	  12.25 MB/s	11543999 B/op	      17 allocs/op
+BenchmarkCompress/illiad.txt-golang_snappy-4                                                 	     316	   3817098 ns/op	 304.20 MB/s	  147552 B/op	       3 allocs/op
+BenchmarkCompress/illiad.txt-klausp_snappy-4                                                 	     216	   5492057 ns/op	 211.42 MB/s	  143356 B/op	      26 allocs/op
+BenchmarkCompress/illiad.txt-pierrec_lz4-4                                                   	     186	   6452311 ns/op	 179.96 MB/s	   46306 B/op	       5 allocs/op
+BenchmarkCompress/illiad.txt-klausp_zstd_1-4                                                 	     100	  10085727 ns/op	 115.13 MB/s	 9413080 B/op	      49 allocs/op
+BenchmarkCompress/illiad.txt-klausp_zstd_3-4                                                 	      76	  14390047 ns/op	  80.69 MB/s	19562973 B/op	      52 allocs/op
+BenchmarkCompress/illiad.txt-klausp_zstd_better_compression-4                                	      66	  17804767 ns/op	  65.22 MB/s	22520280 B/op	      52 allocs/op
+BenchmarkCompress/illiad.txt-klausp_zstd_best_compression-4                                  	      18	  65124851 ns/op	  17.83 MB/s	53898348 B/op	      52 allocs/op
+BenchmarkCompress/illiad.txt-datadog_zstd_1-4                                                	     237	   5050276 ns/op	 229.92 MB/s	 1172760 B/op	       4 allocs/op
+BenchmarkCompress/illiad.txt-datadog_zstd_3-4                                                	     138	   8586484 ns/op	 135.23 MB/s	 1172760 B/op	       4 allocs/op
+BenchmarkCompress/illiad.txt-datadog_zstd_5-4                                                	      86	  14727441 ns/op	  78.84 MB/s	 1172760 B/op	       4 allocs/op
+BenchmarkCompress/illiad.txt-datadog_zstd_7-4                                                	      49	  22039874 ns/op	  52.68 MB/s	 1172760 B/op	       4 allocs/op
+BenchmarkCompress/illiad.txt-datadog_zstd_20-4                                               	       3	 342001844 ns/op	   3.40 MB/s	 1172760 B/op	       4 allocs/op
+BenchmarkCompress/illiad.txt-golang_gzip_fastest-4                                           	      81	  14054474 ns/op	  82.62 MB/s	 1207073 B/op	      19 allocs/op
+BenchmarkCompress/illiad.txt-golang_gzip_default-4                                           	      19	  57433986 ns/op	  20.22 MB/s	  813856 B/op	      17 allocs/op
+BenchmarkCompress/illiad.txt-golang_gzip_best_compression-4                                  	      15	  70306852 ns/op	  16.52 MB/s	  813856 B/op	      17 allocs/op
+BenchmarkCompress/country_asn.csv-klausp_s2_default-4                                        	       7	 146276308 ns/op	 844.25 MB/s	 2122548 B/op	     132 allocs/op
+BenchmarkCompress/country_asn.csv-klausp_s2_better_compression-4                             	       4	 251399656 ns/op	 491.23 MB/s	 2260710 B/op	     133 allocs/op
+BenchmarkCompress/country_asn.csv-klausp_s2_best_compression-4                               	       1	3629561697 ns/op	  34.02 MB/s	558907480 B/op	     371 allocs/op
+BenchmarkCompress/country_asn.csv-golang_snappy-4                                            	       8	 137731170 ns/op	 896.63 MB/s	  147552 B/op	       3 allocs/op
+BenchmarkCompress/country_asn.csv-klausp_snappy-4                                            	       5	 232949554 ns/op	 530.13 MB/s	  248532 B/op	    1900 allocs/op
+BenchmarkCompress/country_asn.csv-pierrec_lz4-4                                              	       4	 258887691 ns/op	 477.02 MB/s	 2132734 B/op	       7 allocs/op
+BenchmarkCompress/country_asn.csv-klausp_zstd_1-4                                            	       3	 384283505 ns/op	 321.36 MB/s	 9279845 B/op	      49 allocs/op
+BenchmarkCompress/country_asn.csv-klausp_zstd_3-4                                            	       3	 446039480 ns/op	 276.87 MB/s	19073386 B/op	      51 allocs/op
+BenchmarkCompress/country_asn.csv-klausp_zstd_better_compression-4                           	       2	 785593347 ns/op	 157.20 MB/s	22022504 B/op	      51 allocs/op
+BenchmarkCompress/country_asn.csv-klausp_zstd_best_compression-4                             	       1	2568995887 ns/op	  48.07 MB/s	53240176 B/op	      49 allocs/op
+BenchmarkCompress/country_asn.csv-datadog_zstd_1-4                                           	       5	 232988585 ns/op	 530.04 MB/s	123979032 B/op	       4 allocs/op
+BenchmarkCompress/country_asn.csv-datadog_zstd_3-4                                           	       3	 369486438 ns/op	 334.23 MB/s	123979032 B/op	       4 allocs/op
+BenchmarkCompress/country_asn.csv-datadog_zstd_5-4                                           	       2	 879353274 ns/op	 140.44 MB/s	123979032 B/op	       4 allocs/op
+BenchmarkCompress/country_asn.csv-datadog_zstd_7-4                                           	       1	1259554308 ns/op	  98.05 MB/s	123979032 B/op	       4 allocs/op
+BenchmarkCompress/country_asn.csv-datadog_zstd_20-4                                          	       1	60588901542 ns/op	   2.04 MB/s	123979032 B/op	       4 allocs/op
+BenchmarkCompress/country_asn.csv-golang_gzip_fastest-4                                      	       2	 534425990 ns/op	 231.08 MB/s	 1207072 B/op	      19 allocs/op
+BenchmarkCompress/country_asn.csv-golang_gzip_default-4                                      	       1	2207678625 ns/op	  55.94 MB/s	  813856 B/op	      17 allocs/op
+BenchmarkCompress/country_asn.csv-golang_gzip_best_compression-4                             	       1	5832642913 ns/op	  21.17 MB/s	  813856 B/op	      17 allocs/op
+BenchmarkCompress/country_asn.json-klausp_s2_default-4                                       	       6	 182941160 ns/op	1625.64 MB/s	 2140396 B/op	     301 allocs/op
+BenchmarkCompress/country_asn.json-klausp_s2_better_compression-4                            	       3	 347764163 ns/op	 855.16 MB/s	 2326165 B/op	     301 allocs/op
+BenchmarkCompress/country_asn.json-klausp_s2_best_compression-4                              	       1	4274593159 ns/op	  69.57 MB/s	1342210024 B/op	     871 allocs/op
+BenchmarkCompress/country_asn.json-golang_snappy-4                                           	       6	 191785051 ns/op	1550.67 MB/s	  147552 B/op	       3 allocs/op
+BenchmarkCompress/country_asn.json-klausp_snappy-4                                           	       3	 353872664 ns/op	 840.40 MB/s	  363901 B/op	    4556 allocs/op
+BenchmarkCompress/country_asn.json-pierrec_lz4-4                                             	       3	 349979975 ns/op	 849.75 MB/s	 2843496 B/op	       8 allocs/op
+BenchmarkCompress/country_asn.json-klausp_zstd_1-4                                           	       2	 528869618 ns/op	 562.32 MB/s	 9118312 B/op	      59 allocs/op
+BenchmarkCompress/country_asn.json-klausp_zstd_3-4                                           	       2	 567717493 ns/op	 523.84 MB/s	18774376 B/op	      49 allocs/op
+BenchmarkCompress/country_asn.json-klausp_zstd_better_compression-4                          	       1	1059772150 ns/op	 280.62 MB/s	21634416 B/op	      48 allocs/op
+BenchmarkCompress/country_asn.json-klausp_zstd_best_compression-4                            	       1	3240260655 ns/op	  91.78 MB/s	53026160 B/op	      48 allocs/op
+BenchmarkCompress/country_asn.json-datadog_zstd_1-4                                          	       4	 332914521 ns/op	 893.31 MB/s	298558744 B/op	       4 allocs/op
+BenchmarkCompress/country_asn.json-datadog_zstd_3-4                                          	       3	 423455815 ns/op	 702.31 MB/s	298558744 B/op	       4 allocs/op
+BenchmarkCompress/country_asn.json-datadog_zstd_5-4                                          	       1	1439348745 ns/op	 206.62 MB/s	298558744 B/op	       4 allocs/op
+BenchmarkCompress/country_asn.json-datadog_zstd_7-4                                          	       1	1990470551 ns/op	 149.41 MB/s	298558744 B/op	       4 allocs/op
+BenchmarkCompress/country_asn.json-datadog_zstd_20-4                                         	       1	209869488332 ns/op	   1.42 MB/s	298558744 B/op	       4 allocs/op
+BenchmarkCompress/country_asn.json-golang_gzip_fastest-4                                     	       2	 736704302 ns/op	 403.68 MB/s	 1207072 B/op	      19 allocs/op
+BenchmarkCompress/country_asn.json-golang_gzip_default-4                                     	       1	2101618465 ns/op	 141.51 MB/s	  813856 B/op	      17 allocs/op
+BenchmarkCompress/country_asn.json-golang_gzip_best_compression-4                            	       1	8567041919 ns/op	  34.71 MB/s	  813856 B/op	      17 allocs/op
+BenchmarkCompress/country_asn.mmdb-klausp_s2_default-4                                       	      16	  68915024 ns/op	 440.00 MB/s	 2112047 B/op	      41 allocs/op
+BenchmarkCompress/country_asn.mmdb-klausp_s2_better_compression-4                            	       8	 130804246 ns/op	 231.82 MB/s	 2181711 B/op	      41 allocs/op
+BenchmarkCompress/country_asn.mmdb-klausp_s2_best_compression-4                              	       1	2621924202 ns/op	  11.56 MB/s	138947584 B/op	     102 allocs/op
+BenchmarkCompress/country_asn.mmdb-golang_snappy-4                                           	      15	  75488193 ns/op	 401.69 MB/s	  147552 B/op	       3 allocs/op
+BenchmarkCompress/country_asn.mmdb-klausp_snappy-4                                           	      10	 105981581 ns/op	 286.11 MB/s	  181791 B/op	     475 allocs/op
+BenchmarkCompress/country_asn.mmdb-pierrec_lz4-4                                             	       7	 147305926 ns/op	 205.85 MB/s	 1218897 B/op	       6 allocs/op
+BenchmarkCompress/country_asn.mmdb-klausp_zstd_1-4                                           	       5	 207082099 ns/op	 146.43 MB/s	 9462246 B/op	      50 allocs/op
+BenchmarkCompress/country_asn.mmdb-klausp_zstd_3-4                                           	       4	 259270553 ns/op	 116.95 MB/s	19669476 B/op	      53 allocs/op
+BenchmarkCompress/country_asn.mmdb-klausp_zstd_better_compression-4                          	       3	 393761078 ns/op	  77.01 MB/s	22618597 B/op	      53 allocs/op
+BenchmarkCompress/country_asn.mmdb-klausp_zstd_best_compression-4                            	       1	2434133960 ns/op	  12.46 MB/s	53993968 B/op	      53 allocs/op
+BenchmarkCompress/country_asn.mmdb-datadog_zstd_1-4                                          	       9	 118741361 ns/op	 255.37 MB/s	30442776 B/op	       4 allocs/op
+BenchmarkCompress/country_asn.mmdb-datadog_zstd_3-4                                          	       5	 219224749 ns/op	 138.32 MB/s	30442776 B/op	       4 allocs/op
+BenchmarkCompress/country_asn.mmdb-datadog_zstd_5-4                                          	       3	 348711383 ns/op	  86.96 MB/s	30442776 B/op	       4 allocs/op
+BenchmarkCompress/country_asn.mmdb-datadog_zstd_7-4                                          	       2	 568713922 ns/op	  53.32 MB/s	30442776 B/op	       4 allocs/op
+BenchmarkCompress/country_asn.mmdb-datadog_zstd_20-4                                         	       1	8445931342 ns/op	   3.59 MB/s	30442776 B/op	       4 allocs/op
+BenchmarkCompress/country_asn.mmdb-golang_gzip_fastest-4                                     	       3	 357696692 ns/op	  84.77 MB/s	 1207072 B/op	      19 allocs/op
+BenchmarkCompress/country_asn.mmdb-golang_gzip_default-4                                     	       1	1371947540 ns/op	  22.10 MB/s	  813856 B/op	      17 allocs/op
+BenchmarkCompress/country_asn.mmdb-golang_gzip_best_compression-4                            	       1	7500529343 ns/op	   4.04 MB/s	  813856 B/op	      17 allocs/op
+BenchmarkDecompress/alices_adventures_in_wonderland.txt-klausp_s2_default-4                  	    3822	    297174 ns/op	 586.46 MB/s	 1238272 B/op	       3 allocs/op
+BenchmarkDecompress/alices_adventures_in_wonderland.txt-klausp_s2_better_compression-4       	    3567	    311532 ns/op	 559.43 MB/s	 1238272 B/op	       3 allocs/op
+BenchmarkDecompress/alices_adventures_in_wonderland.txt-klausp_s2_best_compression-4         	    2832	    358147 ns/op	 486.62 MB/s	 1238274 B/op	       3 allocs/op
+BenchmarkDecompress/alices_adventures_in_wonderland.txt-golang_snappy-4                      	    4794	    240805 ns/op	 723.74 MB/s	  147568 B/op	       3 allocs/op
+BenchmarkDecompress/alices_adventures_in_wonderland.txt-klausp_snappy-4                      	    5505	    205942 ns/op	 846.26 MB/s	  140544 B/op	       3 allocs/op
+BenchmarkDecompress/alices_adventures_in_wonderland.txt-pierrec_lz4-4                        	    2319	    629497 ns/op	 276.86 MB/s	 8387657 B/op	       9 allocs/op
+BenchmarkDecompress/alices_adventures_in_wonderland.txt-klausp_zstd_1-4                      	    1291	    819976 ns/op	 212.54 MB/s	 5438631 B/op	      19 allocs/op
+BenchmarkDecompress/alices_adventures_in_wonderland.txt-klausp_zstd_3-4                      	    1338	    909075 ns/op	 191.71 MB/s	 9649349 B/op	      18 allocs/op
+BenchmarkDecompress/alices_adventures_in_wonderland.txt-klausp_zstd_better_compression-4     	    1370	    872481 ns/op	 199.75 MB/s	 9654544 B/op	      17 allocs/op
+BenchmarkDecompress/alices_adventures_in_wonderland.txt-klausp_zstd_best_compression-4       	    1414	    858538 ns/op	 203.00 MB/s	 9644702 B/op	      18 allocs/op
+BenchmarkDecompress/alices_adventures_in_wonderland.txt-datadog_zstd_1-4                     	    3846	    314413 ns/op	 554.30 MB/s	  270667 B/op	       6 allocs/op
+BenchmarkDecompress/alices_adventures_in_wonderland.txt-datadog_zstd_3-4                     	    3338	    350514 ns/op	 497.21 MB/s	  270669 B/op	       6 allocs/op
+BenchmarkDecompress/alices_adventures_in_wonderland.txt-datadog_zstd_5-4                     	    3380	    345171 ns/op	 504.91 MB/s	  270663 B/op	       6 allocs/op
+BenchmarkDecompress/alices_adventures_in_wonderland.txt-datadog_zstd_7-4                     	    3712	    343216 ns/op	 507.79 MB/s	  270664 B/op	       6 allocs/op
+BenchmarkDecompress/alices_adventures_in_wonderland.txt-datadog_zstd_best_20-4               	    3300	    359217 ns/op	 485.17 MB/s	  270669 B/op	       6 allocs/op
+BenchmarkDecompress/alices_adventures_in_wonderland.txt-golang_gzip_fastest-4                	     910	   1299435 ns/op	 134.12 MB/s	   46720 B/op	      50 allocs/op
+BenchmarkDecompress/alices_adventures_in_wonderland.txt-golang_gzip_default-4                	    1120	   1059029 ns/op	 164.57 MB/s	   45872 B/op	      47 allocs/op
+BenchmarkDecompress/alices_adventures_in_wonderland.txt-golang_gzip_best_compression-4       	    1124	   1055413 ns/op	 165.13 MB/s	   46032 B/op	      48 allocs/op
+BenchmarkDecompress/illiad.txt-klausp_s2_default-4                                           	     926	   1430037 ns/op	 811.97 MB/s	 2106625 B/op	       3 allocs/op
+BenchmarkDecompress/illiad.txt-klausp_s2_better_compression-4                                	     723	   1696221 ns/op	 684.55 MB/s	 2106626 B/op	       3 allocs/op
+BenchmarkDecompress/illiad.txt-klausp_s2_best_compression-4                                  	     679	   1608949 ns/op	 721.68 MB/s	 2106625 B/op	       3 allocs/op
+BenchmarkDecompress/illiad.txt-golang_snappy-4                                               	     723	   1647017 ns/op	 705.00 MB/s	  147568 B/op	       3 allocs/op
+BenchmarkDecompress/illiad.txt-klausp_snappy-4                                               	     858	   1388487 ns/op	 836.27 MB/s	  140544 B/op	       3 allocs/op
+BenchmarkDecompress/illiad.txt-pierrec_lz4-4                                                 	     984	   1213106 ns/op	 957.17 MB/s	 8393686 B/op	       9 allocs/op
+BenchmarkDecompress/illiad.txt-klausp_zstd_1-4                                               	     378	   3102757 ns/op	 374.23 MB/s	 5446191 B/op	      18 allocs/op
+BenchmarkDecompress/illiad.txt-klausp_zstd_3-4                                               	     397	   3050379 ns/op	 380.66 MB/s	 9662687 B/op	      17 allocs/op
+BenchmarkDecompress/illiad.txt-klausp_zstd_better_compression-4                              	     409	   2855652 ns/op	 406.62 MB/s	 9671297 B/op	      17 allocs/op
+BenchmarkDecompress/illiad.txt-klausp_zstd_best_compression-4                                	     460	   2599014 ns/op	 446.77 MB/s	 9658708 B/op	      18 allocs/op
+BenchmarkDecompress/illiad.txt-datadog_zstd_1-4                                              	     722	   1600477 ns/op	 725.50 MB/s	  270625 B/op	       6 allocs/op
+BenchmarkDecompress/illiad.txt-datadog_zstd_3-4                                              	     630	   1940360 ns/op	 598.42 MB/s	  270625 B/op	       6 allocs/op
+BenchmarkDecompress/illiad.txt-datadog_zstd_5-4                                              	     591	   2053345 ns/op	 565.49 MB/s	  270625 B/op	       6 allocs/op
+BenchmarkDecompress/illiad.txt-datadog_zstd_7-4                                              	     646	   1921151 ns/op	 604.40 MB/s	  270624 B/op	       6 allocs/op
+BenchmarkDecompress/illiad.txt-datadog_zstd_best_20-4                                        	     613	   1917968 ns/op	 605.41 MB/s	  270625 B/op	       6 allocs/op
+BenchmarkDecompress/illiad.txt-golang_gzip_fastest-4                                         	     128	   9334889 ns/op	 124.39 MB/s	   94824 B/op	     297 allocs/op
+BenchmarkDecompress/illiad.txt-golang_gzip_default-4                                         	     153	   7787034 ns/op	 149.11 MB/s	   89920 B/op	     266 allocs/op
+BenchmarkDecompress/illiad.txt-golang_gzip_best_compression-4                                	     153	   7794059 ns/op	 148.98 MB/s	   88488 B/op	     274 allocs/op
+BenchmarkDecompress/country_asn.csv-klausp_s2_default-4                                      	      14	  77549995 ns/op	1592.45 MB/s	 2106624 B/op	       3 allocs/op
+BenchmarkDecompress/country_asn.csv-klausp_s2_better_compression-4                           	      14	  77823010 ns/op	1586.86 MB/s	 2106624 B/op	       3 allocs/op
+BenchmarkDecompress/country_asn.csv-klausp_s2_best_compression-4                             	      15	  73232268 ns/op	1686.33 MB/s	 2106624 B/op	       3 allocs/op
+BenchmarkDecompress/country_asn.csv-golang_snappy-4                                          	      15	  75043438 ns/op	1645.64 MB/s	  147568 B/op	       3 allocs/op
+BenchmarkDecompress/country_asn.csv-klausp_snappy-4                                          	      15	  73201010 ns/op	1687.05 MB/s	  140544 B/op	       3 allocs/op
+BenchmarkDecompress/country_asn.csv-pierrec_lz4-4                                            	      19	  60172253 ns/op	2052.34 MB/s	 8609877 B/op	       8 allocs/op
+BenchmarkDecompress/country_asn.csv-klausp_zstd_1-4                                          	       6	 176195908 ns/op	 700.89 MB/s	 5653049 B/op	      37 allocs/op
+BenchmarkDecompress/country_asn.csv-klausp_zstd_3-4                                          	       5	 213057042 ns/op	 579.63 MB/s	 9992678 B/op	      34 allocs/op
+BenchmarkDecompress/country_asn.csv-klausp_zstd_better_compression-4                         	       5	 224280556 ns/op	 550.62 MB/s	 9953894 B/op	      34 allocs/op
+BenchmarkDecompress/country_asn.csv-klausp_zstd_best_compression-4                           	       5	 212002489 ns/op	 582.51 MB/s	 9918822 B/op	      33 allocs/op
+BenchmarkDecompress/country_asn.csv-datadog_zstd_1-4                                         	      13	  80844481 ns/op	1527.55 MB/s	  270648 B/op	       6 allocs/op
+BenchmarkDecompress/country_asn.csv-datadog_zstd_3-4                                         	      12	  91833175 ns/op	1344.77 MB/s	  270655 B/op	       6 allocs/op
+BenchmarkDecompress/country_asn.csv-datadog_zstd_5-4                                         	      12	  96110942 ns/op	1284.91 MB/s	  270655 B/op	       6 allocs/op
+BenchmarkDecompress/country_asn.csv-datadog_zstd_7-4                                         	      13	  84149149 ns/op	1467.56 MB/s	  270648 B/op	       6 allocs/op
+BenchmarkDecompress/country_asn.csv-datadog_zstd_best_20-4                                   	      12	 113767178 ns/op	1085.50 MB/s	  270655 B/op	       6 allocs/op
+BenchmarkDecompress/country_asn.csv-golang_gzip_fastest-4                                    	       3	 352948190 ns/op	 349.89 MB/s	 1091442 B/op	   15571 allocs/op
+BenchmarkDecompress/country_asn.csv-golang_gzip_default-4                                    	       4	 286695349 ns/op	 430.75 MB/s	  838488 B/op	    5708 allocs/op
+BenchmarkDecompress/country_asn.csv-golang_gzip_best_compression-4                           	       4	 280480194 ns/op	 440.30 MB/s	  829248 B/op	    5798 allocs/op
+BenchmarkDecompress/country_asn.json-klausp_s2_default-4                                     	       8	 132789066 ns/op	2239.61 MB/s	 2106624 B/op	       3 allocs/op
+BenchmarkDecompress/country_asn.json-klausp_s2_better_compression-4                          	       9	 115986817 ns/op	2564.05 MB/s	 2106624 B/op	       3 allocs/op
+BenchmarkDecompress/country_asn.json-klausp_s2_best_compression-4                            	      10	 108830047 ns/op	2732.66 MB/s	 2106624 B/op	       3 allocs/op
+BenchmarkDecompress/country_asn.json-golang_snappy-4                                         	       8	 128948153 ns/op	2306.32 MB/s	  147568 B/op	       3 allocs/op
+BenchmarkDecompress/country_asn.json-klausp_snappy-4                                         	       9	 121203398 ns/op	2453.69 MB/s	  140544 B/op	       3 allocs/op
+BenchmarkDecompress/country_asn.json-pierrec_lz4-4                                           	      10	 110350229 ns/op	2695.02 MB/s	 8389148 B/op	       8 allocs/op
+BenchmarkDecompress/country_asn.json-klausp_zstd_1-4                                         	       4	 294694059 ns/op	1009.17 MB/s	 5587498 B/op	      49 allocs/op
+BenchmarkDecompress/country_asn.json-klausp_zstd_3-4                                         	       3	 349423984 ns/op	 851.10 MB/s	 9888213 B/op	      49 allocs/op
+BenchmarkDecompress/country_asn.json-klausp_zstd_better_compression-4                        	       3	 353119062 ns/op	 842.20 MB/s	 9862810 B/op	      49 allocs/op
+BenchmarkDecompress/country_asn.json-klausp_zstd_best_compression-4                          	       4	 330455066 ns/op	 899.96 MB/s	 9818026 B/op	      43 allocs/op
+BenchmarkDecompress/country_asn.json-datadog_zstd_1-4                                        	       9	 123171387 ns/op	2414.49 MB/s	  270684 B/op	       6 allocs/op
+BenchmarkDecompress/country_asn.json-datadog_zstd_3-4                                        	       8	 130913772 ns/op	2271.69 MB/s	  270699 B/op	       6 allocs/op
+BenchmarkDecompress/country_asn.json-datadog_zstd_5-4                                        	       8	 125996749 ns/op	2360.34 MB/s	  270699 B/op	       6 allocs/op
+BenchmarkDecompress/country_asn.json-datadog_zstd_7-4                                        	       9	 115497674 ns/op	2574.91 MB/s	  270684 B/op	       6 allocs/op
+BenchmarkDecompress/country_asn.json-datadog_zstd_best_20-4                                  	       8	 129209829 ns/op	2301.65 MB/s	  270699 B/op	       6 allocs/op
+BenchmarkDecompress/country_asn.json-golang_gzip_fastest-4                                   	       3	 458203457 ns/op	 649.05 MB/s	 1865858 B/op	   40953 allocs/op
+BenchmarkDecompress/country_asn.json-golang_gzip_default-4                                   	       3	 357670841 ns/op	 831.48 MB/s	 1004016 B/op	    6859 allocs/op
+BenchmarkDecompress/country_asn.json-golang_gzip_best_compression-4                          	       3	 335435598 ns/op	 886.60 MB/s	  988138 B/op	    7029 allocs/op
+BenchmarkDecompress/country_asn.mmdb-klausp_s2_default-4                                     	      40	  27121797 ns/op	1118.01 MB/s	 2106624 B/op	       3 allocs/op
+BenchmarkDecompress/country_asn.mmdb-klausp_s2_better_compression-4                          	      38	  28756033 ns/op	1054.48 MB/s	 2106624 B/op	       3 allocs/op
+BenchmarkDecompress/country_asn.mmdb-klausp_s2_best_compression-4                            	      38	  28758150 ns/op	1054.40 MB/s	 2106624 B/op	       3 allocs/op
+BenchmarkDecompress/country_asn.mmdb-golang_snappy-4                                         	      37	  30822825 ns/op	 983.77 MB/s	  147568 B/op	       3 allocs/op
+BenchmarkDecompress/country_asn.mmdb-klausp_snappy-4                                         	      44	  26122794 ns/op	1160.77 MB/s	  140544 B/op	       3 allocs/op
+BenchmarkDecompress/country_asn.mmdb-pierrec_lz4-4                                           	      56	  18945352 ns/op	1600.53 MB/s	 8389133 B/op	       8 allocs/op
+BenchmarkDecompress/country_asn.mmdb-klausp_zstd_1-4                                         	      14	  75942412 ns/op	 399.28 MB/s	 6033610 B/op	      28 allocs/op
+BenchmarkDecompress/country_asn.mmdb-klausp_zstd_3-4                                         	      14	  79057373 ns/op	 383.55 MB/s	10678562 B/op	      28 allocs/op
+BenchmarkDecompress/country_asn.mmdb-klausp_zstd_better_compression-4                        	      14	  80475126 ns/op	 376.79 MB/s	10727714 B/op	      29 allocs/op
+BenchmarkDecompress/country_asn.mmdb-klausp_zstd_best_compression-4                          	      13	  82363881 ns/op	 368.15 MB/s	10367449 B/op	      25 allocs/op
+BenchmarkDecompress/country_asn.mmdb-datadog_zstd_1-4                                        	      28	  40110850 ns/op	 755.97 MB/s	  270605 B/op	       6 allocs/op
+BenchmarkDecompress/country_asn.mmdb-datadog_zstd_3-4                                        	      27	  42486944 ns/op	 713.69 MB/s	  270606 B/op	       6 allocs/op
+BenchmarkDecompress/country_asn.mmdb-datadog_zstd_5-4                                        	      27	  43338962 ns/op	 699.66 MB/s	  270606 B/op	       6 allocs/op
+BenchmarkDecompress/country_asn.mmdb-datadog_zstd_7-4                                        	      28	  42074052 ns/op	 720.69 MB/s	  270605 B/op	       6 allocs/op
+BenchmarkDecompress/country_asn.mmdb-datadog_zstd_best_20-4                                  	      18	  64876458 ns/op	 467.39 MB/s	  270626 B/op	       6 allocs/op
+BenchmarkDecompress/country_asn.mmdb-golang_gzip_fastest-4                                   	       5	 223859135 ns/op	 135.45 MB/s	 4354073 B/op	   36028 allocs/op
+BenchmarkDecompress/country_asn.mmdb-golang_gzip_default-4                                   	       5	 200646449 ns/op	 151.12 MB/s	 4575763 B/op	   55558 allocs/op
+BenchmarkDecompress/country_asn.mmdb-golang_gzip_best_compression-4                          	       5	 200923624 ns/op	 150.92 MB/s	 4588088 B/op	   55123 allocs/op
+PASS
+ok  	github.com/skerkour/go-benchmarks/compression	1409.644s
+go test -benchmem -bench=. github.com/skerkour/go-benchmarks/signatures
+goos: linux
+goarch: amd64
+pkg: github.com/skerkour/go-benchmarks/signatures
+cpu: AMD EPYC 7763 64-Core Processor
+BenchmarkSign/64B-Ed25519-4         	   45981	     26086 ns/op	   2.45 MB/s	      64 B/op	       1 allocs/op
+BenchmarkSign/64B-ECDSA-P-256-4     	   34602	     34733 ns/op	   1.84 MB/s	    6064 B/op	      59 allocs/op
+BenchmarkSign/64B-ECDSA-P-384-4     	    4922	    241232 ns/op	   0.27 MB/s	    6200 B/op	      60 allocs/op
+BenchmarkSign/64B-ECDSA-P-521-4     	    1730	    686719 ns/op	   0.09 MB/s	    6872 B/op	      61 allocs/op
+BenchmarkSign/64B-RSA-PKCS-1-v1.5-2048-SHA256-4         	     174	   6846044 ns/op	   0.01 MB/s	   37888 B/op	      53 allocs/op
+BenchmarkSign/64B-RSA-PKCS-1-v1.5-4096-SHA256-4         	     174	   6842870 ns/op	   0.01 MB/s	   37888 B/op	      53 allocs/op
+BenchmarkSign/1KiB-Ed25519-4                            	   41425	     28954 ns/op	  35.37 MB/s	      64 B/op	       1 allocs/op
+BenchmarkSign/1KiB-ECDSA-P-256-4                        	   33492	     35556 ns/op	  28.80 MB/s	    6064 B/op	      59 allocs/op
+BenchmarkSign/1KiB-ECDSA-P-384-4                        	    4909	    240867 ns/op	   4.25 MB/s	    6200 B/op	      60 allocs/op
+BenchmarkSign/1KiB-ECDSA-P-521-4                        	    1729	    687797 ns/op	   1.49 MB/s	    6872 B/op	      61 allocs/op
+BenchmarkSign/1KiB-RSA-PKCS-1-v1.5-2048-SHA256-4        	     174	   6887750 ns/op	   0.15 MB/s	   37888 B/op	      53 allocs/op
+BenchmarkSign/1KiB-RSA-PKCS-1-v1.5-4096-SHA256-4        	     174	   6869301 ns/op	   0.15 MB/s	   37888 B/op	      53 allocs/op
+BenchmarkSign/64KiB-Ed25519-4                           	    5457	    218929 ns/op	 299.35 MB/s	      64 B/op	       1 allocs/op
+BenchmarkSign/64KiB-ECDSA-P-256-4                       	   15661	     76655 ns/op	 854.95 MB/s	    6064 B/op	      59 allocs/op
+BenchmarkSign/64KiB-ECDSA-P-384-4                       	    4225	    282878 ns/op	 231.68 MB/s	    6200 B/op	      60 allocs/op
+BenchmarkSign/64KiB-ECDSA-P-521-4                       	    1641	    728278 ns/op	  89.99 MB/s	    6872 B/op	      61 allocs/op
+BenchmarkSign/64KiB-RSA-PKCS-1-v1.5-2048-SHA256-4       	     171	   6940692 ns/op	   9.44 MB/s	   37888 B/op	      53 allocs/op
+BenchmarkSign/64KiB-RSA-PKCS-1-v1.5-4096-SHA256-4       	     172	   6908255 ns/op	   9.49 MB/s	   37888 B/op	      53 allocs/op
+BenchmarkSign/1MiB-Ed25519-4                            	     382	   3121750 ns/op	 335.89 MB/s	      64 B/op	       1 allocs/op
+BenchmarkSign/1MiB-ECDSA-P-256-4                        	    1713	    699413 ns/op	1499.22 MB/s	    6064 B/op	      59 allocs/op
+BenchmarkSign/1MiB-ECDSA-P-384-4                        	    1318	    911670 ns/op	1150.17 MB/s	    6200 B/op	      60 allocs/op
+BenchmarkSign/1MiB-ECDSA-P-521-4                        	     888	   1350329 ns/op	 776.53 MB/s	    6872 B/op	      61 allocs/op
+BenchmarkSign/1MiB-RSA-PKCS-1-v1.5-2048-SHA256-4        	     159	   7494865 ns/op	 139.91 MB/s	   37888 B/op	      53 allocs/op
+BenchmarkSign/1MiB-RSA-PKCS-1-v1.5-4096-SHA256-4        	     159	   7512266 ns/op	 139.58 MB/s	   37888 B/op	      53 allocs/op
+BenchmarkSign/1GiB-Ed25519-4                            	       1	3174115302 ns/op	 338.28 MB/s	     304 B/op	       7 allocs/op
+BenchmarkSign/1GiB-ECDSA-P-256-4                        	       2	 676746976 ns/op	1586.62 MB/s	    6072 B/op	      59 allocs/op
+BenchmarkSign/1GiB-ECDSA-P-384-4                        	       2	 677168871 ns/op	1585.63 MB/s	    6208 B/op	      60 allocs/op
+BenchmarkSign/1GiB-ECDSA-P-521-4                        	       2	 683265919 ns/op	1571.48 MB/s	    6880 B/op	      61 allocs/op
+BenchmarkSign/1GiB-RSA-PKCS-1-v1.5-2048-SHA256-4        	       2	 683598588 ns/op	1570.72 MB/s	   37888 B/op	      53 allocs/op
+BenchmarkSign/1GiB-RSA-PKCS-1-v1.5-4096-SHA256-4        	       2	 683391932 ns/op	1571.19 MB/s	   37888 B/op	      53 allocs/op
+BenchmarkVerify/64B-Ed25519-4                           	   19948	     60567 ns/op	   1.06 MB/s	       0 B/op	       0 allocs/op
+BenchmarkVerify/64B-ECDSA-P-256-4                       	   14954	     80132 ns/op	   0.80 MB/s	     576 B/op	      10 allocs/op
+BenchmarkVerify/64B-ECDSA-P-384-4                       	    1771	    676648 ns/op	   0.09 MB/s	     808 B/op	      17 allocs/op
+BenchmarkVerify/64B-ECDSA-P-521-4                       	     493	   2435769 ns/op	   0.03 MB/s	    1224 B/op	      17 allocs/op
+BenchmarkVerify/64B-RSA-PKCS-1-v1.5-2048-SHA256-4       	    3393	    338497 ns/op	   0.19 MB/s	   62560 B/op	     101 allocs/op
+BenchmarkVerify/64B-RSA-PKCS-1-v1.5-4096-SHA256-4       	    3361	    337658 ns/op	   0.19 MB/s	   62560 B/op	     101 allocs/op
+BenchmarkVerify/1KiB-Ed25519-4                          	   19548	     60896 ns/op	  16.82 MB/s	       0 B/op	       0 allocs/op
+BenchmarkVerify/1KiB-ECDSA-P-256-4                      	   14853	     80783 ns/op	  12.68 MB/s	     576 B/op	      10 allocs/op
+BenchmarkVerify/1KiB-ECDSA-P-384-4                      	    1750	    676750 ns/op	   1.51 MB/s	     808 B/op	      17 allocs/op
+BenchmarkVerify/1KiB-ECDSA-P-521-4                      	     492	   2431868 ns/op	   0.42 MB/s	    1224 B/op	      17 allocs/op
+BenchmarkVerify/1KiB-RSA-PKCS-1-v1.5-2048-SHA256-4      	    3370	    336705 ns/op	   3.04 MB/s	   62560 B/op	     101 allocs/op
+BenchmarkVerify/1KiB-RSA-PKCS-1-v1.5-4096-SHA256-4      	    3330	    337594 ns/op	   3.03 MB/s	   62560 B/op	     101 allocs/op
+BenchmarkVerify/64KiB-Ed25519-4                         	    7665	    155880 ns/op	 420.43 MB/s	       0 B/op	       0 allocs/op
+BenchmarkVerify/64KiB-ECDSA-P-256-4                     	    9873	    121468 ns/op	 539.53 MB/s	     576 B/op	      10 allocs/op
+BenchmarkVerify/64KiB-ECDSA-P-384-4                     	    1670	    720095 ns/op	  91.01 MB/s	     808 B/op	      17 allocs/op
+BenchmarkVerify/64KiB-ECDSA-P-521-4                     	     484	   2478211 ns/op	  26.44 MB/s	    1224 B/op	      17 allocs/op
+BenchmarkVerify/64KiB-RSA-PKCS-1-v1.5-2048-SHA256-4     	    3050	    378587 ns/op	 173.11 MB/s	   62560 B/op	     101 allocs/op
+BenchmarkVerify/64KiB-RSA-PKCS-1-v1.5-4096-SHA256-4     	    3042	    378029 ns/op	 173.36 MB/s	   62560 B/op	     101 allocs/op
+BenchmarkVerify/1MiB-Ed25519-4                          	     744	   1608873 ns/op	 651.75 MB/s	       0 B/op	       0 allocs/op
+BenchmarkVerify/1MiB-ECDSA-P-256-4                      	    1617	    741915 ns/op	1413.34 MB/s	     576 B/op	      10 allocs/op
+BenchmarkVerify/1MiB-ECDSA-P-384-4                      	     896	   1339346 ns/op	 782.90 MB/s	     808 B/op	      17 allocs/op
+BenchmarkVerify/1MiB-ECDSA-P-521-4                      	     387	   3106347 ns/op	 337.56 MB/s	    1224 B/op	      17 allocs/op
+BenchmarkVerify/1MiB-RSA-PKCS-1-v1.5-2048-SHA256-4      	    1171	   1001063 ns/op	1047.46 MB/s	   62560 B/op	     101 allocs/op
+BenchmarkVerify/1MiB-RSA-PKCS-1-v1.5-4096-SHA256-4      	    1184	   1002222 ns/op	1046.25 MB/s	   62560 B/op	     101 allocs/op
+BenchmarkVerify/1GiB-Ed25519-4                          	       1	1581411019 ns/op	 678.98 MB/s	       0 B/op	       0 allocs/op
+BenchmarkVerify/1GiB-ECDSA-P-256-4                      	       2	 676807894 ns/op	1586.48 MB/s	     576 B/op	      10 allocs/op
+BenchmarkVerify/1GiB-ECDSA-P-384-4                      	       2	 677271972 ns/op	1585.39 MB/s	     808 B/op	      17 allocs/op
+BenchmarkVerify/1GiB-ECDSA-P-521-4                      	       2	 685162458 ns/op	1567.13 MB/s	    1224 B/op	      17 allocs/op
+BenchmarkVerify/1GiB-RSA-PKCS-1-v1.5-2048-SHA256-4      	       2	 677015462 ns/op	1585.99 MB/s	   62560 B/op	     101 allocs/op
+BenchmarkVerify/1GiB-RSA-PKCS-1-v1.5-4096-SHA256-4      	       2	 677005269 ns/op	1586.02 MB/s	   62560 B/op	     101 allocs/op
+PASS
+ok  	github.com/skerkour/go-benchmarks/signatures	168.184s
+go test -benchmem  -bench=. -gcflags '-l' github.com/skerkour/go-benchmarks/cgo
+goos: linux
+goarch: amd64
+pkg: github.com/skerkour/go-benchmarks/cgo
+cpu: AMD EPYC 7763 64-Core Processor
+BenchmarkCGO-4   	40241938	        29.29 ns/op	       0 B/op	       0 allocs/op
+BenchmarkGo-4    	642584664	         1.868 ns/op	       0 B/op	       0 allocs/op
+PASS
+ok  	github.com/skerkour/go-benchmarks/cgo	2.605s
+go test -benchmem -bench=. github.com/skerkour/go-benchmarks/encoding
+go: downloading github.com/mr-tron/base58 v1.2.0
+go: downloading github.com/segmentio/asm v1.2.0
+go: downloading github.com/akamensky/base58 v0.0.0-20210829145138-ce8bf8802e8f
+goos: linux
+goarch: amd64
+pkg: github.com/skerkour/go-benchmarks/encoding
+cpu: AMD EPYC 7763 64-Core Processor
+BenchmarkEncode/64B-std_hex-4         	 8568526	       140.8 ns/op	 454.42 MB/s	     256 B/op	       2 allocs/op
+BenchmarkEncode/64B-std_base64-4      	 9252787	       125.6 ns/op	 509.63 MB/s	     192 B/op	       2 allocs/op
+BenchmarkEncode/64B-std_base32-4      	 8783224	       132.7 ns/op	 482.20 MB/s	     224 B/op	       2 allocs/op
+BenchmarkEncode/64B-base64_simd-4     	 6051380	       199.4 ns/op	 320.90 MB/s	     192 B/op	       2 allocs/op
+BenchmarkEncode/64B-stdx_base32-4     	 9392100	       127.1 ns/op	 503.48 MB/s	     224 B/op	       2 allocs/op
+BenchmarkEncode/64B-akamensky_base58-4         	 1519770	       782.9 ns/op	  81.75 MB/s	     392 B/op	       5 allocs/op
+BenchmarkEncode/64B-mr-tron_base58-4           	  254353	      4677 ns/op	  13.68 MB/s	     192 B/op	       2 allocs/op
+BenchmarkEncode/1KiB-std_hex-4                 	  685453	      1658 ns/op	 617.63 MB/s	    4096 B/op	       2 allocs/op
+BenchmarkEncode/1KiB-std_base64-4              	  898903	      1213 ns/op	 844.05 MB/s	    2816 B/op	       2 allocs/op
+BenchmarkEncode/1KiB-std_base32-4              	  797313	      1354 ns/op	 756.47 MB/s	    3584 B/op	       2 allocs/op
+BenchmarkEncode/1KiB-base64_simd-4             	 2081401	       571.6 ns/op	1791.43 MB/s	    2816 B/op	       2 allocs/op
+BenchmarkEncode/1KiB-stdx_base32-4             	  780033	      1346 ns/op	 760.58 MB/s	    3584 B/op	       2 allocs/op
+BenchmarkEncode/1KiB-akamensky_base58-4        	   18708	     64015 ns/op	  16.00 MB/s	    5832 B/op	       9 allocs/op
+BenchmarkEncode/1KiB-mr-tron_base58-4          	    1060	   1134219 ns/op	   0.90 MB/s	    2816 B/op	       2 allocs/op
+BenchmarkEncode/64KiB-std_hex-4                	   12327	    100608 ns/op	 651.40 MB/s	  262144 B/op	       2 allocs/op
+BenchmarkEncode/64KiB-std_base64-4             	   15976	     75161 ns/op	 871.95 MB/s	  180224 B/op	       2 allocs/op
+BenchmarkEncode/64KiB-std_base32-4             	   14498	     80472 ns/op	 814.40 MB/s	  212992 B/op	       2 allocs/op
+BenchmarkEncode/64KiB-base64_simd-4            	   49843	     32967 ns/op	1987.91 MB/s	  180224 B/op	       2 allocs/op
+BenchmarkEncode/64KiB-stdx_base32-4            	   13860	     89162 ns/op	 735.02 MB/s	  212992 B/op	       2 allocs/op
+BenchmarkEncode/64KiB-akamensky_base58-4       	       5	 228535269 ns/op	   0.29 MB/s	  547529 B/op	      23 allocs/op
+BenchmarkEncode/64KiB-mr-tron_base58-4         	       1	4631457899 ns/op	   0.01 MB/s	  180224 B/op	       2 allocs/op
+BenchmarkEncode/100KiB-std_hex-4               	    6172	    171092 ns/op	 598.51 MB/s	  409601 B/op	       2 allocs/op
+BenchmarkEncode/100KiB-std_base64-4            	    8982	    118575 ns/op	 863.59 MB/s	  278530 B/op	       2 allocs/op
+BenchmarkEncode/100KiB-std_base32-4            	    8058	    128713 ns/op	 795.57 MB/s	  327683 B/op	       2 allocs/op
+BenchmarkEncode/100KiB-base64_simd-4           	   21225	     56523 ns/op	1811.66 MB/s	  278528 B/op	       2 allocs/op
+BenchmarkEncode/100KiB-stdx_base32-4           	    9235	    125447 ns/op	 816.28 MB/s	  327683 B/op	       2 allocs/op
+BenchmarkEncode/100KiB-akamensky_base58-4      	       2	 558567005 ns/op	   0.18 MB/s	  940744 B/op	      25 allocs/op
+BenchmarkEncode/100KiB-mr-tron_base58-4        	       1	11794311703 ns/op	   0.01 MB/s	  294912 B/op	       2 allocs/op
+PASS
+ok  	github.com/skerkour/go-benchmarks/encoding	56.895s
+go test -cpu=5000 -bench=. github.com/skerkour/go-benchmarks/pointer_swap
+goos: linux
+goarch: amd64
+pkg: github.com/skerkour/go-benchmarks/pointer_swap
+cpu: AMD EPYC 7763 64-Core Processor
+BenchmarkParallelAtomicPointerRead-5000      	810882984	         1.458 ns/op
+BenchmarkParallelAtomicValueRead-5000        	618966444	         1.925 ns/op
+BenchmarkParallelRWMutexRead-5000            	31976013	        35.84 ns/op
+PASS
+ok  	github.com/skerkour/go-benchmarks/pointer_swap	5.797s
+go test -benchmem -bench=. github.com/skerkour/go-benchmarks/cryptoencoding
+goos: linux
+goarch: amd64
+pkg: github.com/skerkour/go-benchmarks/cryptoencoding
+cpu: AMD EPYC 7763 64-Core Processor
+BenchmarkDecode/91B-pkix-4         	  832248	      1381 ns/op	  65.88 MB/s	     696 B/op	      11 allocs/op
+BenchmarkDecode/178B-pkix+PEM-4    	  498738	      2226 ns/op	  79.97 MB/s	     904 B/op	      15 allocs/op
+BenchmarkDecode/33B-binary-4       	  144021	      8157 ns/op	   4.05 MB/s	     368 B/op	       6 allocs/op
+PASS
+ok  	github.com/skerkour/go-benchmarks/cryptoencoding	3.568s
+go test -benchmem -bench=. github.com/skerkour/go-benchmarks/slices
+goos: linux
+goarch: amd64
+pkg: github.com/skerkour/go-benchmarks/slices
+cpu: AMD EPYC 7763 64-Core Processor
+BenchmarkSlices/append-4         	 1000000	      1184 ns/op	8447.22 MB/s	   10240 B/op	       1 allocs/op
+BenchmarkSlices/copy-4           	  849134	      1187 ns/op	8422.57 MB/s	   10240 B/op	       1 allocs/op
+PASS
+ok  	github.com/skerkour/go-benchmarks/slices	2.226s

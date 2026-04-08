@@ -44,7 +44,9 @@ amd64:
 * [AMD EPYC 7543 (Scaleway POP2-8C-32G)](results/scaleway_POP2-8C-32G.txt)
 * [AMD EPYC 9R14 (AWS EC2 c7a.4xlarge)](results/aws_c7a_4xlarge.txt)
 * [4th Generation Intel Xeon Scalable 8375C @ 2.90GHz (AWS EC2 c7i.4xlarge)](results/aws_c7i_4xlarge.txt)
+* [GitHub Actions AMD64](results/github_actions_amd64.txt)
 
 arm64:
 * [Ampere Altra Max Neoverse-N1 (Scaleway COPARM1-8C-32G)](results/scaleway_COPARM1-8C-32G.txt)
 * [Graviton 3 (AWS EC2 c7g.4xlarge)](results/aws_c7g_4xlarge.txt)
+* [GitHub Actions ARM64](results/github_actions_arm64.txt)
